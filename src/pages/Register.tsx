@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useContent } from '../hooks/useContent';
+import { useRegistrations } from '../hooks/useRegistrations';
 import { 
   Users, 
   User, 
@@ -10,11 +11,16 @@ import {
   Trophy,
   Check,
   AlertCircle,
-  Upload
+  Upload,
+  CheckCircle
 } from 'lucide-react';
 
 const Register: React.FC = () => {
   const { content } = useContent();
+  const { addRegistration } = useRegistrations();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [formData, setFormData] = useState({
     teamName: '',
     teamTag: '',
@@ -63,8 +69,85 @@ const Register: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
+    
+    setIsSubmitting(true);
+    setSubmitError('');
+    
+    try {
+      // Validate required fields
+      if (!formData.teamName || !formData.teamTag || !formData.captainName || 
+          !formData.captainEmail || !formData.captainPhone || !formData.captainDiscord) {
+        throw new Error('Vyplňte všechna povinná pole týmu a kapitána');
+      }
+
+      // Validate players
+      const validPlayers = formData.players.filter(player => 
+        player.name && player.summonerName && player.role && player.nationality
+      );
+      
+      if (validPlayers.length < 5) {
+        throw new Error('Musíte zadat všech 5 hlavních hráčů');
+      }
+
+      // Check for duplicate roles
+      const roles = validPlayers.map(player => player.role);
+      const uniqueRoles = new Set(roles);
+      if (uniqueRoles.size !== roles.length) {
+        throw new Error('Každý hráč musí mít unikátní roli');
+      }
+
+      if (!formData.agreeToRules || !formData.agreeToStreaming) {
+        throw new Error('Musíte souhlasit s pravidly a podmínkami');
+      }
+
+      // Submit registration
+      setTimeout(() => {
+        const registrationId = addRegistration({
+          teamName: formData.teamName,
+          teamTag: formData.teamTag,
+          captainName: formData.captainName,
+          captainEmail: formData.captainEmail,
+          captainPhone: formData.captainPhone,
+          captainDiscord: formData.captainDiscord,
+          players: validPlayers,
+          substitutes: formData.substitutes.filter(sub => sub.name && sub.summonerName),
+          coach: formData.coach,
+          agreeToRules: formData.agreeToRules,
+          agreeToStreaming: formData.agreeToStreaming,
+        });
+
+        setIsSubmitting(false);
+        setSubmitSuccess(true);
+        
+        // Reset form
+        setFormData({
+          teamName: '',
+          teamTag: '',
+          captainName: '',
+          captainEmail: '',
+          captainPhone: '',
+          captainDiscord: '',
+          players: [
+            { name: '', summonerName: '', role: '', nationality: '' },
+            { name: '', summonerName: '', role: '', nationality: '' },
+            { name: '', summonerName: '', role: '', nationality: '' },
+            { name: '', summonerName: '', role: '', nationality: '' },
+            { name: '', summonerName: '', role: '', nationality: '' }
+          ],
+          substitutes: [
+            { name: '', summonerName: '', role: '', nationality: '' },
+            { name: '', summonerName: '', role: '', nationality: '' }
+          ],
+          coach: { name: '', email: '', experience: '' },
+          agreeToRules: false,
+          agreeToStreaming: false
+        });
+      }, 1000);
+      
+    } catch (error) {
+      setSubmitError((error as Error).message);
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -122,8 +205,37 @@ const Register: React.FC = () => {
             </div>
           </div>
 
+          {/* Success Message */}
+          {submitSuccess && (
+            <div className="bg-green-600/20 border border-green-500/30 rounded-2xl p-8 mb-12 text-center">
+              <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-green-400 mb-4">Registrace Úspěšná!</h2>
+              <p className="text-gray-300 mb-4">
+                Váš tým byl úspěšně zaregistrován. Obdržíte potvrzovací email s dalšími instrukcemi.
+              </p>
+              <button
+                onClick={() => setSubmitSuccess(false)}
+                className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium transition-colors"
+              >
+                Registrovat Další Tým
+              </button>
+            </div>
+          )}
+
+          {/* Error Message */}
+          {submitError && (
+            <div className="bg-red-600/20 border border-red-500/30 rounded-2xl p-6 mb-12">
+              <div className="flex items-center space-x-3">
+                <AlertCircle className="w-6 h-6 text-red-400" />
+                <h3 className="text-lg font-bold text-red-400">Chyba při registraci</h3>
+              </div>
+              <p className="text-red-300 mt-2">{submitError}</p>
+            </div>
+          )}
+
           {/* Registration Form */}
-          <form onSubmit={handleSubmit} className="space-y-12">
+          {!submitSuccess && (
+            <form onSubmit={handleSubmit} className="space-y-12">
             {/* Team Information */}
             <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
               <h3 className="text-2xl font-bold mb-6 text-white">Informace o Týmu</h3>
@@ -441,16 +553,27 @@ const Register: React.FC = () => {
             <div className="text-center">
               <button
                 type="submit"
-                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-12 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-blue-600/25 flex items-center space-x-3 mx-auto"
+                disabled={isSubmitting}
+                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-gray-600 disabled:to-gray-700 text-white px-12 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-blue-600/25 flex items-center space-x-3 mx-auto disabled:transform-none disabled:shadow-none"
               >
-                <Users className="w-6 h-6" />
-                <span>Registrovat Tým</span>
+                {isSubmitting ? (
+                  <>
+                    <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span>Registruji...</span>
+                  </>
+                ) : (
+                  <>
+                    <Users className="w-6 h-6" />
+                    <span>Registrovat Tým</span>
+                  </>
+                )}
               </button>
               <p className="text-sm text-gray-400 mt-4">
                 Po odeslání formuláře obdržíte email s dalšími instrukcemi
               </p>
             </div>
           </form>
+          )}
         </div>
       </section>
     </div>

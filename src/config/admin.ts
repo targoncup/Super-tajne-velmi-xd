@@ -4,6 +4,39 @@ export const ADMIN_CONFIG = {
   sessionTimeout: 24 * 60 * 60 * 1000, // 24 hours in milliseconds
 };
 
+// Registration data structure
+export interface TeamRegistration {
+  id: string;
+  timestamp: number;
+  teamName: string;
+  teamTag: string;
+  captainName: string;
+  captainEmail: string;
+  captainPhone: string;
+  captainDiscord: string;
+  players: Array<{
+    name: string;
+    summonerName: string;
+    role: string;
+    nationality: string;
+  }>;
+  substitutes: Array<{
+    name: string;
+    summonerName: string;
+    role: string;
+    nationality: string;
+  }>;
+  coach: {
+    name: string;
+    email: string;
+    experience: string;
+  };
+  agreeToRules: boolean;
+  agreeToStreaming: boolean;
+  status: 'pending' | 'approved' | 'rejected';
+  notes: string;
+}
+
 // Content structure for editing
 export interface SiteContent {
   home: {
