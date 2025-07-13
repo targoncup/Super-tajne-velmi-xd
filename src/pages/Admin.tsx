@@ -34,9 +34,7 @@ const Admin: React.FC = () => {
   const { isAuthenticated, login, logout } = useAuth();
   const { content, updateContent, resetContent } = useContent();
   const { registrations, updateRegistrationStatus, deleteRegistration, getRegistrationStats } = useRegistrations();
-  const { registrations, updateRegistrationStatus, deleteRegistration, getRegistrationStats } = useRegistrations();
   const [activeTab, setActiveTab] = useState<'content' | 'registrations'>('content');
-  const [selectedRegistration, setSelectedRegistration] = useState<TeamRegistration | null>(null);
   const [selectedRegistration, setSelectedRegistration] = useState<TeamRegistration | null>(null);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
