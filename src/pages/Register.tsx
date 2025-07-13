@@ -236,343 +236,333 @@ const Register: React.FC = () => {
           {/* Registration Form */}
           {!submitSuccess && (
             <form onSubmit={handleSubmit} className="space-y-12">
-            {/* Team Information */}
-            <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
-              <h3 className="text-2xl font-bold mb-6 text-white">Informace o Týmu</h3>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Název Týmu *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.teamName}
-                    onChange={(e) => handleInputChange('teamName', e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
-                    placeholder="Zadejte název týmu"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Team Tag *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    maxLength={5}
-                    value={formData.teamTag}
-                    onChange={(e) => handleInputChange('teamTag', e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
-                    placeholder="TAG (max 5 znaků)"
-                  />
-                </div>
-              </div>
-
-              <div className="mt-6">
-                <label className="block text-sm font-medium text-gray-300 mb-2">
-                  Logo Týmu
-                </label>
-                <div className="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-blue-500 transition-colors">
-                  <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                  <p className="text-gray-300 mb-2">Nahrajte logo týmu</p>
-                  <p className="text-sm text-gray-400">PNG, JPG do 2MB</p>
-                  <input type="file" className="hidden" accept="image/*" />
-                </div>
-              </div>
-            </div>
-
-            {/* Captain Information */}
-            <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
-              <h3 className="text-2xl font-bold mb-6 text-white">Kapitán Týmu</h3>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Jméno a Příjmení *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.captainName}
-                    onChange={(e) => handleInputChange('captainName', e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
-                    placeholder="Jan Novák"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Email *
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={formData.captainEmail}
-                    onChange={(e) => handleInputChange('captainEmail', e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
-                    placeholder="jan.novak@email.cz"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Telefon *
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    value={formData.captainPhone}
-                    onChange={(e) => handleInputChange('captainPhone', e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
-                    placeholder="+420 123 456 789"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Discord *
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.captainDiscord}
-                    onChange={(e) => handleInputChange('captainDiscord', e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
-                    placeholder="username#1234"
-                  />
-                </div>
-              </div>
-            </div>
-
-            {/* Main Players */}
-            <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
-              <h3 className="text-2xl font-bold mb-6 text-white">Hlavní Sestava (5 hráčů)</h3>
-              <div className="space-y-6">
-                {formData.players.map((player, index) => (
-                  <div key={index} className="grid md:grid-cols-4 gap-4 p-4 bg-gray-800/50 rounded-lg">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Jméno a Příjmení *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={player.name}
-                        onChange={(e) => handlePlayerChange(index, 'name', e.target.value)}
-                        className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
-                        placeholder="Jan Novák"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Summoner Name *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        value={player.summonerName}
-                        onChange={(e) => handlePlayerChange(index, 'summonerName', e.target.value)}
-                        className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
-                        placeholder="SummonerName"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Role *
-                      </label>
-                      <select
-                        required
-                        value={player.role}
-                        onChange={(e) => handlePlayerChange(index, 'role', e.target.value)}
-                        className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
-                      >
-                        <option value="">Vyberte roli</option>
-                        {roles.map(role => (
-                          <option key={role} value={role}>{role}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Národnost *
-                      </label>
-                      <select
-                        required
-                        value={player.nationality}
-                        onChange={(e) => handlePlayerChange(index, 'nationality', e.target.value)}
-                        className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
-                      >
-                        <option value="">Vyberte</option>
-                        {nationalities.map(nat => (
-                          <option key={nat} value={nat}>{nat}</option>
-                        ))}
-                      </select>
-                    </div>
+              {/* Team Information */}
+              <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
+                <h3 className="text-2xl font-bold mb-6 text-white">Informace o Týmu</h3>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Název Týmu *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.teamName}
+                      onChange={(e) => handleInputChange('teamName', e.target.value)}
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
+                      placeholder="Zadejte název týmu"
+                    />
                   </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Substitute Players */}
-            <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
-              <h3 className="text-2xl font-bold mb-6 text-white">Náhradníci (2 hráči)</h3>
-              <div className="space-y-6">
-                {formData.substitutes.map((player, index) => (
-                  <div key={index} className="grid md:grid-cols-4 gap-4 p-4 bg-gray-800/50 rounded-lg">
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Jméno a Příjmení
-                      </label>
-                      <input
-                        type="text"
-                        value={player.name}
-                        onChange={(e) => handlePlayerChange(index, 'name', e.target.value, true)}
-                        className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
-                        placeholder="Jan Novák"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Summoner Name
-                      </label>
-                      <input
-                        type="text"
-                        value={player.summonerName}
-                        onChange={(e) => handlePlayerChange(index, 'summonerName', e.target.value, true)}
-                        className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
-                        placeholder="SummonerName"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Role
-                      </label>
-                      <select
-                        value={player.role}
-                        onChange={(e) => handlePlayerChange(index, 'role', e.target.value, true)}
-                        className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
-                      >
-                        <option value="">Vyberte roli</option>
-                        {roles.map(role => (
-                          <option key={role} value={role}>{role}</option>
-                        ))}
-                      </select>
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-300 mb-2">
-                        Národnost
-                      </label>
-                      <select
-                        value={player.nationality}
-                        onChange={(e) => handlePlayerChange(index, 'nationality', e.target.value, true)}
-                        className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
-                      >
-                        <option value="">Vyberte</option>
-                        {nationalities.map(nat => (
-                          <option key={nat} value={nat}>{nat}</option>
-                        ))}
-                      </select>
-                    </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Team Tag *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      maxLength={5}
+                      value={formData.teamTag}
+                      onChange={(e) => handleInputChange('teamTag', e.target.value)}
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
+                      placeholder="TAG (max 5 znaků)"
+                    />
                   </div>
-                ))}
-              </div>
-            </div>
+                </div>
 
-            {/* Coach Information */}
-            <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
-              <h3 className="text-2xl font-bold mb-6 text-white">Trenér (volitelné)</h3>
-              <div className="grid md:grid-cols-3 gap-6">
-                <div>
+                <div className="mt-6">
                   <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Jméno a Příjmení
+                    Logo Týmu
                   </label>
-                  <input
-                    type="text"
-                    value={formData.coach.name}
-                    onChange={(e) => handleCoachChange('name', e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
-                    placeholder="Jan Novák"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Email
-                  </label>
-                  <input
-                    type="email"
-                    value={formData.coach.email}
-                    onChange={(e) => handleCoachChange('email', e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
-                    placeholder="trenér@email.cz"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-2">
-                    Zkušenosti
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.coach.experience}
-                    onChange={(e) => handleCoachChange('experience', e.target.value)}
-                    className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
-                    placeholder="2 roky coaching"
-                  />
+                  <div className="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-blue-500 transition-colors">
+                    <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                    <p className="text-gray-300 mb-2">Nahrajte logo týmu</p>
+                    <p className="text-sm text-gray-400">PNG, JPG do 2MB</p>
+                    <input type="file" className="hidden" accept="image/*" />
+                  </div>
                 </div>
               </div>
-            </div>
 
-            {/* Terms and Conditions */}
-            <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
-              <h3 className="text-2xl font-bold mb-6 text-white">Souhlas s Podmínkami</h3>
-              <div className="space-y-4">
-                <label className="flex items-start space-x-3">
-                  <input
-                    type="checkbox"
-                    required
-                    checked={formData.agreeToRules}
-                    onChange={(e) => setFormData(prev => ({ ...prev, agreeToRules: e.target.checked }))}
-                    className="mt-1 w-5 h-5 text-blue-600 bg-gray-800 border-gray-600 rounded focus:ring-blue-500"
-                  />
-                  <span className="text-gray-300">
-                    Souhlasím s <a href="/rules" className="text-blue-400 hover:underline">pravidly turnaje</a> a zavazuji se je dodržovat *
-                  </span>
-                </label>
-                <label className="flex items-start space-x-3">
-                  <input
-                    type="checkbox"
-                    required
-                    checked={formData.agreeToStreaming}
-                    onChange={(e) => setFormData(prev => ({ ...prev, agreeToStreaming: e.target.checked }))}
-                    className="mt-1 w-5 h-5 text-blue-600 bg-gray-800 border-gray-600 rounded focus:ring-blue-500"
-                  />
-                  <span className="text-gray-300">
-                    Souhlasím s nahráváním a vysíláním zápasů pro účely turnaje *
-                  </span>
-                </label>
+              {/* Captain Information */}
+              <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
+                <h3 className="text-2xl font-bold mb-6 text-white">Kapitán Týmu</h3>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Jméno a Příjmení *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.captainName}
+                      onChange={(e) => handleInputChange('captainName', e.target.value)}
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
+                      placeholder="Jan Novák"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Email *
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={formData.captainEmail}
+                      onChange={(e) => handleInputChange('captainEmail', e.target.value)}
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
+                      placeholder="jan.novak@email.cz"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Telefon *
+                    </label>
+                    <input
+                      type="tel"
+                      required
+                      value={formData.captainPhone}
+                      onChange={(e) => handleInputChange('captainPhone', e.target.value)}
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
+                      placeholder="+420 123 456 789"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Discord *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={formData.captainDiscord}
+                      onChange={(e) => handleInputChange('captainDiscord', e.target.value)}
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
+                      placeholder="username#1234"
+                    />
+                  </div>
+                </div>
               </div>
-            </div>
 
-            {/* Submit Button */}
-            <div className="text-center">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-gray-600 disabled:to-gray-700 text-white px-12 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-blue-600/25 flex items-center space-x-3 mx-auto disabled:transform-none disabled:shadow-none"
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    <span>Registruji...</span>
-                  </>
-                ) : (
-                  <>
-                    <Users className="w-6 h-6" />
-                    <span>Registrovat Tým</span>
-                  </>
-                )}
-              </button>
-              <p className="text-sm text-gray-400 mt-4">
-                Po odeslání formuláře obdržíte email s dalšími instrukcemi
-              </p>
-            </div>
-          </form>
+              {/* Main Players */}
+              <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
+                <h3 className="text-2xl font-bold mb-6 text-white">Hlavní Sestava (5 hráčů)</h3>
+                <div className="space-y-6">
+                  {formData.players.map((player, index) => (
+                    <div key={index} className="grid md:grid-cols-4 gap-4 p-4 bg-gray-800/50 rounded-lg">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                          Jméno a Příjmení *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={player.name}
+                          onChange={(e) => handlePlayerChange(index, 'name', e.target.value)}
+                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
+                          placeholder="Jan Novák"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                          Summoner Name *
+                        </label>
+                        <input
+                          type="text"
+                          required
+                          value={player.summonerName}
+                          onChange={(e) => handlePlayerChange(index, 'summonerName', e.target.value)}
+                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
+                          placeholder="SummonerName"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                          Role *
+                        </label>
+                        <select
+                          required
+                          value={player.role}
+                          onChange={(e) => handlePlayerChange(index, 'role', e.target.value)}
+                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
+                        >
+                          <option value="">Vyberte roli</option>
+                          {roles.map(role => (
+                            <option key={role} value={role}>{role}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                          Národnost *
+                        </label>
+                        <select
+                          required
+                          value={player.nationality}
+                          onChange={(e) => handlePlayerChange(index, 'nationality', e.target.value)}
+                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
+                        >
+                          <option value="">Vyberte</option>
+                          {nationalities.map(nat => (
+                            <option key={nat} value={nat}>{nat}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Substitute Players */}
+              <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
+                <h3 className="text-2xl font-bold mb-6 text-white">Náhradníci (2 hráči)</h3>
+                <div className="space-y-6">
+                  {formData.substitutes.map((player, index) => (
+                    <div key={index} className="grid md:grid-cols-4 gap-4 p-4 bg-gray-800/50 rounded-lg">
+                      <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                          Jméno a Příjmení
+                        </label>
+                        <input
+                          type="text"
+                          value={player.name}
+                          onChange={(e) => handlePlayerChange(index, 'name', e.target.value, true)}
+                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
+                          placeholder="Jan Novák"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                          Summoner Name
+                        </label>
+                        <input
+                          type="text"
+                          value={player.summonerName}
+                          onChange={(e) => handlePlayerChange(index, 'summonerName', e.target.value, true)}
+                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
+                          placeholder="SummonerName"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                          Role
+                        </label>
+                        <select
+                          value={player.role}
+                          onChange={(e) => handlePlayerChange(index, 'role', e.target.value, true)}
+                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
+                        >
+                          <option value="">Vyberte roli</option>
+                          {roles.map(role => (
+                            <option key={role} value={role}>{role}</option>
+                          ))}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-300 mb-2">
+                          Národnost
+                        </label>
+                        <select
+                          value={player.nationality}
+                          onChange={(e) => handlePlayerChange(index, 'nationality', e.target.value, true)}
+                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
+                        >
+                          <option value="">Vyberte</option>
+                          {nationalities.map(nat => (
+                            <option key={nat} value={nat}>{nat}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Coach Information */}
+              <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
+                <h3 className="text-2xl font-bold mb-6 text-white">Trenér (volitelné)</h3>
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Jméno a Příjmení
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.coach.name}
+                      onChange={(e) => handleCoachChange('name', e.target.value)}
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
+                      placeholder="Jan Novák"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Email
+                    </label>
+                    <input
+                      type="email"
+                      value={formData.coach.email}
+                      onChange={(e) => handleCoachChange('email', e.target.value)}
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
+                      placeholder="trenér@email.cz"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-300 mb-2">
+                      Zkušenosti
+                    </label>
+                    <input
+                      type="text"
+                      value={formData.coach.experience}
+                      onChange={(e) => handleCoachChange('experience', e.target.value)}
+                      className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
+                      placeholder="2 roky coaching"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Terms and Conditions */}
+              <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
+                <h3 className="text-2xl font-bold mb-6 text-white">Souhlas s Podmínkami</h3>
+                <div className="space-y-4">
+                  <label className="flex items-start space-x-3">
+                    <input
+                      type="checkbox"
+                      required
+                      checked={formData.agreeToRules}
+                      onChange={(e) => setFormData(prev => ({ ...prev, agreeToRules: e.target.checked }))}
+                      className="mt-1 w-5 h-5 text-blue-600 bg-gray-800 border-gray-600 rounded focus:ring-blue-500"
+                    />
+                    <span className="text-gray-300">
+                      Souhlasím s <a href="/rules" className="text-blue-400 hover:underline">pravidly turnaje</a> a zavazuji se je dodržovat *
+                    </span>
+                  </label>
+                  <label className="flex items-start space-x-3">
+                    <input
+                      type="checkbox"
+                      required
+                      checked={formData.agreeToStreaming}
+                      onChange={(e) => setFormData(prev => ({ ...prev, agreeToStreaming: e.target.checked }))}
+                      className="mt-1 w-5 h-5 text-blue-600 bg-gray-800 border-gray-600 rounded focus:ring-blue-500"
+                    />
+                    <span className="text-gray-300">
+                      Souhlasím s nahráváním a vysíláním zápasů pro účely turnaje *
+                    </span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Submit Button */}
+              <div className="text-center">
+                <button
+                  type="submit"
+                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-12 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-blue-600/25 flex items-center space-x-3 mx-auto"
+                >
+                  <Users className="w-6 h-6" />
+                  <span>Registrovat Tým</span>
+                </button>
+                <p className="text-sm text-gray-400 mt-4">
+                  Po odeslání formuláře obdržíte email s dalšími instrukcemi
+                </p>
+              </div>
+            </form>
           )}
         </div>
       </section>

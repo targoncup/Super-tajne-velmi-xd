@@ -34,7 +34,9 @@ const Admin: React.FC = () => {
   const { isAuthenticated, login, logout } = useAuth();
   const { content, updateContent, resetContent } = useContent();
   const { registrations, updateRegistrationStatus, deleteRegistration, getRegistrationStats } = useRegistrations();
+  const { registrations, updateRegistrationStatus, deleteRegistration, getRegistrationStats } = useRegistrations();
   const [activeTab, setActiveTab] = useState<'content' | 'registrations'>('content');
+  const [selectedRegistration, setSelectedRegistration] = useState<TeamRegistration | null>(null);
   const [selectedRegistration, setSelectedRegistration] = useState<TeamRegistration | null>(null);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -44,6 +46,8 @@ const Admin: React.FC = () => {
   const [saveMessage, setSaveMessage] = useState('');
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
+
+  const stats = getRegistrationStats();
 
   useEffect(() => {
     setTempContent(content);
@@ -82,6 +86,55 @@ const Admin: React.FC = () => {
     }
     
     return '';
+  };
+
+  const formatDate = (timestamp: number): string => {
+    return new Date(timestamp).toLocaleDateString('cs-CZ', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+  };
+
+  const getStatusColor = (status: TeamRegistration['status']): string => {
+    switch (status) {
+      case 'pending':
+        return 'bg-yellow-600/20 border-yellow-500/30 text-yellow-400';
+      case 'approved':
+        return 'bg-green-600/20 border-green-500/30 text-green-400';
+      case 'rejected':
+        return 'bg-red-600/20 border-red-500/30 text-red-400';
+      default:
+        return 'bg-gray-600/20 border-gray-500/30 text-gray-400';
+    }
+  };
+
+  const getStatusIcon = (status: TeamRegistration['status']) => {
+    switch (status) {
+      case 'pending':
+        return <Clock className="w-3 h-3" />;
+      case 'approved':
+        return <CheckCircle className="w-3 h-3" />;
+      case 'rejected':
+        return <XCircle className="w-3 h-3" />;
+      default:
+        return <Clock className="w-3 h-3" />;
+    }
+  };
+
+  const handleStatusUpdate = (id: string, status: TeamRegistration['status']) => {
+    updateRegistrationStatus(id, status);
+  };
+
+  const handleDeleteRegistration = (id: string) => {
+    if (window.confirm('Opravdu chcete smazat tuto registraci? Tato akce je nevratná.')) {
+      deleteRegistration(id);
+      if (selectedRegistration?.id === id) {
+        setSelectedRegistration(null);
+      }
+    }
   };
 
   const validateSection = (sectionKey: string): boolean => {
@@ -311,6 +364,14 @@ const Admin: React.FC = () => {
               <span>Obnovit</span>
             </button>
             <button
+              onClick={handleReset}
+              disabled={isLoading}
+              className="bg-yellow-600 hover:bg-yellow-700 disabled:bg-gray-600 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2"
+            >
+              <RotateCcw className="w-4 h-4" />
+              <span>Obnovit</span>
+            </button>
+            <button
               onClick={logout}
               className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center space-x-2"
             >
@@ -318,6 +379,37 @@ const Admin: React.FC = () => {
               <span>Odhlásit</span>
             </button>
           </div>
+        </div>
+
+        {/* Tab Navigation */}
+        <div className="flex space-x-1 mb-8 bg-gray-700 rounded-lg p-1">
+          <button
+            onClick={() => setActiveTab('content')}
+            className={`flex-1 px-4 py-2 rounded-md font-medium transition-colors flex items-center justify-center space-x-2 ${
+              activeTab === 'content'
+                ? 'bg-blue-600 text-white'
+                : 'text-gray-300 hover:text-white hover:bg-gray-600'
+            }`}
+          >
+            <Settings className="w-4 h-4" />
+            <span>Obsah</span>
+          </button>
+          <button
+            onClick={() => setActiveTab('registrations')}
+            className={`flex-1 px-4 py-2 rounded-md font-medium transition-colors flex items-center justify-center space-x-2 ${
+              activeTab === 'registrations'
+                ? 'bg-blue-600 text-white'
+                : 'text-gray-300 hover:text-white hover:bg-gray-600'
+            }`}
+          >
+            <Users className="w-4 h-4" />
+            <span>Registrace</span>
+            {stats.total > 0 && (
+              <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">
+                {stats.total}
+              </span>
+            )}
+          </button>
         </div>
 
         {/* Save Message */}
