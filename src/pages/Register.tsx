@@ -116,6 +116,12 @@ const Register: React.FC = () => {
           agreeToStreaming: formData.agreeToStreaming,
         });
 
+        // Trigger storage event for admin panel
+        window.dispatchEvent(new StorageEvent('storage', {
+          key: 'targon_cup_registrations',
+          newValue: localStorage.getItem('targon_cup_registrations'),
+        }));
+
         setIsSubmitting(false);
         setSubmitSuccess(true);
         
