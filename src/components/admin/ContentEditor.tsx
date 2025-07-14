@@ -71,7 +71,12 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ section, onClose }) => {
       viewers: 'Počet diváků',
       viewersLabel: 'Label diváků',
       countries: 'Počet zemí',
-      countriesLabel: 'Label zemí'
+      countriesLabel: 'Label zemí',
+      icon: 'Ikona',
+      team: 'Tým',
+      prize: 'Odměna',
+      place: 'Umístění',
+      season: 'Sezóna'
     };
     return labels[fieldKey] || fieldKey.replace(/([A-Z])/g, ' $1').toLowerCase();
   };
@@ -96,22 +101,32 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ section, onClose }) => {
     return '';
   };
 
-  const handleFieldChange = (field: string, value: string | boolean) => {
-    if (section === 'home' && field.startsWith('stats.')) {
-      const statsField = field.replace('stats.', '');
-      setEditedContent(prev => ({
-        ...prev,
-        stats: {
-          ...(prev as any).stats,
-          [statsField]: value
-        }
-      }));
+  const setNestedValue = (obj: any, path: string[], val: any) => {
+    const [head, ...rest] = path;
+    const match = head.match(/(.+)\[(\d+)\]/);
+    if (match) {
+      const [, key, index] = match;
+      obj[key] = Array.isArray(obj[key]) ? [...obj[key]] : [];
+      if (rest.length === 0) {
+        obj[key][Number(index)] = val;
+      } else {
+        obj[key][Number(index)] = obj[key][Number(index)] || {};
+        setNestedValue(obj[key][Number(index)], rest, val);
+      }
+    } else if (rest.length === 0) {
+      obj[head] = val;
     } else {
-      setEditedContent(prev => ({
-        ...prev,
-        [field]: value
-      }));
+      obj[head] = obj[head] ? { ...obj[head] } : {};
+      setNestedValue(obj[head], rest, val);
     }
+  };
+
+  const handleFieldChange = (field: string, value: string | boolean) => {
+    setEditedContent(prev => {
+      const updated = JSON.parse(JSON.stringify(prev));
+      setNestedValue(updated, field.split('.'), value);
+      return updated;
+    });
 
     // Clear validation error
     const errorKey = field;
@@ -130,8 +145,19 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ section, onClose }) => {
     const validateObject = (obj: any, prefix = '') => {
       Object.entries(obj).forEach(([key, value]) => {
         const fullKey = prefix ? `${prefix}.${key}` : key;
-        
-        if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+
+        if (Array.isArray(value)) {
+          value.forEach((item, idx) => {
+            if (typeof item === 'object' && item !== null) {
+              validateObject(item, `${fullKey}[${idx}]`);
+            } else if (typeof item === 'string') {
+              const error = validateField(key, item);
+              if (error) {
+                errors[`${fullKey}[${idx}]`] = error;
+              }
+            }
+          });
+        } else if (typeof value === 'object' && value !== null) {
           validateObject(value, fullKey);
         } else if (typeof value === 'string') {
           const error = validateField(key, value);
@@ -174,7 +200,36 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ section, onClose }) => {
     const fullKey = prefix ? `${prefix}.${key}` : key;
     const errorKey = fullKey;
     
-    if (typeof value === 'object' && value !== null && !Array.isArray(value)) {
+    if (Array.isArray(value)) {
+      return (
+        <div key={fullKey} className="space-y-4">
+          <h4 className="text-lg font-semibold text-white capitalize">
+            {getFieldLabel(key)}
+          </h4>
+          <div className="ml-4 space-y-6 border-l-2 border-gray-600 pl-4">
+            {value.map((item, idx) => (
+              <div key={`${fullKey}[${idx}]`} className="space-y-4">
+                <h5 className="text-sm font-semibold text-gray-300">{idx + 1}</h5>
+                {typeof item === 'object' && item !== null ? (
+                  Object.entries(item).map(([subKey, subValue]) =>
+                    renderField(subKey, subValue, `${fullKey}[${idx}]`)
+                  )
+                ) : (
+                  <input
+                    type="text"
+                    value={item as string}
+                    onChange={(e) => handleFieldChange(`${fullKey}[${idx}]`, e.target.value)}
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:outline-none"
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    if (typeof value === 'object' && value !== null) {
       return (
         <div key={fullKey} className="space-y-4">
           <h4 className="text-lg font-semibold text-white capitalize">

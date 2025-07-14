@@ -29,34 +29,16 @@ const Home: React.FC = () => {
     { number: content.home.stats.countries, label: content.home.stats.countriesLabel }
   ];
 
-  const features = [
-    {
-      icon: DollarSign,
-      title: 'Obrovské Odměny',
-      description: 'Největší prize pool v historii českých a slovenských League of Legends turnajů'
-    },
-    {
-      icon: Shield,
-      title: 'Profesionální Organizace',
-      description: 'Turnaj organizovaný podle nejvyšších standardů s kvalifikovanými rozhodčími'
-    },
-    {
-      icon: Users,
-      title: 'Elitní Konkurence',
-      description: 'Soutěžte proti nejlepším týmům z České republiky a Slovenska'
-    },
-    {
-      icon: Star,
-      title: 'Živé Vysílání',
-      description: 'Všechny zápasy jsou vysílány živě s profesionálním komentářem'
-    }
-  ];
+  const iconMap: Record<string, React.ElementType> = {
+    DollarSign,
+    Shield,
+    Users,
+    Star
+  };
 
-  const champions = [
-    { season: 'Léto 2024', team: 'Celestial Guardians', prize: '$25,000', place: '1.' },
-    { season: 'Jaro 2024', team: 'Starforge Legends', prize: '$20,000', place: '1.' },
-    { season: 'Zima 2023', team: 'Cosmic Reapers', prize: '$15,000', place: '1.' }
-  ];
+  const features = content.home.features;
+
+  const champions = content.home.champions;
 
   return (
     <div className="min-h-screen bg-gray-800 text-white overflow-x-hidden">
@@ -159,15 +141,18 @@ const Home: React.FC = () => {
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <div key={index} className="bg-gray-800/80 border border-gray-600 hover:border-blue-500/50 rounded-2xl p-8 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl group">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <feature.icon className="w-8 h-8 text-white" />
+            {features.map((feature, index) => {
+              const Icon = iconMap[feature.icon] || Star;
+              return (
+                <div key={index} className="bg-gray-800/80 border border-gray-600 hover:border-blue-500/50 rounded-2xl p-8 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl group">
+                  <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                    <Icon className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-4 text-white">{feature.title}</h3>
+                  <p className="text-gray-300 leading-relaxed">{feature.description}</p>
                 </div>
-                <h3 className="text-xl font-bold mb-4 text-white">{feature.title}</h3>
-                <p className="text-gray-300 leading-relaxed">{feature.description}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

@@ -47,8 +47,19 @@ export interface SiteContent {
     watchTrailerText: string;
     featuresTitle: string;
     featuresSubtitle: string;
+    features: Array<{
+      icon: string;
+      title: string;
+      description: string;
+    }>;
     championsTitle: string;
     championsSubtitle: string;
+    champions: Array<{
+      season: string;
+      team: string;
+      prize: string;
+      place: string;
+    }>;
     statsEnabled: boolean;
     stats: {
       teams: string;
@@ -113,8 +124,35 @@ export const DEFAULT_CONTENT: SiteContent = {
     watchTrailerText: 'Sledovat Trailer',
     featuresTitle: 'Proč Zvolit Targon Cup?',
     featuresSubtitle: 'Zažijte vrchol kompetitivního League of Legends s profesionální organizací a obrovskými odměnami.',
+    features: [
+      {
+        icon: 'DollarSign',
+        title: 'Obrovské Odměny',
+        description: 'Největší prize pool v historii českých a slovenských League of Legends turnajů'
+      },
+      {
+        icon: 'Shield',
+        title: 'Profesionální Organizace',
+        description: 'Turnaj organizovaný podle nejvyšších standardů s kvalifikovanými rozhodčími'
+      },
+      {
+        icon: 'Users',
+        title: 'Elitní Konkurence',
+        description: 'Soutěžte proti nejlepším týmům z České republiky a Slovenska'
+      },
+      {
+        icon: 'Star',
+        title: 'Živé Vysílání',
+        description: 'Všechny zápasy jsou vysílány živě s profesionálním komentářem'
+      }
+    ],
     championsTitle: 'Síň Šampiónů',
     championsSubtitle: 'Legendy, které dosáhly velikosti',
+    champions: [
+      { season: 'Léto 2024', team: 'Celestial Guardians', prize: '$25,000', place: '1.' },
+      { season: 'Jaro 2024', team: 'Starforge Legends', prize: '$20,000', place: '1.' },
+      { season: 'Zima 2023', team: 'Cosmic Reapers', prize: '$15,000', place: '1.' }
+    ],
     welcomeMessage: 'Vítejte v nejprestižnějším League of Legends turnaji',
     announcementText: 'Registrace pro Zimní Mistrovství 2024 jsou nyní otevřené!',
     callToActionText: 'Připojte se k tisícům hráčů a dokažte svou hodnotu',

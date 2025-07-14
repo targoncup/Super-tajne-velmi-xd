@@ -42,3 +42,10 @@ export interface DatabaseRegistration {
   created_at: string;
   updated_at: string;
 }
+
+export interface DatabaseContent {
+  id: string;
+  key: string;
+  data: any;
+  updated_at: string;
+}
