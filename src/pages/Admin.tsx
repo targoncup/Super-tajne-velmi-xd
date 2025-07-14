@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useContent } from '../hooks/useContent';
-import { useRegistrations } from '../hooks/useRegistrations';
+import { useSupabaseRegistrations } from '../hooks/useSupabaseRegistrations';
 import { TeamRegistration } from '../config/admin';
 import { 
   Lock, 
@@ -35,7 +35,15 @@ import Content from '../components/admin/Content';
 const Admin: React.FC = () => {
   const { isAuthenticated, login, logout } = useAuth();
   const { content, updateContent, resetContent } = useContent();
-  const { registrations, updateRegistrationStatus, deleteRegistration, getRegistrationStats } = useRegistrations();
+  const { 
+    registrations, 
+    loading: registrationsLoading, 
+    error: registrationsError,
+    updateRegistrationStatus, 
+    deleteRegistration, 
+    getRegistrationStats,
+    refetch: refetchRegistrations
+  } = useSupabaseRegistrations();
   const [activeTab, setActiveTab] = useState('dashboard');
   const [selectedRegistration, setSelectedRegistration] = useState<TeamRegistration | null>(null);
   const [password, setPassword] = useState('');
@@ -53,18 +61,6 @@ const Admin: React.FC = () => {
   useEffect(() => {
     setTempContent(content);
   }, [content]);
-
-  // Listen for new registrations
-  useEffect(() => {
-    const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'targon_cup_registrations') {
-        setRefreshTrigger(prev => prev + 1);
-      }
-    };
-
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
-  }, []);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -138,15 +134,20 @@ const Admin: React.FC = () => {
   };
 
   const handleStatusUpdate = (id: string, status: TeamRegistration['status']) => {
-    updateRegistrationStatus(id, status);
+    updateRegistrationStatus(id, status).catch((error) => {
+      console.error('Failed to update registration status:', error);
+    });
   };
 
   const handleDeleteRegistration = (id: string) => {
     if (window.confirm('Opravdu chcete smazat tuto registraci? Tato akce je nevratná.')) {
-      deleteRegistration(id);
-      if (selectedRegistration?.id === id) {
-        setSelectedRegistration(null);
-      }
+      deleteRegistration(id).then(() => {
+        if (selectedRegistration?.id === id) {
+          setSelectedRegistration(null);
+        }
+      }).catch((error) => {
+        console.error('Failed to delete registration:', error);
+      });
     }
   };
 
