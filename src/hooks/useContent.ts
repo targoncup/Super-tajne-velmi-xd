@@ -1,24 +1,54 @@
 import { useState, useEffect } from 'react';
 import { SiteContent, DEFAULT_CONTENT } from '../config/admin';
+import { supabase } from '../lib/supabase';
 
 const CONTENT_STORAGE_KEY = 'targon_cup_content';
 
 export const useContent = () => {
   const [content, setContent] = useState<SiteContent>(DEFAULT_CONTENT);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const savedContent = localStorage.getItem(CONTENT_STORAGE_KEY);
-    if (savedContent) {
+    const loadContent = async () => {
       try {
-        const parsedContent = JSON.parse(savedContent);
-        // Deep merge to ensure all new fields are included
-        const mergedContent = deepMerge(DEFAULT_CONTENT, parsedContent);
-        setContent(mergedContent);
-      } catch (error) {
-        console.error('Error parsing saved content:', error);
-        setContent(DEFAULT_CONTENT);
+        const { data, error } = await supabase
+          .from('site_content')
+          .select('data')
+          .eq('key', 'site')
+          .single();
+
+        if (error && error.code !== 'PGRST116') throw error;
+
+        if (data && data.data) {
+          const merged = deepMerge(DEFAULT_CONTENT, data.data);
+          setContent(merged);
+          localStorage.setItem(CONTENT_STORAGE_KEY, JSON.stringify(merged));
+        } else {
+          const savedContent = localStorage.getItem(CONTENT_STORAGE_KEY);
+          if (savedContent) {
+            const parsed = JSON.parse(savedContent);
+            setContent(deepMerge(DEFAULT_CONTENT, parsed));
+          }
+        }
+      } catch (err) {
+        console.error('Error loading content:', err);
+        const savedContent = localStorage.getItem(CONTENT_STORAGE_KEY);
+        if (savedContent) {
+          try {
+            const parsed = JSON.parse(savedContent);
+            setContent(deepMerge(DEFAULT_CONTENT, parsed));
+          } catch {
+            setContent(DEFAULT_CONTENT);
+          }
+        } else {
+          setContent(DEFAULT_CONTENT);
+        }
+      } finally {
+        setLoading(false);
       }
-    }
+    };
+
+    loadContent();
   }, []);
 
   // Deep merge function to properly merge nested objects
@@ -36,20 +66,41 @@ export const useContent = () => {
     return result;
   };
 
-  const updateContent = (newContent: Partial<SiteContent>) => {
+  const updateContent = async (newContent: Partial<SiteContent>) => {
     const updatedContent = deepMerge(content, newContent);
     setContent(updatedContent);
     localStorage.setItem(CONTENT_STORAGE_KEY, JSON.stringify(updatedContent));
+
+    try {
+      const { error } = await supabase
+        .from('site_content')
+        .upsert({ key: 'site', data: updatedContent }, { onConflict: 'key' });
+
+      if (error) throw error;
+    } catch (err) {
+      console.error('Error saving content to Supabase:', err);
+    }
   };
 
-  const resetContent = () => {
+  const resetContent = async () => {
     setContent(DEFAULT_CONTENT);
     localStorage.removeItem(CONTENT_STORAGE_KEY);
+
+    try {
+      const { error } = await supabase
+        .from('site_content')
+        .update({ data: DEFAULT_CONTENT })
+        .eq('key', 'site');
+      if (error) throw error;
+    } catch (err) {
+      console.error('Error resetting content in Supabase:', err);
+    }
   };
 
   return {
     content,
     updateContent,
     resetContent,
+    loading,
   };
 };
