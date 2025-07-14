@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useContent } from '../hooks/useContent';
-import { useRegistrations } from '../hooks/useRegistrations';
+import { useSupabaseRegistrations } from '../hooks/useSupabaseRegistrations';
 import { 
   Users, 
   User, 
@@ -17,7 +17,7 @@ import {
 
 const Register: React.FC = () => {
   const { content } = useContent();
-  const { addRegistration } = useRegistrations();
+  const { addRegistration, loading: dbLoading, error: dbError } = useSupabaseRegistrations();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState('');
@@ -102,7 +102,7 @@ const Register: React.FC = () => {
 
       // Submit registration
       setTimeout(() => {
-        const registrationId = addRegistration({
+        addRegistration({
           teamName: formData.teamName,
           teamTag: formData.teamTag,
           captainName: formData.captainName,
@@ -114,39 +114,36 @@ const Register: React.FC = () => {
           coach: formData.coach,
           agreeToRules: formData.agreeToRules,
           agreeToStreaming: formData.agreeToStreaming,
-        });
-
-        // Trigger storage event for admin panel
-        window.dispatchEvent(new StorageEvent('storage', {
-          key: 'targon_cup_registrations',
-          newValue: localStorage.getItem('targon_cup_registrations'),
-        }));
-
-        setIsSubmitting(false);
-        setSubmitSuccess(true);
-        
-        // Reset form
-        setFormData({
-          teamName: '',
-          teamTag: '',
-          captainName: '',
-          captainEmail: '',
-          captainPhone: '',
-          captainDiscord: '',
-          players: [
-            { name: '', summonerName: '', role: '', nationality: '' },
-            { name: '', summonerName: '', role: '', nationality: '' },
-            { name: '', summonerName: '', role: '', nationality: '' },
-            { name: '', summonerName: '', role: '', nationality: '' },
-            { name: '', summonerName: '', role: '', nationality: '' }
-          ],
-          substitutes: [
-            { name: '', summonerName: '', role: '', nationality: '' },
-            { name: '', summonerName: '', role: '', nationality: '' }
-          ],
-          coach: { name: '', email: '', experience: '' },
-          agreeToRules: false,
-          agreeToStreaming: false
+        }).then(() => {
+          setIsSubmitting(false);
+          setSubmitSuccess(true);
+          
+          // Reset form
+          setFormData({
+            teamName: '',
+            teamTag: '',
+            captainName: '',
+            captainEmail: '',
+            captainPhone: '',
+            captainDiscord: '',
+            players: [
+              { name: '', summonerName: '', role: '', nationality: '' },
+              { name: '', summonerName: '', role: '', nationality: '' },
+              { name: '', summonerName: '', role: '', nationality: '' },
+              { name: '', summonerName: '', role: '', nationality: '' },
+              { name: '', summonerName: '', role: '', nationality: '' }
+            ],
+            substitutes: [
+              { name: '', summonerName: '', role: '', nationality: '' },
+              { name: '', summonerName: '', role: '', nationality: '' }
+            ],
+            coach: { name: '', email: '', experience: '' },
+            agreeToRules: false,
+            agreeToStreaming: false
+          });
+        }).catch((error) => {
+          setSubmitError(error.message);
+          setIsSubmitting(false);
         });
       }, 1000);
       
@@ -236,6 +233,17 @@ const Register: React.FC = () => {
                 <h3 className="text-lg font-bold text-red-400">Chyba při registraci</h3>
               </div>
               <p className="text-red-300 mt-2">{submitError}</p>
+            </div>
+          )}
+
+          {/* Database Error */}
+          {dbError && (
+            <div className="bg-red-600/20 border border-red-500/30 rounded-2xl p-6 mb-12">
+              <div className="flex items-center space-x-3">
+                <AlertCircle className="w-6 h-6 text-red-400" />
+                <h3 className="text-lg font-bold text-red-400">Chyba databáze</h3>
+              </div>
+              <p className="text-red-300 mt-2">{dbError}</p>
             </div>
           )}
 
@@ -559,10 +567,20 @@ const Register: React.FC = () => {
               <div className="text-center">
                 <button
                   type="submit"
-                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-12 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-blue-600/25 flex items-center space-x-3 mx-auto"
+                  disabled={isSubmitting || dbLoading}
+                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-gray-600 disabled:to-gray-700 text-white px-12 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-blue-600/25 flex items-center space-x-3 mx-auto"
                 >
-                  <Users className="w-6 h-6" />
-                  <span>Registrovat Tým</span>
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <span>Registruji...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Users className="w-6 h-6" />
+                      <span>Registrovat Tým</span>
+                    </>
+                  )}
                 </button>
                 <p className="text-sm text-gray-400 mt-4">
                   Po odeslání formuláře obdržíte email s dalšími instrukcemi
