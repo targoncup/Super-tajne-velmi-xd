@@ -15,7 +15,7 @@ export const useContent = () => {
           .from('site_content')
           .select('data')
           .eq('key', 'site')
-          .single();
+          .maybeSingle();
 
         if (error && error.code !== 'PGRST116') throw error;
 
