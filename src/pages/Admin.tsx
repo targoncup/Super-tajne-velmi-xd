@@ -1,20 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useContent } from '../hooks/useContent';
 import { useSupabaseRegistrations } from '../hooks/useSupabaseRegistrations';
-import { TeamRegistration } from '../config/admin';
+import { TeamRegistration, SiteContent } from '../config/admin';
+import ContentEditor from '../components/admin/ContentEditor';
+import RegistrationDetail from '../components/admin/RegistrationDetail';
 import { 
   Lock, 
   LogOut, 
-  Save, 
   RotateCcw, 
   Edit3,
   Eye,
   EyeOff,
   Shield,
-  Check,
   AlertCircle,
-  X,
   Home,
   Settings,
   Users,
@@ -27,14 +26,17 @@ import {
   XCircle,
   Clock,
   Trash2,
-  FileText
+  FileText,
+  BarChart3,
+  Globe,
+  Palette,
+  Database,
+  RefreshCw
 } from 'lucide-react';
-import Menu from '../components/admin/Menu';
-import Content from '../components/admin/Content';
 
 const Admin: React.FC = () => {
   const { isAuthenticated, login, logout } = useAuth();
-  const { content, updateContent, resetContent } = useContent();
+  const { content, resetContent } = useContent();
   const { 
     registrations, 
     loading: registrationsLoading, 
@@ -44,23 +46,16 @@ const Admin: React.FC = () => {
     getRegistrationStats,
     refetch: refetchRegistrations
   } = useSupabaseRegistrations();
+
   const [activeTab, setActiveTab] = useState('dashboard');
   const [selectedRegistration, setSelectedRegistration] = useState<TeamRegistration | null>(null);
+  const [editingSection, setEditingSection] = useState<keyof SiteContent | null>(null);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
-  const [editingSection, setEditingSection] = useState<string | null>(null);
-  const [tempContent, setTempContent] = useState(content);
-  const [saveMessage, setSaveMessage] = useState('');
-  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
-  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   const stats = getRegistrationStats();
-
-  useEffect(() => {
-    setTempContent(content);
-  }, [content]);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -75,26 +70,6 @@ const Admin: React.FC = () => {
       }
       setIsLoading(false);
     }, 500);
-  };
-
-  const validateField = (section: string, field: string, value: string): string => {
-    if (!value.trim()) {
-      return 'Toto pole je povinné';
-    }
-    
-    if (field.includes('Title') && value.length < 3) {
-      return 'Titulek musí mít alespoň 3 znaky';
-    }
-    
-    if (field.includes('Description') && value.length < 10) {
-      return 'Popis musí mít alespoň 10 znaků';
-    }
-    
-    if (field.includes('ButtonText') && value.length > 30) {
-      return 'Text tlačítka nesmí být delší než 30 znaků';
-    }
-    
-    return '';
   };
 
   const formatDate = (timestamp: number): string => {
@@ -133,6 +108,19 @@ const Admin: React.FC = () => {
     }
   };
 
+  const getStatusText = (status: TeamRegistration['status']): string => {
+    switch (status) {
+      case 'pending':
+        return 'Čekající';
+      case 'approved':
+        return 'Schváleno';
+      case 'rejected':
+        return 'Zamítnuto';
+      default:
+        return 'Neznámý';
+    }
+  };
+
   const handleStatusUpdate = (id: string, status: TeamRegistration['status']) => {
     updateRegistrationStatus(id, status).catch((error) => {
       console.error('Failed to update registration status:', error);
@@ -151,143 +139,14 @@ const Admin: React.FC = () => {
     }
   };
 
-  const validateSection = (sectionKey: string): boolean => {
-    const errors: Record<string, string> = {};
-    const section = tempContent[sectionKey as keyof typeof tempContent];
-    
-    if (typeof section === 'object' && section !== null) {
-      Object.entries(section).forEach(([fieldKey, fieldValue]) => {
-        if (typeof fieldValue === 'string') {
-          const error = validateField(sectionKey, fieldKey, fieldValue);
-          if (error) {
-            errors[`${sectionKey}.${fieldKey}`] = error;
-          }
-        }
-      });
-    }
-    
-    setValidationErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
-
-  const handleSave = () => {
-    if (!editingSection) return;
-    
-    setIsLoading(true);
-    
-    if (validateSection(editingSection)) {
-      setTimeout(() => {
-        updateContent(tempContent);
-        setSaveMessage('Změny byly úspěšně uloženy!');
-        setEditingSection(null);
-        setValidationErrors({});
-        setIsLoading(false);
-        
-        setTimeout(() => setSaveMessage(''), 4000);
-      }, 800);
-    } else {
-      setIsLoading(false);
-    }
-  };
-
-  const handleCancel = () => {
-    setTempContent(content);
-    setEditingSection(null);
-    setValidationErrors({});
-  };
-
   const handleReset = () => {
     if (window.confirm('Opravdu chcete obnovit všechen obsah na výchozí hodnoty? Tato akce je nevratná.')) {
       setIsLoading(true);
       setTimeout(() => {
         resetContent();
-        setTempContent(content);
-        setSaveMessage('Obsah byl obnoven na výchozí hodnoty');
-        setEditingSection(null);
-        setValidationErrors({});
         setIsLoading(false);
-        setTimeout(() => setSaveMessage(''), 4000);
       }, 1000);
     }
-  };
-
-  const updateTempContent = (section: string, field: string, value: string) => {
-    setTempContent(prev => ({
-      ...prev,
-      [section]: {
-        ...prev[section as keyof typeof prev],
-        [field]: field === 'statsEnabled' ? value === 'true' : value,
-      },
-    }));
-    
-    // Clear validation error for this field
-    const errorKey = `${section}.${field}`;
-    if (validationErrors[errorKey]) {
-      setValidationErrors(prev => {
-        const newErrors = { ...prev };
-        delete newErrors[errorKey];
-        return newErrors;
-      });
-    }
-  };
-
-  const updateStatsContent = (field: string, value: string) => {
-    setTempContent(prev => ({
-      ...prev,
-      home: {
-        ...prev.home,
-        stats: {
-          ...prev.home.stats,
-          [field]: value,
-        },
-      },
-    }));
-  };
-
-  const getSectionTitle = (sectionKey: string): string => {
-    const titles: Record<string, string> = {
-      home: 'Domovská stránka',
-      tournament: 'Turnaj',
-      rules: 'Pravidla',
-      champions: 'Šampioni',
-      register: 'Registrace',
-      contact: 'Kontakt',
-      navigation: 'Navigace',
-      footer: 'Footer'
-    };
-    return titles[sectionKey] || sectionKey;
-  };
-
-  const getFieldLabel = (fieldKey: string): string => {
-    const labels: Record<string, string> = {
-      heroTitle: 'Hlavní titulek',
-      heroSubtitle: 'Podtitulek',
-      heroDescription: 'Popis hero sekce',
-      registerButtonText: 'Text registračního tlačítka',
-      watchTrailerText: 'Text tlačítka trailer',
-      featuresTitle: 'Titulek funkcí',
-      featuresSubtitle: 'Podtitulek funkcí',
-      championsTitle: 'Titulek šampiónů',
-      championsSubtitle: 'Podtitulek šampiónů',
-      welcomeMessage: 'Uvítací zpráva',
-      announcementText: 'Text oznámení',
-      callToActionText: 'Výzva k akci',
-      statsEnabled: 'Zobrazit statistiky',
-      title: 'Titulek',
-      subtitle: 'Podtitulek',
-      description: 'Popis',
-      prizePool: 'Prize Pool',
-      registrationDeadline: 'Termín registrace',
-      registerButtonText: 'Text registračního tlačítka',
-      rulesButtonText: 'Text tlačítka pravidel',
-      tournament: 'Turnaj',
-      register: 'Registrace',
-      rules: 'Pravidla',
-      champions: 'Šampioni',
-      contact: 'Kontakt',
-      copyright: 'Copyright text'
-    };
-    return labels[fieldKey] || fieldKey.replace(/([A-Z])/g, ' $1').toLowerCase();
   };
 
   if (!isAuthenticated) {
@@ -355,11 +214,398 @@ const Admin: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex">
-      <Menu activeTab={activeTab} setActiveTab={setActiveTab} />
-      <div className="flex-1">
-        <Content activeTab={activeTab} />
+    <div className="min-h-screen bg-gray-900 text-white">
+      <div className="flex">
+        {/* Sidebar */}
+        <div className="w-64 bg-gray-800 min-h-screen border-r border-gray-700">
+          <div className="p-6">
+            <div className="flex items-center space-x-3 mb-8">
+              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center">
+                <Shield className="w-6 h-6 text-white" />
+              </div>
+              <div>
+                <h2 className="text-lg font-bold text-white">Admin Panel</h2>
+                <p className="text-xs text-gray-400">Targon Cup</p>
+              </div>
+            </div>
+
+            <nav className="space-y-2">
+              <button
+                onClick={() => setActiveTab('dashboard')}
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                  activeTab === 'dashboard' 
+                    ? 'bg-blue-600 text-white' 
+                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                }`}
+              >
+                <BarChart3 className="w-5 h-5" />
+                <span>Dashboard</span>
+              </button>
+
+              <button
+                onClick={() => setActiveTab('registrations')}
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                  activeTab === 'registrations' 
+                    ? 'bg-blue-600 text-white' 
+                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                }`}
+              >
+                <Users className="w-5 h-5" />
+                <span>Registrace</span>
+                {stats.pending > 0 && (
+                  <span className="bg-yellow-600 text-white text-xs px-2 py-1 rounded-full">
+                    {stats.pending}
+                  </span>
+                )}
+              </button>
+
+              <button
+                onClick={() => setActiveTab('content')}
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                  activeTab === 'content' 
+                    ? 'bg-blue-600 text-white' 
+                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                }`}
+              >
+                <FileText className="w-5 h-5" />
+                <span>Obsah Stránek</span>
+              </button>
+
+              <button
+                onClick={() => setActiveTab('settings')}
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                  activeTab === 'settings' 
+                    ? 'bg-blue-600 text-white' 
+                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                }`}
+              >
+                <Settings className="w-5 h-5" />
+                <span>Nastavení</span>
+              </button>
+            </nav>
+
+            <div className="mt-8 pt-8 border-t border-gray-700">
+              <button
+                onClick={logout}
+                className="w-full flex items-center space-x-3 px-4 py-3 text-red-400 hover:bg-red-600/20 rounded-lg transition-colors"
+              >
+                <LogOut className="w-5 h-5" />
+                <span>Odhlásit se</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Content */}
+        <div className="flex-1 p-8">
+          {/* Dashboard */}
+          {activeTab === 'dashboard' && (
+            <div>
+              <div className="flex items-center justify-between mb-8">
+                <h1 className="text-3xl font-bold text-white">Dashboard</h1>
+                <button
+                  onClick={refetchRegistrations}
+                  className="flex items-center space-x-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
+                >
+                  <RefreshCw className="w-4 h-4" />
+                  <span>Obnovit</span>
+                </button>
+              </div>
+
+              {/* Stats Cards */}
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-gray-400 text-sm">Celkem Registrací</p>
+                      <p className="text-3xl font-bold text-white">{stats.total}</p>
+                    </div>
+                    <div className="w-12 h-12 bg-blue-600/20 rounded-lg flex items-center justify-center">
+                      <Users className="w-6 h-6 text-blue-400" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-gray-400 text-sm">Čekající</p>
+                      <p className="text-3xl font-bold text-yellow-400">{stats.pending}</p>
+                    </div>
+                    <div className="w-12 h-12 bg-yellow-600/20 rounded-lg flex items-center justify-center">
+                      <Clock className="w-6 h-6 text-yellow-400" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-gray-400 text-sm">Schválené</p>
+                      <p className="text-3xl font-bold text-green-400">{stats.approved}</p>
+                    </div>
+                    <div className="w-12 h-12 bg-green-600/20 rounded-lg flex items-center justify-center">
+                      <CheckCircle className="w-6 h-6 text-green-400" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-gray-400 text-sm">Zamítnuté</p>
+                      <p className="text-3xl font-bold text-red-400">{stats.rejected}</p>
+                    </div>
+                    <div className="w-12 h-12 bg-red-600/20 rounded-lg flex items-center justify-center">
+                      <XCircle className="w-6 h-6 text-red-400" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Recent Registrations */}
+              <div className="bg-gray-800 rounded-xl border border-gray-700">
+                <div className="p-6 border-b border-gray-700">
+                  <h2 className="text-xl font-bold text-white">Nejnovější Registrace</h2>
+                </div>
+                <div className="p-6">
+                  {registrationsLoading ? (
+                    <div className="flex items-center justify-center py-8">
+                      <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+                    </div>
+                  ) : registrations.length === 0 ? (
+                    <div className="text-center py-8 text-gray-400">
+                      Žádné registrace zatím
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {registrations.slice(0, 5).map((registration) => (
+                        <div key={registration.id} className="flex items-center justify-between p-4 bg-gray-700/50 rounded-lg">
+                          <div className="flex items-center space-x-4">
+                            <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
+                              <Users className="w-5 h-5 text-white" />
+                            </div>
+                            <div>
+                              <h3 className="font-medium text-white">{registration.teamName}</h3>
+                              <p className="text-sm text-gray-400">{registration.captainName}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-3">
+                            <div className={`px-3 py-1 rounded-full border text-xs font-medium flex items-center space-x-1 ${getStatusColor(registration.status)}`}>
+                              {getStatusIcon(registration.status)}
+                              <span>{getStatusText(registration.status)}</span>
+                            </div>
+                            <button
+                              onClick={() => setSelectedRegistration(registration)}
+                              className="text-blue-400 hover:text-blue-300 text-sm"
+                            >
+                              Zobrazit
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Registrations */}
+          {activeTab === 'registrations' && (
+            <div>
+              <div className="flex items-center justify-between mb-8">
+                <h1 className="text-3xl font-bold text-white">Registrace Týmů</h1>
+                <button
+                  onClick={refetchRegistrations}
+                  className="flex items-center space-x-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
+                >
+                  <RefreshCw className="w-4 h-4" />
+                  <span>Obnovit</span>
+                </button>
+              </div>
+
+              {registrationsError && (
+                <div className="bg-red-600/20 border border-red-500/30 rounded-lg p-4 mb-6">
+                  <div className="flex items-center space-x-2">
+                    <AlertCircle className="w-5 h-5 text-red-400" />
+                    <span className="text-red-400">Chyba: {registrationsError}</span>
+                  </div>
+                </div>
+              )}
+
+              <div className="bg-gray-800 rounded-xl border border-gray-700">
+                <div className="p-6">
+                  {registrationsLoading ? (
+                    <div className="flex items-center justify-center py-12">
+                      <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin" />
+                    </div>
+                  ) : registrations.length === 0 ? (
+                    <div className="text-center py-12 text-gray-400">
+                      <Users className="w-16 h-16 mx-auto mb-4 opacity-50" />
+                      <h3 className="text-lg font-medium mb-2">Žádné registrace</h3>
+                      <p>Zatím se neregistroval žádný tým</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {registrations.map((registration) => (
+                        <div key={registration.id} className="flex items-center justify-between p-6 bg-gray-700/50 rounded-lg border border-gray-600 hover:border-gray-500 transition-colors">
+                          <div className="flex items-center space-x-4">
+                            <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center">
+                              <Users className="w-6 h-6 text-white" />
+                            </div>
+                            <div>
+                              <h3 className="text-lg font-bold text-white">{registration.teamName}</h3>
+                              <div className="flex items-center space-x-4 text-sm text-gray-400">
+                                <span>#{registration.teamTag}</span>
+                                <span>•</span>
+                                <span>{registration.captainName}</span>
+                                <span>•</span>
+                                <span>{formatDate(registration.timestamp)}</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="flex items-center space-x-3">
+                            <div className={`px-3 py-1 rounded-full border text-sm font-medium flex items-center space-x-1 ${getStatusColor(registration.status)}`}>
+                              {getStatusIcon(registration.status)}
+                              <span>{getStatusText(registration.status)}</span>
+                            </div>
+                            <button
+                              onClick={() => setSelectedRegistration(registration)}
+                              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+                            >
+                              Zobrazit
+                            </button>
+                            <button
+                              onClick={() => handleDeleteRegistration(registration.id)}
+                              className="p-2 text-red-400 hover:bg-red-600/20 rounded-lg transition-colors"
+                            >
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Content Management */}
+          {activeTab === 'content' && (
+            <div>
+              <div className="flex items-center justify-between mb-8">
+                <h1 className="text-3xl font-bold text-white">Správa Obsahu</h1>
+                <button
+                  onClick={handleReset}
+                  className="flex items-center space-x-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                >
+                  <RotateCcw className="w-4 h-4" />
+                  <span>Obnovit na výchozí</span>
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {Object.entries(content).map(([sectionKey, sectionContent]) => {
+                  const getSectionIcon = (key: string) => {
+                    switch (key) {
+                      case 'home': return <Home className="w-6 h-6" />;
+                      case 'tournament': return <Calendar className="w-6 h-6" />;
+                      case 'rules': return <FileText className="w-6 h-6" />;
+                      case 'champions': return <Crown className="w-6 h-6" />;
+                      case 'register': return <Users className="w-6 h-6" />;
+                      case 'contact': return <Mail className="w-6 h-6" />;
+                      case 'navigation': return <Globe className="w-6 h-6" />;
+                      case 'footer': return <Database className="w-6 h-6" />;
+                      default: return <FileText className="w-6 h-6" />;
+                    }
+                  };
+
+                  const getSectionTitle = (key: string): string => {
+                    const titles: Record<string, string> = {
+                      home: 'Domovská stránka',
+                      tournament: 'Turnaj',
+                      rules: 'Pravidla',
+                      champions: 'Šampioni',
+                      register: 'Registrace',
+                      contact: 'Kontakt',
+                      navigation: 'Navigace',
+                      footer: 'Footer'
+                    };
+                    return titles[key] || key;
+                  };
+
+                  return (
+                    <div key={sectionKey} className="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-gray-600 transition-colors">
+                      <div className="flex items-center space-x-3 mb-4">
+                        <div className="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center text-blue-400">
+                          {getSectionIcon(sectionKey)}
+                        </div>
+                        <h3 className="text-lg font-bold text-white">{getSectionTitle(sectionKey)}</h3>
+                      </div>
+                      <p className="text-gray-400 text-sm mb-4">
+                        {Object.keys(sectionContent).length} polí k editaci
+                      </p>
+                      <button
+                        onClick={() => setEditingSection(sectionKey as keyof SiteContent)}
+                        className="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
+                      >
+                        <Edit3 className="w-4 h-4" />
+                        <span>Editovat</span>
+                      </button>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Settings */}
+          {activeTab === 'settings' && (
+            <div>
+              <h1 className="text-3xl font-bold text-white mb-8">Nastavení</h1>
+              <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                <h2 className="text-xl font-bold text-white mb-4">Systémové Informace</h2>
+                <div className="space-y-4 text-gray-300">
+                  <div className="flex justify-between">
+                    <span>Verze systému:</span>
+                    <span className="text-white">1.0.0</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Databáze:</span>
+                    <span className="text-green-400">Supabase (Připojeno)</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Celkem registrací:</span>
+                    <span className="text-white">{stats.total}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Poslední aktualizace:</span>
+                    <span className="text-white">{new Date().toLocaleDateString('cs-CZ')}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
+
+      {/* Modals */}
+      {selectedRegistration && (
+        <RegistrationDetail
+          registration={selectedRegistration}
+          onClose={() => setSelectedRegistration(null)}
+          onStatusUpdate={handleStatusUpdate}
+        />
+      )}
+
+      {editingSection && (
+        <ContentEditor
+          section={editingSection}
+          onClose={() => setEditingSection(null)}
+        />
+      )}
     </div>
   );
 };
