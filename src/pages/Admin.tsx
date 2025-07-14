@@ -46,12 +46,25 @@ const Admin: React.FC = () => {
   const [saveMessage, setSaveMessage] = useState('');
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   const stats = getRegistrationStats();
 
   useEffect(() => {
     setTempContent(content);
   }, [content]);
+
+  // Listen for new registrations
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'targon_cup_registrations') {
+        setRefreshTrigger(prev => prev + 1);
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, []);
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
