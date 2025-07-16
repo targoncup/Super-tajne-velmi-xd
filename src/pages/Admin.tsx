@@ -4,6 +4,7 @@ import { useContent } from '../hooks/useContent';
 import { useSupabaseRegistrations } from '../hooks/useSupabaseRegistrations';
 import { TeamRegistration, SiteContent } from '../config/admin';
 import ContentEditor from '../components/admin/ContentEditor';
+import UniversalContentEditor from '../components/admin/UniversalContentEditor';
 import RegistrationDetail from '../components/admin/RegistrationDetail';
 import { 
   Lock, 
@@ -31,7 +32,8 @@ import {
   Globe,
   Palette,
   Database,
-  RefreshCw
+  RefreshCw,
+  Type
 } from 'lucide-react';
 
 const Admin: React.FC = () => {
@@ -50,6 +52,7 @@ const Admin: React.FC = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [selectedRegistration, setSelectedRegistration] = useState<TeamRegistration | null>(null);
   const [editingSection, setEditingSection] = useState<keyof SiteContent | null>(null);
+  const [showUniversalEditor, setShowUniversalEditor] = useState(false);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
@@ -269,6 +272,14 @@ const Admin: React.FC = () => {
               >
                 <FileText className="w-5 h-5" />
                 <span>Obsah Stránek</span>
+              </button>
+
+              <button
+                onClick={() => setShowUniversalEditor(true)}
+                className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white"
+              >
+                <Type className="w-5 h-5" />
+                <span>Editace Textů</span>
               </button>
 
               <button
@@ -604,6 +615,12 @@ const Admin: React.FC = () => {
         <ContentEditor
           section={editingSection}
           onClose={() => setEditingSection(null)}
+        />
+      )}
+
+      {showUniversalEditor && (
+        <UniversalContentEditor
+          onClose={() => setShowUniversalEditor(false)}
         />
       )}
     </div>
