@@ -102,6 +102,77 @@ const Tournament: React.FC = () => {
               </div>
             </div>
           </div>
+
+          {/* Tournament Schedule */}
+          <div className="mt-20">
+            <h2 className="text-3xl font-bold text-center mb-12 text-white">Harmonogram Turnaje</h2>
+            <div className="grid md:grid-cols-3 gap-8">
+              <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-white font-bold text-xl">1</span>
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-white">Registrace</h3>
+                  <p className="text-gray-300 mb-4">1. listopadu - 15. prosince</p>
+                  <p className="text-sm text-gray-400">Týmy se registrují a odevzdávají potřebné dokumenty</p>
+                </div>
+              </div>
+
+              <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-white font-bold text-xl">2</span>
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-white">Skupinová Fáze</h3>
+                  <p className="text-gray-300 mb-4">20. prosince - 5. ledna</p>
+                  <p className="text-sm text-gray-400">64 týmů rozděleno do 8 skupin po 8 týmech</p>
+                </div>
+              </div>
+
+              <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
+                <div className="text-center">
+                  <div className="w-16 h-16 bg-yellow-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <span className="text-white font-bold text-xl">3</span>
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-white">Playoff</h3>
+                  <p className="text-gray-300 mb-4">10. ledna - 25. ledna</p>
+                  <p className="text-sm text-gray-400">Top 32 týmů v double elimination bracketu</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Prize Distribution */}
+          <div className="mt-20">
+            <h2 className="text-3xl font-bold text-center mb-12 text-white">Rozdělení Cen</h2>
+            <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-8 border border-gray-600">
+              <div className="grid md:grid-cols-4 gap-6">
+                <div className="text-center p-6 bg-yellow-600/20 rounded-xl border border-yellow-500/30">
+                  <Trophy className="w-12 h-12 text-yellow-400 mx-auto mb-3" />
+                  <div className="text-2xl font-bold text-yellow-400 mb-2">1. Místo</div>
+                  <div className="text-3xl font-black text-white">$25,000</div>
+                </div>
+                <div className="text-center p-6 bg-gray-600/20 rounded-xl border border-gray-500/30">
+                  <Trophy className="w-12 h-12 text-gray-400 mx-auto mb-3" />
+                  <div className="text-2xl font-bold text-gray-400 mb-2">2. Místo</div>
+                  <div className="text-3xl font-black text-white">$15,000</div>
+                </div>
+                <div className="text-center p-6 bg-orange-600/20 rounded-xl border border-orange-500/30">
+                  <Trophy className="w-12 h-12 text-orange-400 mx-auto mb-3" />
+                  <div className="text-2xl font-bold text-orange-400 mb-2">3. Místo</div>
+                  <div className="text-3xl font-black text-white">$7,500</div>
+                </div>
+                <div className="text-center p-6 bg-blue-600/20 rounded-xl border border-blue-500/30">
+                  <Trophy className="w-12 h-12 text-blue-400 mx-auto mb-3" />
+                  <div className="text-2xl font-bold text-blue-400 mb-2">4. Místo</div>
+                  <div className="text-3xl font-black text-white">$2,500</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 };
 
