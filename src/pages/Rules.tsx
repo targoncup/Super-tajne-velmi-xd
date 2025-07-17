@@ -59,7 +59,7 @@ const Rules: React.FC = () => {
                 </div>
                 <div className="flex items-center space-x-3">
                   <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
-                  <span><strong>Formát zápasu:</strong> Best of 3 (Fearless)</span>
+                  <span><strong>Formát zápasu:</strong> Best of 3</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
@@ -67,7 +67,7 @@ const Rules: React.FC = () => {
                 </div>
                 <div className="flex items-center space-x-3">
                   <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
-                  <span><strong>Formát Playoffs:</strong> Double Elimination – Best of 5 (Fearless)</span>
+                  <span><strong>Formát Playoffs:</strong> Double Elimination – Best of 5</span>
                 </div>
               </div>
             </div>
