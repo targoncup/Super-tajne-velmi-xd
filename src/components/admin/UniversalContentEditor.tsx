@@ -291,7 +291,7 @@ const UniversalContentEditor: React.FC<UniversalContentEditorProps> = ({ onClose
         if (key === 'faqItems') return { question: '', answer: '' };
         if (key === 'scheduleItems') return { phase: '', title: '', dates: '', description: '' };
         if (key === 'prizes') return { place: '', amount: '', color: '' };
-        if (key === 'sections') return { title: '', icon: '', items: [], note: '' };
+        if (key === 'sections') return { title: '', icon: 'FileText', items: [''], note: '' };
         if (key === 'records') return { title: '', value: '', description: '', icon: '' };
         if (key === 'tournamentLinks') return { text: '', href: '' };
         if (key === 'items') return '';
