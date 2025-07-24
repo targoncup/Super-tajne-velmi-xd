@@ -81,7 +81,9 @@ const Contact: React.FC = () => {
                       {method.title === 'Email' ? (
                         <a href={`mailto:${method.contact}`} className="hover:underline">{method.contact}</a>
                       ) : (
-                        <a href={method.contact} target="_blank" rel="noopener noreferrer" className="hover:underline">{method.contact}</a>
+                        <a href={method.contact} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                          {method.title === 'Discord' ? 'https://discord.gg/c9pRsbYCt2' : method.contact}
+                        </a>
                       )}
                     </p>
                     <p className="text-sm text-blue-300 mt-1">Dostupnost: {method.available}</p>
