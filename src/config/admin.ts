@@ -29,6 +29,12 @@ export interface TeamRegistration {
   coach: Coach;
   agreeToRules: boolean;
   agreeToStreaming: boolean;
+  logo?: {
+    name: string;
+    type: string;
+    size: number;
+    data: string; // base64 encoded
+  } | null;
   createdAt?: string;
 }
 

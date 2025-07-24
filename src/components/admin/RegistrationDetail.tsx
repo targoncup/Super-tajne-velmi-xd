@@ -120,6 +120,34 @@ const RegistrationDetail: React.FC<RegistrationDetailProps> = ({
                     <Calendar className="w-4 h-4 text-gray-400" />
                     <span className="text-gray-300">Registrováno: {formatDate(registration.timestamp)}</span>
                   </div>
+                  {registration.logo && (
+                    <div className="space-y-3">
+                      <div className="flex items-center space-x-3">
+                        <Image className="w-4 h-4 text-gray-400" />
+                        <span className="text-gray-300">Logo týmu:</span>
+                      </div>
+                      <div className="flex items-center space-x-4 bg-gray-800/50 rounded-lg p-4">
+                        <img 
+                          src={registration.logo.data} 
+                          alt={`${registration.teamName} logo`}
+                          className="w-16 h-16 object-contain rounded-lg border border-gray-600"
+                        />
+                        <div className="flex-1">
+                          <div className="text-white font-medium">{registration.logo.name}</div>
+                          <div className="text-sm text-gray-400">
+                            {registration.logo.type} • {(registration.logo.size / 1024).toFixed(1)} KB
+                          </div>
+                        </div>
+                        <button
+                          onClick={downloadLogo}
+                          className="p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                          title="Stáhnout logo"
+                        >
+                          <Download className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
 

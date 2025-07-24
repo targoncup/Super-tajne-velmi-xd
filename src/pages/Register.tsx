@@ -21,6 +21,8 @@ const Register: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState('');
+  const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [logoPreview, setLogoPreview] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     teamName: '',
     teamTag: '',
@@ -43,6 +45,44 @@ const Register: React.FC = () => {
     agreeToRules: false,
     agreeToStreaming: false
   });
+
+  const handleLogoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        setSubmitError('Prosím nahrajte pouze obrázky (PNG, JPG, GIF)');
+        return;
+      }
+      
+      // Validate file size (2MB limit)
+      if (file.size > 2 * 1024 * 1024) {
+        setSubmitError('Soubor je příliš velký. Maximum je 2MB.');
+        return;
+      }
+      
+      setLogoFile(file);
+      
+      // Create preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setLogoPreview(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+      
+      // Clear any previous errors
+      setSubmitError('');
+    }
+  };
+
+  const convertFileToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
 
   const roles = ['Top', 'Jungle', 'Mid', 'ADC', 'Support'];
   const nationalities = ['Česká republika', 'Slovensko', 'Ostatní'];
@@ -73,7 +113,8 @@ const Register: React.FC = () => {
     setIsSubmitting(true);
     setSubmitError('');
     
-    try {
+    const processSubmission = async () => {
+      try {
       // Validate required fields
       if (!formData.teamName || !formData.teamTag || !formData.captainName || 
           !formData.captainEmail || !formData.captainPhone || !formData.captainDiscord) {
@@ -100,8 +141,19 @@ const Register: React.FC = () => {
         throw new Error('Musíte souhlasit s pravidly a podmínkami');
       }
 
+      // Convert logo to base64 if uploaded
+      let logoData = null;
+      if (logoFile) {
+        logoData = {
+          name: logoFile.name,
+          type: logoFile.type,
+          size: logoFile.size,
+          data: await convertFileToBase64(logoFile)
+        };
+      }
+
       // Submit registration
-      setTimeout(() => {
+      setTimeout(async () => {
         addRegistration({
           teamName: formData.teamName,
           teamTag: formData.teamTag,
@@ -114,9 +166,14 @@ const Register: React.FC = () => {
           coach: formData.coach,
           agreeToRules: formData.agreeToRules,
           agreeToStreaming: formData.agreeToStreaming,
+          logo: logoData,
         }).then(() => {
           setIsSubmitting(false);
           setSubmitSuccess(true);
+          
+          // Reset logo
+          setLogoFile(null);
+          setLogoPreview(null);
           
           // Reset form
           setFormData({
@@ -146,11 +203,13 @@ const Register: React.FC = () => {
           setIsSubmitting(false);
         });
       }, 1000);
-      
-    } catch (error) {
+      } catch (error) {
       setSubmitError((error as Error).message);
       setIsSubmitting(false);
-    }
+      }
+    };
+    
+    processSubmission();
   };
 
   return (
@@ -282,11 +341,44 @@ const Register: React.FC = () => {
                   <label className="block text-sm font-medium text-gray-300 mb-2">
                     Logo Týmu
                   </label>
-                  <div className="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-blue-500 transition-colors">
-                    <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                    <p className="text-gray-300 mb-2">Nahrajte logo týmu</p>
-                    <p className="text-sm text-gray-400">PNG, JPG do 2MB</p>
-                    <input type="file" className="hidden" accept="image/*" />
+                  <div className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+                    logoPreview ? 'border-green-500 bg-green-500/10' : 'border-gray-600 hover:border-blue-500'
+                  }`}>
+                    {logoPreview ? (
+                      <div className="space-y-4">
+                        <img 
+                          src={logoPreview} 
+                          alt="Logo preview" 
+                          className="w-24 h-24 object-contain mx-auto rounded-lg border border-gray-600"
+                        />
+                        <div>
+                          <p className="text-green-400 font-medium mb-1">Logo nahráno</p>
+                          <p className="text-sm text-gray-400">{logoFile?.name}</p>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setLogoFile(null);
+                            setLogoPreview(null);
+                          }}
+                          className="text-red-400 hover:text-red-300 text-sm underline"
+                        >
+                          Odstranit logo
+                        </button>
+                      </div>
+                    ) : (
+                      <>
+                        <Upload className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                        <p className="text-gray-300 mb-2">Nahrajte logo týmu</p>
+                        <p className="text-sm text-gray-400">PNG, JPG do 2MB</p>
+                      </>
+                    )}
+                    <input 
+                      type="file" 
+                      onChange={handleLogoUpload}
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" 
+                      accept="image/*" 
+                    />
                   </div>
                 </div>
               </div>

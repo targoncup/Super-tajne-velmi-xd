@@ -33,7 +33,9 @@ import {
   Palette,
   Database,
   RefreshCw,
-  Type
+  Type,
+  Download,
+  Archive
 } from 'lucide-react';
 
 const Admin: React.FC = () => {

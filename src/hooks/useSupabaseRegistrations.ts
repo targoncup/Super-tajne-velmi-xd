@@ -24,6 +24,7 @@ export const useSupabaseRegistrations = () => {
     agreeToStreaming: dbReg.agree_to_streaming,
     status: dbReg.status,
     notes: dbReg.notes || '',
+    logo: dbReg.logo,
   });
 
   // Convert app format to database format
@@ -41,6 +42,7 @@ export const useSupabaseRegistrations = () => {
     agree_to_streaming: appReg.agreeToStreaming,
     status: appReg.status || 'pending',
     notes: appReg.notes || '',
+    logo: appReg.logo || null,
   });
 
   // Fetch registrations from database
