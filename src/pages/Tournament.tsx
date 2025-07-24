@@ -99,7 +99,6 @@ const Tournament: React.FC = () => {
                     </div>
                   </div>
                 </div>
-              </div>
             </div>
           </div>
         </div>
