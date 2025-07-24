@@ -40,7 +40,7 @@ import {
 
 const Admin: React.FC = () => {
   const { isAuthenticated, login, logout } = useAuth();
-  const { content, resetContent } = useContent();
+  const { content, updateContent, resetContent } = useContent();
   const { 
     registrations, 
     loading: registrationsLoading, 
