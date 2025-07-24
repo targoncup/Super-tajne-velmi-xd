@@ -84,6 +84,14 @@ export interface SiteContent {
     rules: string;
     champions: string;
     contact: string;
+    pageVisibility: {
+      home: boolean;
+      tournament: boolean;
+      register: boolean;
+      rules: boolean;
+      champions: boolean;
+      contact: boolean;
+    };
   };
   footer: {
     title: string;
@@ -190,7 +198,15 @@ export const DEFAULT_CONTENT: SiteContent = {
     register: "Registrace",
     rules: "Pravidla",
     champions: "Šampioni",
-    contact: "Kontakt"
+    contact: "Kontakt",
+    pageVisibility: {
+      home: true,
+      tournament: true,
+      register: true,
+      rules: true,
+      champions: true,
+      contact: true
+    }
   },
   footer: {
     title: "Targon Cup 2025",

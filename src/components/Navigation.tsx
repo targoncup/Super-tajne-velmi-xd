@@ -24,12 +24,12 @@ const Navigation: React.FC = () => {
   }, []);
 
   const navItems = [
-    { name: content.navigation.tournament, icon: Calendar, href: '/tournament' },
-    { name: content.navigation.register, icon: Users, href: '/register' },
-    { name: content.navigation.rules, icon: FileText, href: '/rules' },
-    { name: content.navigation.champions, icon: Trophy, href: '/champions' },
-    { name: content.navigation.contact, icon: Mail, href: '/contact' }
-  ];
+    { name: content.navigation.tournament, icon: Calendar, href: '/tournament', visible: content.navigation.pageVisibility.tournament },
+    { name: content.navigation.register, icon: Users, href: '/register', visible: content.navigation.pageVisibility.register },
+    { name: content.navigation.rules, icon: FileText, href: '/rules', visible: content.navigation.pageVisibility.rules },
+    { name: content.navigation.champions, icon: Trophy, href: '/champions', visible: content.navigation.pageVisibility.champions },
+    { name: content.navigation.contact, icon: Mail, href: '/contact', visible: content.navigation.pageVisibility.contact }
+  ].filter(item => item.visible);
 
   return (
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${

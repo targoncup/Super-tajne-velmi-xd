@@ -568,6 +568,55 @@ const Admin: React.FC = () => {
                 </div>
               </div>
 
+              {/* Page Visibility Controls */}
+              <div className="bg-gray-700 rounded-xl p-6 border border-gray-600 mb-8">
+                <h3 className="text-xl font-bold text-white mb-6 flex items-center">
+                  <Eye className="w-5 h-5 mr-2 text-blue-400" />
+                  Viditelnost Stránek v Navigaci
+                </h3>
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                  {[
+                    { key: 'tournament', label: 'Turnaj', icon: Calendar },
+                    { key: 'register', label: 'Registrace', icon: Users },
+                    { key: 'rules', label: 'Pravidla', icon: FileText },
+                    { key: 'champions', label: 'Šampioni', icon: Crown },
+                    { key: 'contact', label: 'Kontakt', icon: Mail }
+                  ].map(({ key, label, icon: Icon }) => (
+                    <div key={key} className="flex items-center justify-between p-4 bg-gray-800/50 rounded-lg border border-gray-600">
+                      <div className="flex items-center space-x-3">
+                        <Icon className="w-5 h-5 text-gray-400" />
+                        <span className="text-white font-medium">{label}</span>
+                      </div>
+                      <button
+                        onClick={() => {
+                          const newContent = { ...content };
+                          newContent.navigation.pageVisibility[key] = !newContent.navigation.pageVisibility[key];
+                          updateContent(newContent);
+                        }}
+                        className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                          content.navigation.pageVisibility[key] 
+                            ? 'bg-blue-600' 
+                            : 'bg-gray-600'
+                        }`}
+                      >
+                        <span
+                          className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                            content.navigation.pageVisibility[key] 
+                              ? 'translate-x-6' 
+                              : 'translate-x-1'
+                          }`}
+                        />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 p-3 bg-blue-600/20 rounded-lg border border-blue-500/30">
+                  <p className="text-sm text-blue-300">
+                    <strong>Poznámka:</strong> Vypnuté stránky se nebudou zobrazovat v navigačním menu, ale budou stále dostupné přes přímý odkaz.
+                  </p>
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {Object.entries(content).map(([sectionKey, sectionContent]) => {
                   const getSectionIcon = (key: string) => {

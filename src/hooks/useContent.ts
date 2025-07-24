@@ -32,7 +32,8 @@ export const useContent = () => {
           if (savedContent) {
             const parsed = JSON.parse(savedContent);
             console.log('Loaded from localStorage:', parsed);
-            setContent(deepMerge(DEFAULT_CONTENT, parsed));
+            const merged = deepMerge(DEFAULT_CONTENT, parsed);
+            setContent(merged);
           }
         }
       } catch (err) {
@@ -41,7 +42,8 @@ export const useContent = () => {
         if (savedContent) {
           try {
             const parsed = JSON.parse(savedContent);
-            setContent(deepMerge(DEFAULT_CONTENT, parsed));
+            const merged = deepMerge(DEFAULT_CONTENT, parsed);
+            setContent(merged);
           } catch {
             setContent(DEFAULT_CONTENT);
           }
