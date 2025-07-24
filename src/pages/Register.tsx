@@ -602,6 +602,9 @@ const Register: React.FC = () => {
                     <span>
                       Souhlasím s <a href="/pravidla" className="underline text-blue-400">pravidly turnaje</a> a potvrzuji správnost údajů
                     </span>
+                    <span>
+                      Souhlasím s <a href="/rules" className="underline text-blue-400">pravidly turnaje</a> a potvrzuji správnost údajů
+                    </span>
                   </label>
                   <label className="flex items-center space-x-3">
                     <input
