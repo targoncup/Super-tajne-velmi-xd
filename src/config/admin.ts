@@ -60,10 +60,10 @@ export interface SiteContent {
     championsTitle: string;
     championsSubtitle: string;
     champions: Array<{
-      name: string;
-      year: string;
-      image: string;
-      description: string;
+      season: string;
+      team: string;
+      prize: string;
+      place: string;
     }>;
     statsEnabled: boolean;
     stats: {
@@ -149,16 +149,22 @@ export const DEFAULT_CONTENT: SiteContent = {
     championsSubtitle: "Vítězové předchozích ročníků",
     champions: [
       {
-        name: "Team Alpha",
-        year: "2024",
-        image: "https://images.pexels.com/photos/3165335/pexels-photo-3165335.jpeg",
-        description: "Vítězové prvního ročníku Targon Cup"
+        season: "Léto 2024",
+        team: "Celestial Guardians",
+        prize: "100,000 Kč",
+        place: "1."
       },
       {
-        name: "Team Beta",
-        year: "2023",
-        image: "https://images.pexels.com/photos/442576/pexels-photo-442576.jpeg",
-        description: "Legendární tým s neporazitelnou strategií"
+        season: "Jaro 2024",
+        team: "Starforge Legends",
+        prize: "75,000 Kč",
+        place: "1."
+      },
+      {
+        season: "Zima 2023",
+        team: "Cosmic Reapers",
+        prize: "50,000 Kč",
+        place: "1."
       }
     ],
     statsEnabled: true,

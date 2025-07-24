@@ -288,7 +288,7 @@ const UniversalContentEditor: React.FC<UniversalContentEditorProps> = ({ onClose
     if (Array.isArray(value)) {
       const getDefaultItem = () => {
         if (key === 'features') return { icon: 'Star', title: '', description: '' };
-        if (key === 'champions') return { season: '', team: '', prize: '', place: '' };
+        if (key === 'champions') return { season: '', team: '', prize: '', place: '1.' };
         if (key === 'requirements') return '';
         if (key === 'contactMethods') return { title: '', description: '', contact: '', available: '', icon: '' };
         if (key === 'departments') return { title: '', email: '', description: '', icon: '' };
