@@ -219,10 +219,10 @@ const Admin: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-gray-800 text-white">
       <div className="flex">
         {/* Sidebar */}
-        <div className="w-64 bg-gray-800 min-h-screen border-r border-gray-700">
+        <div className="w-64 bg-gray-900 min-h-screen border-r border-gray-700">
           <div className="p-6">
             <div className="flex items-center space-x-3 mb-8">
               <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center">
@@ -240,7 +240,7 @@ const Admin: React.FC = () => {
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                   activeTab === 'dashboard' 
                     ? 'bg-blue-600 text-white' 
-                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                    : 'text-gray-300 hover:bg-gray-800 hover:text-white'
                 }`}
               >
                 <BarChart3 className="w-5 h-5" />
@@ -252,7 +252,7 @@ const Admin: React.FC = () => {
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                   activeTab === 'registrations' 
                     ? 'bg-blue-600 text-white' 
-                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                    : 'text-gray-300 hover:bg-gray-800 hover:text-white'
                 }`}
               >
                 <Users className="w-5 h-5" />
@@ -269,7 +269,7 @@ const Admin: React.FC = () => {
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                   activeTab === 'content' 
                     ? 'bg-blue-600 text-white' 
-                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                    : 'text-gray-300 hover:bg-gray-800 hover:text-white'
                 }`}
               >
                 <FileText className="w-5 h-5" />
@@ -278,7 +278,7 @@ const Admin: React.FC = () => {
 
               <button
                 onClick={() => setShowUniversalEditor(true)}
-                className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors text-gray-300 hover:bg-gray-700 hover:text-white"
+                className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors text-gray-300 hover:bg-gray-800 hover:text-white"
               >
                 <Type className="w-5 h-5" />
                 <span>Editace Textů</span>
@@ -289,7 +289,7 @@ const Admin: React.FC = () => {
                 className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
                   activeTab === 'settings' 
                     ? 'bg-blue-600 text-white' 
-                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                    : 'text-gray-300 hover:bg-gray-800 hover:text-white'
                 }`}
               >
                 <Settings className="w-5 h-5" />
@@ -310,7 +310,7 @@ const Admin: React.FC = () => {
         </div>
 
         {/* Main Content */}
-        <div className="flex-1 p-8">
+        <div className="flex-1 p-8 bg-gray-800">
           {/* Dashboard */}
           {activeTab === 'dashboard' && (
             <div>
@@ -334,7 +334,7 @@ const Admin: React.FC = () => {
 
               {/* Stats Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                <div className="bg-gray-700 rounded-xl p-6 border border-gray-600">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-gray-400 text-sm">Celkem Registrací</p>
@@ -346,7 +346,7 @@ const Admin: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                <div className="bg-gray-700 rounded-xl p-6 border border-gray-600">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-gray-400 text-sm">Čekající</p>
@@ -358,7 +358,7 @@ const Admin: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                <div className="bg-gray-700 rounded-xl p-6 border border-gray-600">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-gray-400 text-sm">Schválené</p>
@@ -370,7 +370,7 @@ const Admin: React.FC = () => {
                   </div>
                 </div>
 
-                <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                <div className="bg-gray-700 rounded-xl p-6 border border-gray-600">
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-gray-400 text-sm">Zamítnuté</p>
@@ -384,8 +384,8 @@ const Admin: React.FC = () => {
               </div>
 
               {/* Recent Registrations */}
-              <div className="bg-gray-800 rounded-xl border border-gray-700">
-                <div className="p-6 border-b border-gray-700">
+              <div className="bg-gray-700 rounded-xl border border-gray-600">
+                <div className="p-6 border-b border-gray-600">
                   <h2 className="text-xl font-bold text-white">Nejnovější Registrace</h2>
                 </div>
                 <div className="p-6">
@@ -400,7 +400,7 @@ const Admin: React.FC = () => {
                   ) : (
                     <div className="space-y-4">
                       {registrations.slice(0, 5).map((registration) => (
-                        <div key={registration.id} className="flex items-center justify-between p-4 bg-gray-700/50 rounded-lg">
+                        <div key={registration.id} className="flex items-center justify-between p-4 bg-gray-600/50 rounded-lg">
                           <div className="flex items-center space-x-4">
                             <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
                               <Users className="w-5 h-5 text-white" />
@@ -463,7 +463,7 @@ const Admin: React.FC = () => {
                 </div>
               )}
 
-              <div className="bg-gray-800 rounded-xl border border-gray-700">
+              <div className="bg-gray-700 rounded-xl border border-gray-600">
                 <div className="p-6">
                   {registrationsLoading ? (
                     <div className="flex items-center justify-center py-12">
@@ -478,7 +478,7 @@ const Admin: React.FC = () => {
                   ) : (
                     <div className="space-y-4">
                       {registrations.map((registration) => (
-                        <div key={registration.id} className="flex items-center justify-between p-6 bg-gray-700/50 rounded-lg border border-gray-600 hover:border-gray-500 transition-colors">
+                        <div key={registration.id} className="flex items-center justify-between p-6 bg-gray-600/50 rounded-lg border border-gray-500 hover:border-gray-400 transition-colors">
                           <div className="flex items-center space-x-4">
                             <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center">
                               <Users className="w-6 h-6 text-white" />
@@ -566,7 +566,7 @@ const Admin: React.FC = () => {
                   };
 
                   return (
-                    <div key={sectionKey} className="bg-gray-800 rounded-xl p-6 border border-gray-700 hover:border-gray-600 transition-colors">
+                    <div key={sectionKey} className="bg-gray-700 rounded-xl p-6 border border-gray-600 hover:border-gray-500 transition-colors">
                       <div className="flex items-center space-x-3 mb-4">
                         <div className="w-10 h-10 bg-blue-600/20 rounded-lg flex items-center justify-center text-blue-400">
                           {getSectionIcon(sectionKey)}
@@ -594,7 +594,7 @@ const Admin: React.FC = () => {
           {activeTab === 'settings' && (
             <div>
               <h1 className="text-3xl font-bold text-white mb-8">Nastavení</h1>
-              <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
+              <div className="bg-gray-700 rounded-xl p-6 border border-gray-600">
                 <h2 className="text-xl font-bold text-white mb-4">Systémové Informace</h2>
                 <div className="space-y-4 text-gray-300">
                   <div className="flex justify-between">
