@@ -113,7 +113,7 @@ const Register: React.FC = () => {
     setIsSubmitting(true);
     setSubmitError('');
     
-    const processSubmission = async () => {
+    setTimeout(async () => {
       try {
       // Validate required fields
       if (!formData.teamName || !formData.teamTag || !formData.captainName || 
@@ -153,8 +153,7 @@ const Register: React.FC = () => {
       }
 
       // Submit registration
-      setTimeout(async () => {
-        addRegistration({
+        await addRegistration({
           teamName: formData.teamName,
           teamTag: formData.teamTag,
           captainName: formData.captainName,
@@ -167,7 +166,8 @@ const Register: React.FC = () => {
           agreeToRules: formData.agreeToRules,
           agreeToStreaming: formData.agreeToStreaming,
           logo: logoData,
-        }).then(() => {
+        });
+        
           setIsSubmitting(false);
           setSubmitSuccess(true);
           
@@ -198,18 +198,11 @@ const Register: React.FC = () => {
             agreeToRules: false,
             agreeToStreaming: false
           });
-        }).catch((error) => {
-          setSubmitError(error.message);
-          setIsSubmitting(false);
-        });
-      }, 1000);
       } catch (error) {
-      setSubmitError((error as Error).message);
-      setIsSubmitting(false);
+        setSubmitError((error as Error).message);
+        setIsSubmitting(false);
       }
-    };
-    
-    processSubmission();
+    }, 500);
   };
 
   return (
@@ -341,7 +334,7 @@ const Register: React.FC = () => {
                   <label className="block text-sm font-medium text-gray-300 mb-2">
                     Logo Týmu
                   </label>
-                  <div className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+                  <div className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
                     logoPreview ? 'border-green-500 bg-green-500/10' : 'border-gray-600 hover:border-blue-500'
                   }`}>
                     {logoPreview ? (
@@ -376,7 +369,7 @@ const Register: React.FC = () => {
                     <input 
                       type="file" 
                       onChange={handleLogoUpload}
-                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" 
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" 
                       accept="image/*" 
                     />
                   </div>
