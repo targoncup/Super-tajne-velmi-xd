@@ -25,6 +25,7 @@ const Rules: React.FC = () => {
     Crown,
     Award
   };
+
   return (
     <div className="min-h-screen bg-gray-800 text-white pt-20">
       {/* Rules Section */}
@@ -48,7 +49,7 @@ const Rules: React.FC = () => {
             {content.rules.sections.map((section, index) => {
               const Icon = iconMap[section.icon] || FileText;
               return (
-                <div key={index} className="bg-gradient-to-br from-gray-800 to-gray-700 border border-gray-600 rounded-2xl p-8 hover:border-blue-500/50 transition-all duration-300">
+                <div key={index} className="bg-gradient-to-br from-gray-800 to-gray-700 border border-gray-600 hover:border-blue-500/50 rounded-2xl p-8 transition-all duration-300">
                   <div className="flex items-center space-x-3 mb-6">
                     <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center">
                       <Icon className="w-6 h-6 text-white" />
