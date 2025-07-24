@@ -151,20 +151,20 @@ export const DEFAULT_CONTENT: SiteContent = {
       {
         season: "Léto 2024",
         team: "Celestial Guardians",
-        prize: "100,000 Kč",
-        place: "1."
+        prize: "100 000 Kč",
+        place: "1"
       },
       {
         season: "Jaro 2024",
         team: "Starforge Legends",
-        prize: "75,000 Kč",
-        place: "1."
+        prize: "75 000 Kč",
+        place: "1"
       },
       {
         season: "Zima 2023",
         team: "Cosmic Reapers",
-        prize: "50,000 Kč",
-        place: "1."
+        prize: "50 000 Kč",
+        place: "1"
       }
     ],
     statsEnabled: true,
