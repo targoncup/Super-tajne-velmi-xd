@@ -202,7 +202,6 @@ const Register: React.FC = () => {
                 </div>
               </div>
               </div>
-            </div>
           </div>
           {/* Success Message */}
           {submitSuccess && (
@@ -584,6 +583,7 @@ const Register: React.FC = () => {
               </div>
             </form>
           )}
+        </div>
         </div>
       </section>
     </div>
