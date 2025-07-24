@@ -202,7 +202,6 @@ const Register: React.FC = () => {
               </div>
             </div>
           </div>
-
           {/* Success Message */}
           {submitSuccess && (
             <div className="bg-green-600/20 border border-green-500/30 rounded-2xl p-8 mb-12 text-center">
