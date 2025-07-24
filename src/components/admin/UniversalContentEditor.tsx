@@ -88,9 +88,8 @@ const UniversalContentEditor: React.FC<UniversalContentEditorProps> = ({ onClose
       season: 'Sezóna',
       name: 'Název',
       value: 'Hodnota',
-       team: 'Tým',
-       prize: 'Cena',
-       place: 'Místo',
+      team: 'Tým',
+      prize: 'Cena',
       email: 'Email',
       phone: 'Telefon',
       available: 'Dostupnost',
@@ -202,6 +201,12 @@ const UniversalContentEditor: React.FC<UniversalContentEditorProps> = ({ onClose
       const pathParts = arrayPath.split('.');
       let current = updated[sectionKey];
       
+      // Ensure the section exists
+      if (!current) {
+        updated[sectionKey] = {};
+        current = updated[sectionKey];
+      }
+      
       for (let i = 0; i < pathParts.length - 1; i++) {
         if (!current[pathParts[i]]) {
           current[pathParts[i]] = {};
@@ -225,6 +230,11 @@ const UniversalContentEditor: React.FC<UniversalContentEditorProps> = ({ onClose
       const updated = JSON.parse(JSON.stringify(prev));
       const pathParts = arrayPath.split('.');
       let current = updated[sectionKey];
+      
+      // Safety check
+      if (!current) {
+        return updated;
+      }
       
       for (let i = 0; i < pathParts.length - 1; i++) {
         if (!current[pathParts[i]]) {
@@ -290,8 +300,9 @@ const UniversalContentEditor: React.FC<UniversalContentEditorProps> = ({ onClose
     
     if (Array.isArray(value)) {
       const getDefaultItem = () => {
+        console.log('Getting default item for key:', key, 'in section:', sectionKey);
         if (key === 'features') return { icon: 'Star', title: '', description: '' };
-        if (key === 'champions') return { season: '', team: '', prize: '', place: '' };
+        if (key === 'champions') return { season: '', team: '', prize: '', place: '1' };
         if (key === 'requirements') return '';
         if (key === 'contactMethods') return { title: '', description: '', contact: '', available: '', icon: '' };
         if (key === 'departments') return { title: '', email: '', description: '', icon: '' };
@@ -304,6 +315,7 @@ const UniversalContentEditor: React.FC<UniversalContentEditorProps> = ({ onClose
         if (key === 'records') return { title: '', value: '', description: '', icon: '' };
         if (key === 'tournamentLinks') return { text: '', href: '' };
         if (key === 'items') return '';
+        console.log('No default found for key:', key);
         return {};
       };
 

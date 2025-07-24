@@ -11,6 +11,7 @@ export const useContent = () => {
   useEffect(() => {
     const loadContent = async () => {
       try {
+        console.log('Loading content from Supabase...');
         const { data, error } = await supabase
           .from('site_content')
           .select('data')
@@ -20,13 +21,17 @@ export const useContent = () => {
         if (error && error.code !== 'PGRST116') throw error;
 
         if (data && data.data) {
+          console.log('Loaded content from Supabase:', data.data);
           const merged = deepMerge(DEFAULT_CONTENT, data.data);
+          console.log('Merged content:', merged);
           setContent(merged);
           localStorage.setItem(CONTENT_STORAGE_KEY, JSON.stringify(merged));
         } else {
+          console.log('No data from Supabase, using localStorage or default');
           const savedContent = localStorage.getItem(CONTENT_STORAGE_KEY);
           if (savedContent) {
             const parsed = JSON.parse(savedContent);
+            console.log('Loaded from localStorage:', parsed);
             setContent(deepMerge(DEFAULT_CONTENT, parsed));
           }
         }
