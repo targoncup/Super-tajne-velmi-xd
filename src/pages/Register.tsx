@@ -371,7 +371,7 @@ const Register: React.FC = () => {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Jméno a Příjmení *
+                      Přezdívka *
                     </label>
                     <input
                       type="text"
@@ -379,7 +379,7 @@ const Register: React.FC = () => {
                       value={formData.captainName}
                       onChange={(e) => handleInputChange('captainName', e.target.value)}
                       className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
-                      placeholder="Jan Novák"
+                      placeholder="Vaše přezdívka"
                     />
                   </div>
                   <div>
