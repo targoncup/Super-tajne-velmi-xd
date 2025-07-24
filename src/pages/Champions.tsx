@@ -5,6 +5,13 @@ import { Crown, Trophy, Star, Award } from 'lucide-react';
 const Champions: React.FC = () => {
   const { content } = useContent();
 
+  const iconMap = {
+    Trophy,
+    Star,
+    Award,
+    Crown
+  };
+
   const champions = [
     { 
       season: 'Léto 2024', 
