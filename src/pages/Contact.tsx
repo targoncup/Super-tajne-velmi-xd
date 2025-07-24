@@ -107,7 +107,11 @@ const Contact: React.FC = () => {
                     </div>
                     <p className="text-gray-300">{department.description}</p>
                     <p className="text-white font-medium mt-2">
-                      <a href={`mailto:${department.email}`} className="hover:underline">{department.email}</a>
+                      {department.title === 'Technická Podpora' ? (
+                        <a href="https://discord.gg/c9pRsbYCt2" target="_blank" rel="noopener noreferrer" className="hover:underline">https://discord.gg/c9pRsbYCt2</a>
+                      ) : (
+                        <a href={`mailto:${department.email}`} className="hover:underline">{department.email}</a>
+                      )}
                     </p>
                   </div>
                   );
