@@ -13,43 +13,13 @@ import {
 const Contact: React.FC = () => {
   const { content } = useContent();
 
-  const contactMethods = [
-    {
-      icon: Mail,
-      title: 'Email',
-      description: 'Obecné dotazy a podpora',
-      contact: 'targoncupofficial@gmail.com',
-      available: '24/7'
-    },
-    {
-      icon: MessageCircle,
-      title: 'Discord',
-      description: 'Komunitní podpora a chat',
-      contact: 'https://discord.gg/c9pRsbYCt2',
-      available: '24/7'
-    }
-  ];
-
-  const departments = [
-    {
-      icon: Users,
-      title: 'Registrace Týmů',
-      email: 'targoncupofficial@gmail.com',
-      description: 'Pomoc s registrací a dokumenty'
-    },
-    {
-      icon: Shield,
-      title: 'Technická Podpora',
-      email: 'https://discord.gg/c9pRsbYCt2',
-      description: 'Technické problémy a herní záležitosti'
-    },
-    {
-      icon: Headphones,
-      title: 'Mediální Dotazy',
-      email: 'targoncupofficial@gmail.com',
-      description: 'Tiskové zprávy a partnerství'
-    }
-  ];
+  const iconMap: Record<string, React.ElementType> = {
+    Mail,
+    MessageCircle,
+    Users,
+    Shield,
+    Headphones
+  };
 
   return (
     <div className="min-h-screen bg-gray-800 text-white pt-20">
@@ -75,21 +45,17 @@ const Contact: React.FC = () => {
             <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
               <h3 className="text-xl font-bold mb-6 text-white flex items-center">
                 <Clock className="w-6 h-6 mr-3 text-blue-400" />
-                Pracovní Doba
+                {content.contact.workingHoursTitle}
               </h3>
               <div className="space-y-3 text-gray-300">
-                <div className="flex justify-between">
-                  <span>Pondělí - Pátek</span>
-                  <span className="text-white font-medium">9:00 - 17:00</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Sobota</span>
-                  <span className="text-white font-medium">10:00 - 14:00</span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Neděle</span>
-                  <span className="text-gray-400">Zavřeno</span>
-                </div>
+                {content.contact.workingHours.map((schedule, index) => (
+                  <div key={index} className="flex justify-between">
+                    <span>{schedule.day}</span>
+                    <span className={schedule.hours === 'Zavřeno' ? 'text-gray-400' : 'text-white font-medium'}>
+                      {schedule.hours}
+                    </span>
+                  </div>
+                ))}
               </div>
               <div className="mt-4 p-3 bg-blue-600/20 rounded-lg border border-blue-500/30">
                 <p className="text-sm text-blue-300">
@@ -102,23 +68,26 @@ const Contact: React.FC = () => {
             <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
               <h3 className="text-xl font-bold mb-6 text-white">Způsoby Kontaktování</h3>
               <div className="grid md:grid-cols-2 gap-6">
-                {contactMethods.map(({ icon: Icon, title, description, contact, available }) => (
-                  <div key={title} className="p-4 rounded-lg border border-gray-600 bg-gray-800/40">
+                {content.contact.contactMethods.map((method, index) => {
+                  const Icon = iconMap[method.icon] || Mail;
+                  return (
+                  <div key={index} className="p-4 rounded-lg border border-gray-600 bg-gray-800/40">
                     <div className="flex items-center mb-2">
                       <Icon className="w-5 h-5 text-blue-400 mr-2" />
-                      <h4 className="text-white font-semibold">{title}</h4>
+                      <h4 className="text-white font-semibold">{method.title}</h4>
                     </div>
-                    <p className="text-gray-300">{description}</p>
+                    <p className="text-gray-300">{method.description}</p>
                     <p className="text-white font-medium mt-2">
-                      {title === 'Email' ? (
-                        <a href={`mailto:${contact}`} className="hover:underline">{contact}</a>
+                      {method.title === 'Email' ? (
+                        <a href={`mailto:${method.contact}`} className="hover:underline">{method.contact}</a>
                       ) : (
-                        <a href={contact} target="_blank" rel="noopener noreferrer" className="hover:underline">https://discord.gg/c9pRsbYCt2</a>
+                        <a href={method.contact} target="_blank" rel="noopener noreferrer" className="hover:underline">{method.contact}</a>
                       )}
                     </p>
-                    <p className="text-sm text-blue-300 mt-1">Dostupnost: {available}</p>
+                    <p className="text-sm text-blue-300 mt-1">Dostupnost: {method.available}</p>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
@@ -126,18 +95,21 @@ const Contact: React.FC = () => {
             <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
               <h3 className="text-xl font-bold mb-6 text-white">Oddělení</h3>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {departments.map(({ icon: Icon, title, email, description }) => (
-                  <div key={title} className="p-4 rounded-lg border border-gray-600 bg-gray-800/40">
+                {content.contact.departments.map((department, index) => {
+                  const Icon = iconMap[department.icon] || Users;
+                  return (
+                  <div key={index} className="p-4 rounded-lg border border-gray-600 bg-gray-800/40">
                     <div className="flex items-center mb-2">
                       <Icon className="w-5 h-5 text-blue-400 mr-2" />
-                      <h4 className="text-white font-semibold">{title}</h4>
+                      <h4 className="text-white font-semibold">{department.title}</h4>
                     </div>
-                    <p className="text-gray-300">{description}</p>
+                    <p className="text-gray-300">{department.description}</p>
                     <p className="text-white font-medium mt-2">
-                      <a href={`mailto:${email}`} className="hover:underline">{email}</a>
+                      <a href={`mailto:${department.email}`} className="hover:underline">{department.email}</a>
                     </p>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>

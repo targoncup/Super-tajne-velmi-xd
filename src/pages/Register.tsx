@@ -223,32 +223,24 @@ const Register: React.FC = () => {
           <div className="bg-gradient-to-br from-blue-600/10 to-purple-600/10 border border-blue-500/30 rounded-2xl p-8 mb-12">
             <h2 className="text-2xl font-bold mb-6 text-white flex items-center">
               <Trophy className="w-6 h-6 mr-3 text-yellow-400" />
-              Požadavky pro Registraci
+              {content.register.requirementsTitle}
             </h2>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <Check className="w-5 h-5 text-green-400" />
-                  <span>Minimálně 3 hráči CZ/SK národnosti</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Check className="w-5 h-5 text-green-400" />
-                  <span>5 hlavních hráčů + 2 náhradníci</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Check className="w-5 h-5 text-green-400" />
-                  <span>Všichni hráči Gold+ rank</span>
-                </div>
+                {content.register.requirements.slice(0, 3).map((requirement, index) => (
+                  <div key={index} className="flex items-center space-x-3">
+                    <Check className="w-5 h-5 text-green-400" />
+                    <span>{requirement}</span>
+                  </div>
+                ))}
               </div>
               <div className="space-y-3">
-                <div className="flex items-center space-x-3">
-                  <Check className="w-5 h-5 text-green-400" />
-                  <span>Souhlas s pravidly turnaje</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Check className="w-5 h-5 text-green-400" />
-                  <span>Logo a název týmu (schválení)</span>
-                </div>
+                {content.register.requirements.slice(3).map((requirement, index) => (
+                  <div key={index + 3} className="flex items-center space-x-3">
+                    <Check className="w-5 h-5 text-green-400" />
+                    <span>{requirement}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -256,9 +248,9 @@ const Register: React.FC = () => {
           {submitSuccess && (
             <div className="bg-green-600/20 border border-green-500/30 rounded-2xl p-8 mb-12 text-center">
               <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-green-400 mb-4">Registrace Úspěšná!</h2>
+              <h2 className="text-2xl font-bold text-green-400 mb-4">{content.register.successTitle}</h2>
               <p className="text-gray-300 mb-4">
-                Váš tým byl úspěšně zaregistrován. Obdržíte potvrzovací email s dalšími instrukcemi.
+                {content.register.successMessage}
               </p>
               <button
                 onClick={() => setSubmitSuccess(false)}
@@ -296,7 +288,7 @@ const Register: React.FC = () => {
             <form onSubmit={handleSubmit} className="space-y-12">
               {/* Team Information */}
               <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
-                <h3 className="text-2xl font-bold mb-6 text-white">Informace o Týmu</h3>
+                <h3 className="text-2xl font-bold mb-6 text-white">{content.register.teamInfoTitle}</h3>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -375,7 +367,7 @@ const Register: React.FC = () => {
 
               {/* Captain Information */}
               <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
-                <h3 className="text-2xl font-bold mb-6 text-white">Kapitán Týmu</h3>
+                <h3 className="text-2xl font-bold mb-6 text-white">{content.register.captainTitle}</h3>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -421,7 +413,7 @@ const Register: React.FC = () => {
 
               {/* Main Players */}
               <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
-                <h3 className="text-2xl font-bold mb-6 text-white">Hlavní Sestava (5 hráčů)</h3>
+                <h3 className="text-2xl font-bold mb-6 text-white">{content.register.playersTitle}</h3>
                 <div className="space-y-6">
                   {formData.players.map((player, index) => (
                     <div key={index} className="grid md:grid-cols-4 gap-4 p-4 bg-gray-800/50 rounded-lg">
@@ -490,7 +482,7 @@ const Register: React.FC = () => {
 
               {/* Substitutes */}
               <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
-                <h3 className="text-2xl font-bold mb-6 text-white">Náhradníci (až 2)</h3>
+                <h3 className="text-2xl font-bold mb-6 text-white">{content.register.substitutesTitle}</h3>
                 <div className="space-y-6">
                   {formData.substitutes.map((player, index) => (
                     <div key={index} className="grid md:grid-cols-4 gap-4 p-4 bg-gray-800/50 rounded-lg">
@@ -555,7 +547,7 @@ const Register: React.FC = () => {
 
               {/* Coach */}
               <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
-                <h3 className="text-2xl font-bold mb-6 text-white">Trenér (volitelné)</h3>
+                <h3 className="text-2xl font-bold mb-6 text-white">{content.register.coachTitle}</h3>
                 <div className="grid md:grid-cols-3 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
@@ -598,7 +590,7 @@ const Register: React.FC = () => {
 
               {/* Agreements */}
               <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
-                <h3 className="text-2xl font-bold mb-6 text-white">Souhlasy</h3>
+                <h3 className="text-2xl font-bold mb-6 text-white">{content.register.termsTitle}</h3>
                 <div className="space-y-4">
                   <label className="flex items-center space-x-3">
                     <input
@@ -631,7 +623,7 @@ const Register: React.FC = () => {
                   className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={isSubmitting || dbLoading}
                 >
-                  {isSubmitting || dbLoading ? 'Odesílám...' : 'Registrovat Tým'}
+                  {isSubmitting || dbLoading ? 'Odesílám...' : content.register.submitButtonText}
                 </button>
               </div>
             </form>
