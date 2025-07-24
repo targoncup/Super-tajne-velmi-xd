@@ -98,21 +98,6 @@ const Contact: React.FC = () => {
               </div>
             </div>
 
-            {/* FAQ */}
-            <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
-              <h3 className="text-xl font-bold mb-4 text-white">FAQ</h3>
-              <div className="space-y-3 text-sm">
-                <div>
-                  <div className="font-semibold text-white mb-1">Kdy začíná registrace?</div>
-                  <div className="text-gray-300">Registrace je otevřena od 18.7 2025 do 15.10 2025.</div>
-                </div>
-                <div>
-                  <div className="font-semibold text-white mb-1">Jak rychle odpovídáte?</div>
-                  <div className="text-gray-300">Obvykle do 24 hodin, během turnajů do 2 hodin.</div>
-                </div>
-              </div>
-            </div>
-
             {/* Contact Methods */}
             <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
               <h3 className="text-xl font-bold mb-6 text-white">Způsoby Kontaktování</h3>
