@@ -13,7 +13,9 @@ import {
   Clock,
   MapPin,
   Calendar,
-  Gamepad2
+  Gamepad2,
+  Download,
+  Image
 } from 'lucide-react';
 
 interface RegistrationDetailProps {
@@ -73,6 +75,17 @@ const RegistrationDetail: React.FC<RegistrationDetailProps> = ({
         return 'Zamítnuto';
       default:
         return 'Neznámý';
+    }
+  };
+
+  const downloadLogo = () => {
+    if (registration.logo) {
+      const link = document.createElement('a');
+      link.href = registration.logo.data;
+      link.download = `${registration.teamName}_${registration.teamTag}_logo.${registration.logo.type.split('/')[1]}`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
   };
 
