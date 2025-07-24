@@ -37,6 +37,12 @@ export interface DatabaseRegistration {
     email: string;
     experience: string;
   };
+  logo: {
+    name: string;
+    type: string;
+    size: number;
+    data: string;
+  } | null;
   agree_to_rules: boolean;
   agree_to_streaming: boolean;
   status: 'pending' | 'approved' | 'rejected';
