@@ -4,6 +4,7 @@ import {
   X,
   User,
   Mail,
+  Phone,
   MessageCircle,
   Users,
   Crown,
