@@ -29,6 +29,14 @@ const RegistrationDetail: React.FC<RegistrationDetailProps> = ({
   onClose,
   onStatusUpdate
 }) => {
+  const handleStatusUpdate = (status: TeamRegistration['status']) => {
+    onStatusUpdate(registration.id, status);
+    // Auto-close popup after status update
+    setTimeout(() => {
+      onClose();
+    }, 500);
+  };
+
   const formatDate = (timestamp: number): string => {
     return new Date(timestamp).toLocaleDateString('cs-CZ', {
       year: 'numeric',
@@ -326,14 +334,14 @@ const RegistrationDetail: React.FC<RegistrationDetailProps> = ({
             {registration.status === 'pending' && (
               <>
                 <button
-                  onClick={() => onStatusUpdate(registration.id, 'rejected')}
+                  onClick={() => handleStatusUpdate('rejected')}
                   className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium transition-colors flex items-center space-x-2"
                 >
                   <XCircle className="w-4 h-4" />
                   <span>Zamítnout</span>
                 </button>
                 <button
-                  onClick={() => onStatusUpdate(registration.id, 'approved')}
+                  onClick={() => handleStatusUpdate('approved')}
                   className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-colors flex items-center space-x-2"
                 >
                   <CheckCircle className="w-4 h-4" />
@@ -343,7 +351,7 @@ const RegistrationDetail: React.FC<RegistrationDetailProps> = ({
             )}
             {registration.status !== 'pending' && (
               <button
-                onClick={() => onStatusUpdate(registration.id, 'pending')}
+                onClick={() => handleStatusUpdate('pending')}
                 className="px-4 py-2 bg-yellow-600 hover:bg-yellow-700 text-white rounded-lg font-medium transition-colors flex items-center space-x-2"
               >
                 <Clock className="w-4 h-4" />

@@ -298,10 +298,14 @@ const Admin: React.FC = () => {
 
               <button
                 onClick={() => setShowUniversalEditor(true)}
-                className="w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors text-gray-300 hover:bg-gray-800 hover:text-white"
+                className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                  showUniversalEditor 
+                    ? 'bg-blue-600 text-white' 
+                    : 'text-gray-300 hover:bg-gray-800 hover:text-white'
+                }`}
               >
                 <Type className="w-5 h-5" />
-                <span>Editace Textů</span>
+                <span>Univerzální Editor</span>
               </button>
 
               <button
@@ -546,13 +550,22 @@ const Admin: React.FC = () => {
             <div>
               <div className="flex items-center justify-between mb-8">
                 <h1 className="text-3xl font-bold text-white">Správa Obsahu</h1>
-                <button
-                  onClick={handleReset}
-                  className="flex items-center space-x-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
-                >
-                  <RotateCcw className="w-4 h-4" />
-                  <span>Obnovit na výchozí</span>
-                </button>
+                <div className="flex items-center space-x-3">
+                  <button
+                    onClick={() => setShowUniversalEditor(true)}
+                    className="flex items-center space-x-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                  >
+                    <Type className="w-4 h-4" />
+                    <span>Univerzální Editor</span>
+                  </button>
+                  <button
+                    onClick={handleReset}
+                    className="flex items-center space-x-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                  >
+                    <RotateCcw className="w-4 h-4" />
+                    <span>Obnovit na výchozí</span>
+                  </button>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -606,6 +619,24 @@ const Admin: React.FC = () => {
                     </div>
                   );
                 })}
+              </div>
+
+              {/* Universal Editor Promotion */}
+              <div className="mt-12 bg-gradient-to-br from-blue-600/10 to-purple-600/10 border border-blue-500/30 rounded-2xl p-8">
+                <div className="text-center">
+                  <Type className="w-16 h-16 text-blue-400 mx-auto mb-4" />
+                  <h2 className="text-2xl font-bold text-white mb-4">Univerzální Editor Obsahu</h2>
+                  <p className="text-gray-300 mb-6 max-w-2xl mx-auto">
+                    Editujte veškerý text na webu v jednom místě. Rychle najděte a upravte jakýkoliv obsah pomocí vyhledávání a pokročilých nástrojů.
+                  </p>
+                  <button
+                    onClick={() => setShowUniversalEditor(true)}
+                    className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 flex items-center space-x-3 mx-auto"
+                  >
+                    <Type className="w-6 h-6" />
+                    <span>Otevřít Univerzální Editor</span>
+                  </button>
+                </div>
               </div>
             </div>
           )}
