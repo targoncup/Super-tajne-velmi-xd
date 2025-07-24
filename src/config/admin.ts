@@ -38,6 +38,28 @@ export interface SiteContent {
     subtitle: string;
     description: string;
     cta: string;
+    welcomeMessage: string;
+    heroTitle: string;
+    announcementText: string;
+    heroDescription: string;
+    callToActionText: string;
+    registerButtonText: string;
+    watchTrailerText: string;
+    featuresTitle: string;
+    featuresSubtitle: string;
+    features: Array<{
+      icon: string;
+      title: string;
+      description: string;
+    }>;
+    championsTitle: string;
+    championsSubtitle: string;
+    champions: Array<{
+      name: string;
+      year: string;
+      image: string;
+      description: string;
+    }>;
     statsEnabled: boolean;
     stats: {
       teams: string;
@@ -62,12 +84,6 @@ export interface SiteContent {
     title: string;
     description: string;
     copyright: string;
-  };
-  hero: {
-    title: string;
-    subtitle: string;
-    description: string;
-    cta: string;
   };
   tournament: {
     title: string;
@@ -102,6 +118,48 @@ export const DEFAULT_CONTENT: SiteContent = {
     subtitle: "Největší český League of Legends turnaj",
     description: "Připojte se k největšímu českému a slovenskému League of Legends turnaji roku 2025. Bojujte o titul mistra a ceny v hodnotě přes 100 000 Kč!",
     cta: "Registrovat Tým",
+    welcomeMessage: "Vítejte na Targon Cup 2025",
+    heroTitle: "Targon Cup 2025",
+    announcementText: "Registrace jsou otevřené!",
+    heroDescription: "Připojte se k největšímu českému a slovenskému League of Legends turnaji roku 2025. Bojujte o titul mistra a ceny v hodnotě přes 100 000 Kč!",
+    callToActionText: "Připojte se k turnaji",
+    registerButtonText: "Registrovat Tým",
+    watchTrailerText: "Sledovat Trailer",
+    featuresTitle: "Proč se zúčastnit?",
+    featuresSubtitle: "Objevte výhody účasti v Targon Cup 2025",
+    features: [
+      {
+        icon: "Trophy",
+        title: "Vysoké výhry",
+        description: "Bojujte o ceny v hodnotě přes 100 000 Kč"
+      },
+      {
+        icon: "Users",
+        title: "Profesionální prostředí",
+        description: "Turnaj organizovaný podle nejvyšších standardů"
+      },
+      {
+        icon: "Zap",
+        title: "Live stream",
+        description: "Vaše zápasy budou vysílány tisícům diváků"
+      }
+    ],
+    championsTitle: "Šampioni",
+    championsSubtitle: "Vítězové předchozích ročníků",
+    champions: [
+      {
+        name: "Team Alpha",
+        year: "2024",
+        image: "https://images.pexels.com/photos/3165335/pexels-photo-3165335.jpeg",
+        description: "Vítězové prvního ročníku Targon Cup"
+      },
+      {
+        name: "Team Beta",
+        year: "2023",
+        image: "https://images.pexels.com/photos/442576/pexels-photo-442576.jpeg",
+        description: "Legendární tým s neporazitelnou strategií"
+      }
+    ],
     statsEnabled: true,
     stats: {
       teams: "128",
@@ -126,12 +184,6 @@ export const DEFAULT_CONTENT: SiteContent = {
     title: "Targon Cup 2025",
     description: "Největší český League of Legends turnaj",
     copyright: "© 2025 Targon Cup. Všechna práva vyhrazena."
-  },
-  hero: {
-    title: "Targon Cup 2025",
-    subtitle: "Největší český League of Legends turnaj",
-    description: "Připojte se k největšímu českému a slovenskému League of Legends turnaji roku 2025. Bojujte o titul mistra a ceny v hodnotě přes 100 000 Kč!",
-    cta: "Registrovat Tým"
   },
   tournament: {
     title: "Turnaj",
