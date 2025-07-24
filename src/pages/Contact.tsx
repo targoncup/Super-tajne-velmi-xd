@@ -40,7 +40,7 @@ const Contact: React.FC = () => {
     {
       icon: Shield,
       title: 'Technická Podpora',
-      email: 'https://discord.gg/c9pRsbYCt2,
+      email: 'https://discord.gg/c9pRsbYCt2',
       description: 'Technické problémy a herní záležitosti'
     },
     {
