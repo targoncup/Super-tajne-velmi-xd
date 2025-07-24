@@ -589,19 +589,26 @@ const Admin: React.FC = () => {
                       </div>
                       <button
                         onClick={() => {
-                          const newContent = { ...content };
-                          newContent.navigation.pageVisibility[key] = !newContent.navigation.pageVisibility[key];
-                          updateContent(newContent);
+                          const updatedVisibility = {
+                            ...content.navigation.pageVisibility,
+                            [key]: !content.navigation.pageVisibility[key as keyof typeof content.navigation.pageVisibility]
+                          };
+                          updateContent({
+                            navigation: {
+                              ...content.navigation,
+                              pageVisibility: updatedVisibility
+                            }
+                          });
                         }}
                         className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                          content.navigation.pageVisibility[key] 
+                          content.navigation.pageVisibility[key as keyof typeof content.navigation.pageVisibility]
                             ? 'bg-blue-600' 
                             : 'bg-gray-600'
                         }`}
                       >
                         <span
                           className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                            content.navigation.pageVisibility[key] 
+                            content.navigation.pageVisibility[key as keyof typeof content.navigation.pageVisibility]
                               ? 'translate-x-6' 
                               : 'translate-x-1'
                           }`}
