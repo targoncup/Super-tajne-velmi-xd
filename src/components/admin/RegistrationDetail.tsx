@@ -189,12 +189,14 @@ const RegistrationDetail: React.FC<RegistrationDetailProps> = ({
                       {registration.captainEmail}
                     </a>
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <Phone className="w-4 h-4 text-gray-400" />
-                    <a href={`tel:${registration.captainPhone}`} className="text-blue-400 hover:underline">
-                      {registration.captainPhone}
-                    </a>
-                  </div>
+                  {registration.captainPhone && (
+                    <div className="flex items-center space-x-3">
+                      <Phone className="w-4 h-4 text-gray-400" />
+                      <a href={`tel:${registration.captainPhone}`} className="text-blue-400 hover:underline">
+                        {registration.captainPhone}
+                      </a>
+                    </div>
+                  )}
                   <div className="flex items-center space-x-3">
                     <MessageCircle className="w-4 h-4 text-gray-400" />
                     <span className="text-gray-300">{registration.captainDiscord}</span>

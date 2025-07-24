@@ -18,7 +18,7 @@ export interface DatabaseRegistration {
   team_tag: string;
   captain_name: string;
   captain_email: string;
-  captain_discord: string;
+  captain_phone: string | null;
   players: Array<{
     name: string;
     summonerName: string;

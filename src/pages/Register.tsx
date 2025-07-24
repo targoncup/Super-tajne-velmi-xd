@@ -28,6 +28,7 @@ const Register: React.FC = () => {
     teamTag: '',
     captainName: '',
     captainEmail: '',
+    captainPhone: '',
     captainDiscord: '',
     players: [
       { name: '', summonerName: '', role: '', nationality: '' },

@@ -22,7 +22,7 @@ export interface TeamRegistration {
   teamTag: string;
   captainName: string;
   captainEmail: string;
-  captainDiscord: string;
+  captainPhone?: string;
   players: Player[];
   substitutes: Player[];
   coach: Coach;
