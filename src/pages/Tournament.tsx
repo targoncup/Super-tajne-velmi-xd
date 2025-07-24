@@ -90,16 +90,16 @@ const Tournament: React.FC = () => {
                       </div>
                       <div className="flex items-center justify-center space-x-2">
                         <Shield className="w-4 h-4" />
-                        <span>Draft Pick Formát</span>
-                {content.tournament.prizePool}
+                      </div>
                       <div className="flex items-center justify-center space-x-2">
-              <p className="text-3xl font-black text-green-400">{content.tournament.prizePool}</p>
+                        <Play className="w-4 h-4" />
                         <span>Živé Vysílání na Twitchi</span>
                       </div>
                     </div>
-                {content.tournament.registrationDeadline}
+                    </div>
+                  </div>
                 </div>
-              <p className="text-3xl font-black text-blue-400">{content.tournament.registrationDeadline}</p>
+              </div>
             </div>
           </div>
         </div>
@@ -109,6 +109,3 @@ const Tournament: React.FC = () => {
 };
 
 export default Tournament;
-
-  )
-}
