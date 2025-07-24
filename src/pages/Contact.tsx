@@ -71,22 +71,6 @@ const Contact: React.FC = () => {
           </div>
 
           <div className="space-y-8">
-            {/* Office Info */}
-            <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
-              <h3 className="text-xl font-bold mb-6 text-white flex items-center">
-                <MapPin className="w-6 h-6 mr-3 text-blue-400" />
-                Naše Kancelář
-              </h3>
-              <div className="space-y-4 text-gray-300">
-                <div>
-                  <div className="font-semibold text-white">Targon Cup s.r.o.</div>
-                  <div>Wenceslas Square 1</div>
-                  <div>110 00 Praha 1</div>
-                  <div>Česká republika</div>
-                </div>
-              </div>
-            </div>
-
             {/* Working Hours */}
             <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
               <h3 className="text-xl font-bold mb-6 text-white flex items-center">
