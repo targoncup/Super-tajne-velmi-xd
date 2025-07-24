@@ -62,6 +62,26 @@ const Admin: React.FC = () => {
 
   const stats = getRegistrationStats();
 
+  const downloadAllLogos = () => {
+    const teamsWithLogos = registrations.filter(reg => reg.logo);
+    
+    if (teamsWithLogos.length === 0) {
+      alert('Žádné týmy nemají nahraná loga.');
+      return;
+    }
+
+    teamsWithLogos.forEach((registration) => {
+      if (registration.logo) {
+        const link = document.createElement('a');
+        link.href = registration.logo.data;
+        link.download = `${registration.teamName}_${registration.teamTag}_logo.${registration.logo.type.split('/')[1]}`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    });
+  };
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
