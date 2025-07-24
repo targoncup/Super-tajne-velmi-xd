@@ -600,9 +600,6 @@ const Register: React.FC = () => {
                       className="form-checkbox h-5 w-5 text-blue-600"
                     />
                     <span>
-                      Souhlasím s <a href="/pravidla" className="underline text-blue-400">pravidly turnaje</a> a potvrzuji správnost údajů
-                    </span>
-                    <span>
                       Souhlasím s <a href="/rules" className="underline text-blue-400">pravidly turnaje</a> a potvrzuji správnost údajů
                     </span>
                   </label>
