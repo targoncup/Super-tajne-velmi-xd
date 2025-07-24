@@ -419,7 +419,7 @@ const Register: React.FC = () => {
                     <div key={index} className="grid md:grid-cols-4 gap-4 p-4 bg-gray-800/50 rounded-lg">
                       <div>
                         <label className="block text-sm font-medium text-gray-300 mb-2">
-                          Jméno a Příjmení *
+                          Přezdívka *
                         </label>
                         <input
                           type="text"
@@ -427,7 +427,7 @@ const Register: React.FC = () => {
                           value={player.name}
                           onChange={(e) => handlePlayerChange(index, 'name', e.target.value)}
                           className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
-                          placeholder="Hráč"
+                          placeholder="Přezdívka hráče"
                         />
                       </div>
                       <div>
@@ -488,14 +488,14 @@ const Register: React.FC = () => {
                     <div key={index} className="grid md:grid-cols-4 gap-4 p-4 bg-gray-800/50 rounded-lg">
                       <div>
                         <label className="block text-sm font-medium text-gray-300 mb-2">
-                          Jméno a Příjmení
+                          Přezdívka
                         </label>
                         <input
                           type="text"
                           value={player.name}
                           onChange={(e) => handlePlayerChange(index, 'name', e.target.value, true)}
                           className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
-                          placeholder="Náhradník"
+                          placeholder="Přezdívka náhradníka"
                         />
                       </div>
                       <div>
@@ -551,14 +551,14 @@ const Register: React.FC = () => {
                 <div className="grid md:grid-cols-3 gap-6">
                   <div>
                     <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Jméno a Příjmení
+                      Přezdívka
                     </label>
                     <input
                       type="text"
                       value={formData.coach.name}
                       onChange={(e) => handleCoachChange('name', e.target.value)}
                       className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
-                      placeholder="Trenér"
+                      placeholder="Přezdívka trenéra"
                     />
                   </div>
                   <div>
