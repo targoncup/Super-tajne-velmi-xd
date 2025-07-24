@@ -33,7 +33,9 @@ import {
   Palette,
   Database,
   RefreshCw,
-  Type
+  Type,
+  Download,
+  Archive
 } from 'lucide-react';
 
 const Admin: React.FC = () => {
@@ -150,26 +152,6 @@ const Admin: React.FC = () => {
         setIsLoading(false);
       }, 1000);
     }
-  };
-
-  const downloadAllLogos = () => {
-    const registrationsWithLogos = registrations.filter(reg => reg.logo && reg.logo.data);
-    
-    if (registrationsWithLogos.length === 0) {
-      alert('Žádné týmy nemají nahrané logo.');
-      return;
-    }
-
-    registrationsWithLogos.forEach((registration, index) => {
-      setTimeout(() => {
-        const link = document.createElement('a');
-        link.href = registration.logo!.data;
-        link.download = `${registration.teamName}_${registration.teamTag}_logo.${registration.logo!.name.split('.').pop()}`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }, index * 500); // Delay each download by 500ms to avoid browser blocking
-    });
   };
 
   if (!isAuthenticated) {
@@ -341,6 +323,13 @@ const Admin: React.FC = () => {
                   <RefreshCw className="w-4 h-4" />
                   <span>Obnovit</span>
                 </button>
+                <button
+                  onClick={downloadAllLogos}
+                  className="flex items-center space-x-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
+                >
+                  <Archive className="w-4 h-4" />
+                  <span>Stáhnout všechna loga</span>
+                </button>
               </div>
 
               {/* Stats Cards */}
@@ -447,13 +436,22 @@ const Admin: React.FC = () => {
             <div>
               <div className="flex items-center justify-between mb-8">
                 <h1 className="text-3xl font-bold text-white">Registrace Týmů</h1>
-                <button
-                  onClick={refetchRegistrations}
-                  className="flex items-center space-x-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
-                >
-                  <RefreshCw className="w-4 h-4" />
-                  <span>Obnovit</span>
-                </button>
+                <div className="flex items-center space-x-3">
+                  <button
+                    onClick={refetchRegistrations}
+                    className="flex items-center space-x-2 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors"
+                  >
+                    <RefreshCw className="w-4 h-4" />
+                    <span>Obnovit</span>
+                  </button>
+                  <button
+                    onClick={downloadAllLogos}
+                    className="flex items-center space-x-2 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-colors"
+                  >
+                    <Archive className="w-4 h-4" />
+                    <span>Stáhnout všechna loga</span>
+                  </button>
+                </div>
               </div>
 
               {registrationsError && (
