@@ -131,30 +131,74 @@ const Home: React.FC = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-24 bg-gray-700/50">
+      <section className="py-32 bg-gradient-to-br from-gray-800 via-gray-700 to-gray-800 relative overflow-hidden">
+        {/* Background Effects */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/3 left-1/4 w-72 h-72 bg-blue-600/5 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/3 right-1/4 w-64 h-64 bg-purple-600/5 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,rgba(59,130,246,0.05),transparent_50%)]"></div>
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-5xl font-black mb-6 text-white">
+          <div className="text-center mb-24 relative z-10">
+            <div className="inline-flex items-center justify-center px-8 py-4 bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/30 rounded-full mb-8">
+              <Star className="w-6 h-6 text-blue-400 mr-3" />
+              <span className="text-blue-400 font-bold text-lg">Výhody účasti</span>
+            </div>
+            <h2 className="text-5xl md:text-7xl font-black mb-8 text-white tracking-tight bg-gradient-to-r from-white via-blue-100 to-white bg-clip-text text-transparent">
               {content.home.featuresTitle}
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+            <p className="text-2xl text-gray-300 max-w-4xl mx-auto leading-relaxed font-light">
               {content.home.featuresSubtitle}
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
             {features.map((feature, index) => {
               const Icon = iconMap[feature.icon] || Star;
+              const gradients = [
+                'from-blue-600 to-blue-800',
+                'from-purple-600 to-purple-800', 
+                'from-green-600 to-green-800',
+                'from-yellow-600 to-yellow-800'
+              ];
+              const borderColors = [
+                'border-blue-500/30 hover:border-blue-400/60',
+                'border-purple-500/30 hover:border-purple-400/60',
+                'border-green-500/30 hover:border-green-400/60', 
+                'border-yellow-500/30 hover:border-yellow-400/60'
+              ];
+              const shadowColors = [
+                'hover:shadow-blue-500/25',
+                'hover:shadow-purple-500/25',
+                'hover:shadow-green-500/25',
+                'hover:shadow-yellow-500/25'
+              ];
+              
               return (
-                <div key={index} className="bg-gray-800/80 border border-gray-600 hover:border-blue-500/50 rounded-2xl p-8 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl group">
-                  <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                <div key={index} className={`bg-gradient-to-br from-gray-800/90 to-gray-700/90 backdrop-blur-sm border ${borderColors[index % borderColors.length]} rounded-3xl p-10 transition-all duration-500 transform hover:scale-105 hover:shadow-2xl ${shadowColors[index % shadowColors.length]} group relative overflow-hidden`}>
+                  {/* Card background glow */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  
+                  <div className={`w-20 h-20 bg-gradient-to-br ${gradients[index % gradients.length]} rounded-3xl flex items-center justify-center mb-8 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg relative z-10`}>
                     <Icon className="w-8 h-8 text-white" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-3xl"></div>
                   </div>
-                  <h3 className="text-xl font-bold mb-4 text-white">{feature.title}</h3>
-                  <p className="text-gray-300 leading-relaxed">{feature.description}</p>
+                  
+                  <h3 className="text-2xl font-bold mb-6 text-white group-hover:text-blue-100 transition-colors duration-300 relative z-10">{feature.title}</h3>
+                  <p className="text-gray-300 leading-relaxed text-lg group-hover:text-gray-200 transition-colors duration-300 relative z-10">{feature.description}</p>
+                  
+                  {/* Decorative elements */}
+                  <div className="absolute top-4 right-4 w-2 h-2 bg-blue-400/30 rounded-full group-hover:bg-blue-400/60 transition-colors duration-300"></div>
+                  <div className="absolute bottom-4 left-4 w-1 h-1 bg-purple-400/30 rounded-full group-hover:bg-purple-400/60 transition-colors duration-300"></div>
                 </div>
               );
             })}
+          </div>
+          
+          {/* Bottom decorative line */}
+          <div className="mt-20 flex justify-center relative z-10">
+            <div className="w-32 h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent rounded-full"></div>
           </div>
         </div>
       </section>
