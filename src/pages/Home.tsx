@@ -35,7 +35,8 @@ const Home: React.FC = () => {
     Shield,
     Users,
     Star,
-    Camera
+    Camera,
+    Trophy
   };
 
   const features = content.home.features;
