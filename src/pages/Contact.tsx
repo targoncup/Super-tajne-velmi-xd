@@ -124,6 +124,41 @@ const Contact: React.FC = () => {
                 </div>
               </div>
             </div>
+
+            {/* Contact Methods */}
+            <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
+              <h3 className="text-xl font-bold mb-6 text-white">Způsoby Kontaktování</h3>
+              <div className="grid md:grid-cols-2 gap-6">
+                {contactMethods.map(({ icon: Icon, title, description, contact, available }) => (
+                  <div key={title} className="p-4 rounded-lg border border-gray-600 bg-gray-800/40">
+                    <div className="flex items-center mb-2">
+                      <Icon className="w-5 h-5 text-blue-400 mr-2" />
+                      <h4 className="text-white font-semibold">{title}</h4>
+                    </div>
+                    <p className="text-gray-300">{description}</p>
+                    <p className="text-white font-medium mt-2">{contact}</p>
+                    <p className="text-sm text-blue-300 mt-1">Dostupnost: {available}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Departments */}
+            <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
+              <h3 className="text-xl font-bold mb-6 text-white">Oddělení</h3>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {departments.map(({ icon: Icon, title, email, description }) => (
+                  <div key={title} className="p-4 rounded-lg border border-gray-600 bg-gray-800/40">
+                    <div className="flex items-center mb-2">
+                      <Icon className="w-5 h-5 text-blue-400 mr-2" />
+                      <h4 className="text-white font-semibold">{title}</h4>
+                    </div>
+                    <p className="text-gray-300">{description}</p>
+                    <p className="text-white font-medium mt-2">{email}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
