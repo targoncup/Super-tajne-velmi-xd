@@ -28,7 +28,6 @@ const Register: React.FC = () => {
     teamTag: '',
     captainName: '',
     captainEmail: '',
-    captainPhone: '',
     captainDiscord: '',
     players: [
       { name: '', summonerName: '', role: '', nationality: '' },
@@ -117,7 +116,7 @@ const Register: React.FC = () => {
       try {
       // Validate required fields
       if (!formData.teamName || !formData.teamTag || !formData.captainName || 
-          !formData.captainEmail || !formData.captainPhone || !formData.captainDiscord) {
+          !formData.captainEmail || !formData.captainDiscord) {
         throw new Error('Vyplňte všechna povinná pole týmu a kapitána');
       }
 
@@ -158,7 +157,6 @@ const Register: React.FC = () => {
           teamTag: formData.teamTag,
           captainName: formData.captainName,
           captainEmail: formData.captainEmail,
-          captainPhone: formData.captainPhone,
           captainDiscord: formData.captainDiscord,
           players: validPlayers,
           substitutes: formData.substitutes.filter(sub => sub.name && sub.summonerName),
@@ -181,7 +179,6 @@ const Register: React.FC = () => {
             teamTag: '',
             captainName: '',
             captainEmail: '',
-            captainPhone: '',
             captainDiscord: '',
             players: [
               { name: '', summonerName: '', role: '', nationality: '' },
@@ -404,19 +401,6 @@ const Register: React.FC = () => {
                       onChange={(e) => handleInputChange('captainEmail', e.target.value)}
                       className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
                       placeholder="jan.novak@email.cz"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                      Telefon *
-                    </label>
-                    <input
-                      type="tel"
-                      required
-                      value={formData.captainPhone}
-                      onChange={(e) => handleInputChange('captainPhone', e.target.value)}
-                      className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
-                      placeholder="+420 123 456 789"
                     />
                   </div>
                   <div>

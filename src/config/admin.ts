@@ -22,7 +22,6 @@ export interface TeamRegistration {
   teamTag: string;
   captainName: string;
   captainEmail: string;
-  captainPhone: string;
   captainDiscord: string;
   players: Player[];
   substitutes: Player[];
