@@ -201,7 +201,7 @@ const Register: React.FC = () => {
                   <span>Logo a název týmu (schválení)</span>
                 </div>
               </div>
-              </div>
+            </div>
           </div>
           {/* Success Message */}
           {submitSuccess && (
@@ -365,21 +365,21 @@ const Register: React.FC = () => {
                           required
                           value={player.name}
                           onChange={(e) => handlePlayerChange(index, 'name', e.target.value)}
-                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
-                          placeholder="Jan Novák"
+                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
+                          placeholder="Hráč"
                         />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-300 mb-2">
-                          Summoner Name *
+                          Summoner Jméno *
                         </label>
                         <input
                           type="text"
                           required
                           value={player.summonerName}
                           onChange={(e) => handlePlayerChange(index, 'summonerName', e.target.value)}
-                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
-                          placeholder="SummonerName"
+                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
+                          placeholder="Summoner"
                         />
                       </div>
                       <div>
@@ -390,9 +390,9 @@ const Register: React.FC = () => {
                           required
                           value={player.role}
                           onChange={(e) => handlePlayerChange(index, 'role', e.target.value)}
-                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
+                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
                         >
-                          <option value="">Vyberte roli</option>
+                          <option value="">Vyberte</option>
                           {roles.map(role => (
                             <option key={role} value={role}>{role}</option>
                           ))}
@@ -406,7 +406,7 @@ const Register: React.FC = () => {
                           required
                           value={player.nationality}
                           onChange={(e) => handlePlayerChange(index, 'nationality', e.target.value)}
-                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
+                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
                         >
                           <option value="">Vyberte</option>
                           {nationalities.map(nat => (
@@ -419,9 +419,9 @@ const Register: React.FC = () => {
                 </div>
               </div>
 
-              {/* Substitute Players */}
+              {/* Substitutes */}
               <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
-                <h3 className="text-2xl font-bold mb-6 text-white">Náhradníci (2 hráči)</h3>
+                <h3 className="text-2xl font-bold mb-6 text-white">Náhradníci (až 2)</h3>
                 <div className="space-y-6">
                   {formData.substitutes.map((player, index) => (
                     <div key={index} className="grid md:grid-cols-4 gap-4 p-4 bg-gray-800/50 rounded-lg">
@@ -433,20 +433,20 @@ const Register: React.FC = () => {
                           type="text"
                           value={player.name}
                           onChange={(e) => handlePlayerChange(index, 'name', e.target.value, true)}
-                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
-                          placeholder="Jan Novák"
+                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
+                          placeholder="Náhradník"
                         />
                       </div>
                       <div>
                         <label className="block text-sm font-medium text-gray-300 mb-2">
-                          Summoner Name
+                          Summoner Jméno
                         </label>
                         <input
                           type="text"
                           value={player.summonerName}
                           onChange={(e) => handlePlayerChange(index, 'summonerName', e.target.value, true)}
-                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
-                          placeholder="SummonerName"
+                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
+                          placeholder="Summoner"
                         />
                       </div>
                       <div>
@@ -456,9 +456,9 @@ const Register: React.FC = () => {
                         <select
                           value={player.role}
                           onChange={(e) => handlePlayerChange(index, 'role', e.target.value, true)}
-                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
+                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
                         >
-                          <option value="">Vyberte roli</option>
+                          <option value="">Vyberte</option>
                           {roles.map(role => (
                             <option key={role} value={role}>{role}</option>
                           ))}
@@ -471,7 +471,7 @@ const Register: React.FC = () => {
                         <select
                           value={player.nationality}
                           onChange={(e) => handlePlayerChange(index, 'nationality', e.target.value, true)}
-                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded text-white focus:border-blue-500 focus:outline-none"
+                          className="w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
                         >
                           <option value="">Vyberte</option>
                           {nationalities.map(nat => (
@@ -484,7 +484,7 @@ const Register: React.FC = () => {
                 </div>
               </div>
 
-              {/* Coach Information */}
+              {/* Coach */}
               <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
                 <h3 className="text-2xl font-bold mb-6 text-white">Trenér (volitelné)</h3>
                 <div className="grid md:grid-cols-3 gap-6">
@@ -497,7 +497,7 @@ const Register: React.FC = () => {
                       value={formData.coach.name}
                       onChange={(e) => handleCoachChange('name', e.target.value)}
                       className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
-                      placeholder="Jan Novák"
+                      placeholder="Trenér"
                     />
                   </div>
                   <div>
@@ -521,69 +521,53 @@ const Register: React.FC = () => {
                       value={formData.coach.experience}
                       onChange={(e) => handleCoachChange('experience', e.target.value)}
                       className="w-full px-4 py-3 bg-gray-800 border border-gray-600 rounded-lg text-white focus:border-blue-500 focus:outline-none"
-                      placeholder="2 roky coaching"
+                      placeholder="Předchozí týmy, apod."
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Terms and Conditions */}
+              {/* Agreements */}
               <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
-                <h3 className="text-2xl font-bold mb-6 text-white">Souhlas s Podmínkami</h3>
+                <h3 className="text-2xl font-bold mb-6 text-white">Souhlasy</h3>
                 <div className="space-y-4">
-                  <label className="flex items-start space-x-3">
+                  <label className="flex items-center space-x-3">
                     <input
                       type="checkbox"
-                      required
                       checked={formData.agreeToRules}
-                      onChange={(e) => setFormData(prev => ({ ...prev, agreeToRules: e.target.checked }))}
-                      className="mt-1 w-5 h-5 text-blue-600 bg-gray-800 border-gray-600 rounded focus:ring-blue-500"
+                      onChange={(e) => handleInputChange('agreeToRules', e.target.checked ? true : false)}
+                      className="form-checkbox h-5 w-5 text-blue-600"
                     />
-                    <span className="text-gray-300">
-                      Souhlasím s <a href="/rules" className="text-blue-400 hover:underline">pravidly turnaje</a> a zavazuji se je dodržovat *
+                    <span>
+                      Souhlasím s <a href="/pravidla" className="underline text-blue-400">pravidly turnaje</a> a potvrzuji správnost údajů
                     </span>
                   </label>
-                  <label className="flex items-start space-x-3">
+                  <label className="flex items-center space-x-3">
                     <input
                       type="checkbox"
-                      required
                       checked={formData.agreeToStreaming}
-                      onChange={(e) => setFormData(prev => ({ ...prev, agreeToStreaming: e.target.checked }))}
-                      className="mt-1 w-5 h-5 text-blue-600 bg-gray-800 border-gray-600 rounded focus:ring-blue-500"
+                      onChange={(e) => handleInputChange('agreeToStreaming', e.target.checked ? true : false)}
+                      className="form-checkbox h-5 w-5 text-blue-600"
                     />
-                    <span className="text-gray-300">
-                      Souhlasím s nahráváním a vysíláním zápasů pro účely turnaje *
+                    <span>
+                      Souhlasím s podmínkami streamování zápasů a zpracováním osobních údajů pro účely turnaje
                     </span>
                   </label>
                 </div>
               </div>
 
-              {/* Submit Button */}
               <div className="text-center">
                 <button
                   type="submit"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={isSubmitting || dbLoading}
-                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 disabled:from-gray-600 disabled:to-gray-700 text-white px-12 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-blue-600/25 flex items-center space-x-3 mx-auto"
                 >
-                  {isSubmitting ? (
-                    <>
-                      <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      <span>Registruji...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Users className="w-6 h-6" />
-                      <span>Registrovat Tým</span>
-                    </>
-                  )}
+                  {isSubmitting || dbLoading ? 'Odesílám...' : 'Registrovat Tým'}
                 </button>
-                <p className="text-sm text-gray-400 mt-4">
-                  Po odeslání formuláře obdržíte email s dalšími instrukcemi
-                </p>
               </div>
             </form>
           )}
-        </div>
+
         </div>
       </section>
     </div>
