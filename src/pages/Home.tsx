@@ -4,6 +4,7 @@ import { useContent } from '../hooks/useContent';
 import { 
   Users, 
   Star,
+  Camera,
   DollarSign,
   Shield,
   Trophy,
@@ -33,7 +34,8 @@ const Home: React.FC = () => {
     DollarSign,
     Shield,
     Users,
-    Star
+    Star,
+    Camera
   };
 
   const features = content.home.features;

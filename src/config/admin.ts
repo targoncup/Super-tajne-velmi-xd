@@ -130,7 +130,7 @@ export const DEFAULT_CONTENT: SiteContent = {
     featuresSubtitle: "Objevte výhody účasti v Targon Cup 2025",
     features: [
       {
-        icon: "Trophy",
+        icon: "Camera",
         title: "Vysoké výhry",
         description: "Bojujte o ceny v hodnotě přes 100 000 Kč"
       },
