@@ -130,19 +130,24 @@ export const DEFAULT_CONTENT: SiteContent = {
     featuresSubtitle: "Objevte výhody účasti v Targon Cup 2025",
     features: [
       {
+        icon: "DollarSign",
+        title: "Poznej nové lidi",
+        description: "Najdi spoluhráče, soupeře i nové kámoše – komunita je základ!"
+      },
+      {
+        icon: "Star",
+        title: "Ukaž, co v tobě je",
+        description: "Nemusíš být pro, abys zazářil – překvap všechny a vystup z davu!"
+      },
+      {
         icon: "Camera",
-        title: "Vysoké výhry",
-        description: "Bojujte o ceny v hodnotě přes 100 000 Kč"
-      },
-      {
-        icon: "Users",
-        title: "Profesionální prostředí",
-        description: "Turnaj organizovaný podle nejvyšších standardů"
-      },
-      {
-        icon: "Zap",
         title: "Live stream",
         description: "Vaše zápasy budou vysílány tisícům diváků"
+      },
+      {
+        icon: "Trophy",
+        title: "Vyhraj cool ceny",
+        description: "Mega super TCO pohár a medaile"
       }
     ],
     championsTitle: "Šampioni",

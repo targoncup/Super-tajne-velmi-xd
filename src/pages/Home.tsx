@@ -157,21 +157,21 @@ const Home: React.FC = () => {
             {features.map((feature, index) => {
               const Icon = iconMap[feature.icon] || Star;
               const gradients = [
-                'from-blue-600 to-blue-800',
-                'from-purple-600 to-purple-800', 
                 'from-green-600 to-green-800',
+                'from-purple-600 to-purple-800', 
+                'from-red-600 to-red-800',
                 'from-yellow-600 to-yellow-800'
               ];
               const borderColors = [
-                'border-blue-500/30 hover:border-blue-400/60',
+                'border-green-500/30 hover:border-green-400/60',
                 'border-purple-500/30 hover:border-purple-400/60',
-                'border-green-500/30 hover:border-green-400/60', 
+                'border-red-500/30 hover:border-red-400/60', 
                 'border-yellow-500/30 hover:border-yellow-400/60'
               ];
               const shadowColors = [
-                'hover:shadow-blue-500/25',
-                'hover:shadow-purple-500/25',
                 'hover:shadow-green-500/25',
+                'hover:shadow-purple-500/25',
+                'hover:shadow-red-500/25',
                 'hover:shadow-yellow-500/25'
               ];
               
