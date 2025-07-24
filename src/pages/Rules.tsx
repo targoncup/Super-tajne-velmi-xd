@@ -15,6 +15,9 @@ import {
 const Rules: React.FC = () => {
   const { content } = useContent();
 
+  // Ensure rules sections exist and have proper structure
+  const rulesSections = content?.rules?.sections || [];
+
   const iconMap: Record<string, React.ElementType> = {
     Trophy,
     Target,
@@ -80,7 +83,7 @@ const Rules: React.FC = () => {
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8">
-            {content.rules.sections.map((section, index) => {
+            {rulesSections.map((section, index) => {
               const Icon = iconMap[section.icon] || FileText;
               const colorClass = colorClasses[index % colorClasses.length];
               const iconColorClass = iconColorClasses[index % iconColorClasses.length];
@@ -98,7 +101,7 @@ const Rules: React.FC = () => {
                   </div>
                   
                   <div className="space-y-3">
-                    {(section.items || []).map((item, itemIndex) => (
+                    {(section?.items || []).map((item, itemIndex) => (
                       <div key={itemIndex} className="flex items-start space-x-3">
                         <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0 opacity-60"></div>
                         <p className="text-gray-200 leading-relaxed">{item}</p>
@@ -106,7 +109,7 @@ const Rules: React.FC = () => {
                     ))}
                   </div>
                   
-                  {section.note && (
+                  {section?.note && (
                     <div className="mt-6 p-4 bg-white/10 backdrop-blur-sm rounded-xl border border-white/20">
                       <p className="text-sm text-gray-200">
                         <span className="font-bold text-white">Poznámka:</span> {section.note}
@@ -131,7 +134,7 @@ const Rules: React.FC = () => {
               
               <button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-12 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl shadow-blue-600/25 flex items-center space-x-3 mx-auto">
                 <FileText className="w-6 h-6" />
-                <span>{content.rules.downloadButtonText}</span>
+                <span>{content?.rules?.downloadButtonText || 'Stáhnout Kompletní Pravidla (PDF)'}</span>
               </button>
             </div>
           </div>
