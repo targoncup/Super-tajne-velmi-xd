@@ -200,6 +200,9 @@ const UniversalContentEditor: React.FC<UniversalContentEditorProps> = ({ onClose
       let current = updated[sectionKey];
       
       for (let i = 0; i < pathParts.length - 1; i++) {
+        if (!current[pathParts[i]]) {
+          current[pathParts[i]] = {};
+        }
         current = current[pathParts[i]];
       }
       
@@ -221,6 +224,9 @@ const UniversalContentEditor: React.FC<UniversalContentEditorProps> = ({ onClose
       let current = updated[sectionKey];
       
       for (let i = 0; i < pathParts.length - 1; i++) {
+        if (!current[pathParts[i]]) {
+          return updated; // If path doesn't exist, return unchanged
+        }
         current = current[pathParts[i]];
       }
       
