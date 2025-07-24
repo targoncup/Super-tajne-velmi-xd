@@ -78,7 +78,7 @@ const Contact: React.FC = () => {
                     </div>
                     <p className="text-gray-300">{method.description}</p>
                     <p className="text-white font-medium mt-2">
-                      <a href="mailto:targoncupofficial@gmail.com" className="hover:underline">targoncupofficial@gmail.com</a>
+                      <a href="https://discord.gg/c9pRsbYCt2" target="_blank" rel="noopener noreferrer" className="hover:underline">https://discord.gg/c9pRsbYCt2</a>
                     </p>
                     <p className="text-sm text-blue-300 mt-1">Dostupnost: {method.available}</p>
                   </div>
