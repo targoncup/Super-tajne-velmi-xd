@@ -82,7 +82,7 @@ const Tournament: React.FC = () => {
                     <div className="space-y-3 text-gray-300">
                       <div className="flex items-center justify-center space-x-2">
                         <Target className="w-4 h-4" />
-                        <span>Maximálně 64 Týmů</span>
+                        <span>Maximálně 10 Týmů</span>
                       </div>
                       <div className="flex items-center justify-center space-x-2">
                         <Gamepad2 className="w-4 h-4" />
