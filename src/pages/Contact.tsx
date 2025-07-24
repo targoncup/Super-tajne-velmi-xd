@@ -78,13 +78,7 @@ const Contact: React.FC = () => {
                     </div>
                     <p className="text-gray-300">{method.description}</p>
                     <p className="text-white font-medium mt-2">
-                      {method.title === 'Email' ? (
-                        <a href={`mailto:${method.contact}`} className="hover:underline">{method.contact}</a>
-                      ) : (
-                        <a href={method.contact} target="_blank" rel="noopener noreferrer" className="hover:underline">
-                          {method.title === 'Discord' ? 'https://discord.gg/c9pRsbYCt2' : method.contact}
-                        </a>
-                      )}
+                      <a href="https://discord.gg/c9pRsbYCt2" target="_blank" rel="noopener noreferrer" className="hover:underline">https://discord.gg/c9pRsbYCt2</a>
                     </p>
                     <p className="text-sm text-blue-300 mt-1">Dostupnost: {method.available}</p>
                   </div>
@@ -107,11 +101,7 @@ const Contact: React.FC = () => {
                     </div>
                     <p className="text-gray-300">{department.description}</p>
                     <p className="text-white font-medium mt-2">
-                      {department.title === 'Technická Podpora' ? (
-                        <a href="https://discord.gg/c9pRsbYCt2" target="_blank" rel="noopener noreferrer" className="hover:underline">https://discord.gg/c9pRsbYCt2</a>
-                      ) : (
-                        <a href={`mailto:${department.email}`} className="hover:underline">{department.email}</a>
-                      )}
+                      <a href="https://discord.gg/c9pRsbYCt2" target="_blank" rel="noopener noreferrer" className="hover:underline">https://discord.gg/c9pRsbYCt2</a>
                     </p>
                   </div>
                   );

@@ -252,7 +252,7 @@ export const DEFAULT_CONTENT: SiteContent = {
       {
         title: "Email",
         description: "Obecné dotazy a podpora",
-        contact: "targoncupofficial@gmail.com",
+        contact: "https://discord.gg/c9pRsbYCt2",
         available: "24/7",
         icon: "Mail"
       },
@@ -267,7 +267,7 @@ export const DEFAULT_CONTENT: SiteContent = {
     departments: [
       {
         title: "Registrace Týmů",
-        email: "targoncupofficial@gmail.com",
+        email: "https://discord.gg/c9pRsbYCt2",
         description: "Pomoc s registrací a dokumenty",
         icon: "Users"
       },
@@ -279,7 +279,7 @@ export const DEFAULT_CONTENT: SiteContent = {
       },
       {
         title: "Mediální Dotazy",
-        email: "targoncupofficial@gmail.com",
+        email: "https://discord.gg/c9pRsbYCt2",
         description: "Tiskové zprávy a partnerství",
         icon: "Headphones"
       }
