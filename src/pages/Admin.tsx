@@ -33,9 +33,7 @@ import {
   Palette,
   Database,
   RefreshCw,
-  Type,
-  Download,
-  Archive
+  Type
 } from 'lucide-react';
 
 const Admin: React.FC = () => {
@@ -152,6 +150,26 @@ const Admin: React.FC = () => {
         setIsLoading(false);
       }, 1000);
     }
+  };
+
+  const downloadAllLogos = () => {
+    const registrationsWithLogos = registrations.filter(reg => reg.logo && reg.logo.data);
+    
+    if (registrationsWithLogos.length === 0) {
+      alert('Žádné týmy nemají nahrané logo.');
+      return;
+    }
+
+    registrationsWithLogos.forEach((registration, index) => {
+      setTimeout(() => {
+        const link = document.createElement('a');
+        link.href = registration.logo!.data;
+        link.download = `${registration.teamName}_${registration.teamTag}_logo.${registration.logo!.name.split('.').pop()}`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }, index * 500); // Delay each download by 500ms to avoid browser blocking
+    });
   };
 
   if (!isAuthenticated) {
