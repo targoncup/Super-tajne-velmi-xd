@@ -2,11 +2,9 @@ import React from 'react';
 import { useContent } from '../hooks/useContent';
 import { 
   Mail, 
-  Phone, 
   MapPin, 
   Clock,
   MessageCircle,
-  Send,
   Users,
   Shield,
   Headphones
@@ -70,64 +68,64 @@ const Contact: React.FC = () => {
             </p>
           </div>
 
-            {/* Office Information */}
-            <div className="space-y-8">
-              <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
-                <h3 className="text-xl font-bold mb-6 text-white flex items-center">
-                  <MapPin className="w-6 h-6 mr-3 text-blue-400" />
-                  Naše Kancelář
-                </h3>
-                <div className="space-y-4 text-gray-300">
-                  <div>
-                    <div className="font-semibold text-white">Targon Cup s.r.o.</div>
-                    <div>Wenceslas Square 1</div>
-                    <div>110 00 Praha 1</div>
-                    <div>Česká republika</div>
-                  </div>
+          {/* Office Information */}
+          <div className="space-y-8">
+            <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
+              <h3 className="text-xl font-bold mb-6 text-white flex items-center">
+                <MapPin className="w-6 h-6 mr-3 text-blue-400" />
+                Naše Kancelář
+              </h3>
+              <div className="space-y-4 text-gray-300">
+                <div>
+                  <div className="font-semibold text-white">Targon Cup s.r.o.</div>
+                  <div>Wenceslas Square 1</div>
+                  <div>110 00 Praha 1</div>
+                  <div>Česká republika</div>
                 </div>
               </div>
+            </div>
 
-              <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
-                <h3 className="text-xl font-bold mb-6 text-white flex items-center">
-                  <Clock className="w-6 h-6 mr-3 text-blue-400" />
-                  Pracovní Doba
-                </h3>
-                <div className="space-y-3 text-gray-300">
-                  <div className="flex justify-between">
-                    <span>Pondělí - Pátek</span>
-                    <span className="text-white font-medium">9:00 - 17:00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Sobota</span>
-                    <span className="text-white font-medium">10:00 - 14:00</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Neděle</span>
-                    <span className="text-gray-400">Zavřeno</span>
-                  </div>
+            <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
+              <h3 className="text-xl font-bold mb-6 text-white flex items-center">
+                <Clock className="w-6 h-6 mr-3 text-blue-400" />
+                Pracovní Doba
+              </h3>
+              <div className="space-y-3 text-gray-300">
+                <div className="flex justify-between">
+                  <span>Pondělí - Pátek</span>
+                  <span className="text-white font-medium">9:00 - 17:00</span>
                 </div>
-                <div className="mt-4 p-3 bg-blue-600/20 rounded-lg border border-blue-500/30">
-                  <p className="text-sm text-blue-300">
-                    <strong>Poznámka:</strong> Během turnajů jsme dostupní 24/7 přes Discord
-                  </p>
+                <div className="flex justify-between">
+                  <span>Sobota</span>
+                  <span className="text-white font-medium">10:00 - 14:00</span>
+                </div>
+                <div className="flex justify-between">
+                  <span>Neděle</span>
+                  <span className="text-gray-400">Zavřeno</span>
                 </div>
               </div>
+              <div className="mt-4 p-3 bg-blue-600/20 rounded-lg border border-blue-500/30">
+                <p className="text-sm text-blue-300">
+                  <strong>Poznámka:</strong> Během turnajů jsme dostupní 24/7 přes Discord
+                </p>
+              </div>
+            </div>
 
-              <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
-                <h3 className="text-xl font-bold mb-4 text-white">FAQ</h3>
-                <div className="space-y-3 text-sm">
-                  <div>
-                    <div className="font-semibold text-white mb-1">Kdy začíná registrace?</div>
-                    <div className="text-gray-300">Registrace je otevřena od 18.7 2025 do 15.10 2025.</div>
-                  </div>
-                  <div>
-                    <div className="font-semibold text-white mb-1">Jak rychle odpovídáte?</div>
-                    <div className="text-gray-300">Obvykle do 24 hodin, během turnajů do 2 hodin.</div>
-                  </div>
+            <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
+              <h3 className="text-xl font-bold mb-4 text-white">FAQ</h3>
+              <div className="space-y-3 text-sm">
+                <div>
+                  <div className="font-semibold text-white mb-1">Kdy začíná registrace?</div>
+                  <div className="text-gray-300">Registrace je otevřena od 18.7 2025 do 15.10 2025.</div>
+                </div>
+                <div>
+                  <div className="font-semibold text-white mb-1">Jak rychle odpovídáte?</div>
+                  <div className="text-gray-300">Obvykle do 24 hodin, během turnajů do 2 hodin.</div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
       </section>
     </div>
   );
