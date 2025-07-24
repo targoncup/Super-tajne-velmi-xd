@@ -91,15 +91,15 @@ const Tournament: React.FC = () => {
                       <div className="flex items-center justify-center space-x-2">
                         <Shield className="w-4 h-4" />
                         <span>Draft Pick Formát</span>
-                      </div>
+                {content.tournament.prizePool}
                       <div className="flex items-center justify-center space-x-2">
-                        <Play className="w-4 h-4" />
+              <p className="text-3xl font-black text-green-400">{content.tournament.prizePool}</p>
                         <span>Živé Vysílání na Twitchi</span>
                       </div>
                     </div>
-                  </div>
+                {content.tournament.registrationDeadline}
                 </div>
-              </div>
+              <p className="text-3xl font-black text-blue-400">{content.tournament.registrationDeadline}</p>
             </div>
           </div>
         </div>

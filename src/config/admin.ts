@@ -119,10 +119,6 @@ export interface SiteContent {
 
 export const DEFAULT_CONTENT: SiteContent = {
   home: {
-    title: "Targon Cup 2025",
-    subtitle: "Největší český League of Legends turnaj",
-    description: "Připojte se k největšímu českému a slovenskému League of Legends turnaji roku 2025. Bojujte o titul mistra a ceny v hodnotě přes 100 000 Kč!",
-    cta: "Registrovat Tým",
     welcomeMessage: "Vítejte na Targon Cup 2025",
     heroTitle: "Targon Cup 2025",
     announcementText: "Registrace jsou otevřené!",
@@ -193,26 +189,220 @@ export const DEFAULT_CONTENT: SiteContent = {
   tournament: {
     title: "Turnaj",
     subtitle: "Informace o turnaji",
-    description: "Vše co potřebujete vědět o Targon Cup 2025"
+    description: "Vše co potřebujete vědět o Targon Cup 2025",
+    prizePool: "100,000 Kč",
+    registrationDeadline: "31. Leden",
+    registerButtonText: "Registrovat Tým",
+    rulesButtonText: "Zobrazit Pravidla"
   },
   register: {
     title: "Registrace",
     subtitle: "Registrace týmu",
-    description: "Zaregistrujte svůj tým do Targon Cup 2025"
+    description: "Zaregistrujte svůj tým do Targon Cup 2025",
+    requirementsTitle: "Požadavky pro Registraci",
+    requirements: [
+      "Minimálně 3 hráči CZ/SK národnosti",
+      "5 hlavních hráčů + 2 náhradníci",
+      "Všichni hráči Gold+ rank",
+      "Souhlas s pravidly turnaje",
+      "Logo a název týmu (schválení)"
+    ],
+    teamInfoTitle: "Informace o Týmu",
+    captainTitle: "Kapitán Týmu",
+    playersTitle: "Hlavní Sestava (5 hráčů)",
+    substitutesTitle: "Náhradníci (až 2)",
+    coachTitle: "Trenér (volitelné)",
+    termsTitle: "Souhlasy",
+    submitButtonText: "Registrovat Tým",
+    successTitle: "Registrace Úspěšná!",
+    successMessage: "Váš tým byl úspěšně zaregistrován. Obdržíte potvrzovací email s dalšími instrukcemi."
   },
   contact: {
     title: "Kontakt",
     subtitle: "Kontaktujte nás",
-    description: "Máte dotazy? Neváhejte nás kontaktovat"
+    description: "Máte dotazy? Neváhejte nás kontaktovat",
+    contactMethods: [
+      {
+        title: "Email",
+        description: "Obecné dotazy a podpora",
+        contact: "targoncupofficial@gmail.com",
+        available: "24/7",
+        icon: "Mail"
+      },
+      {
+        title: "Discord",
+        description: "Komunitní podpora a chat",
+        contact: "https://discord.gg/c9pRsbYCt2",
+        available: "24/7",
+        icon: "MessageCircle"
+      }
+    ],
+    departments: [
+      {
+        title: "Registrace Týmů",
+        email: "targoncupofficial@gmail.com",
+        description: "Pomoc s registrací a dokumenty",
+        icon: "Users"
+      },
+      {
+        title: "Technická Podpora",
+        email: "https://discord.gg/c9pRsbYCt2",
+        description: "Technické problémy a herní záležitosti",
+        icon: "Shield"
+      },
+      {
+        title: "Mediální Dotazy",
+        email: "targoncupofficial@gmail.com",
+        description: "Tiskové zprávy a partnerství",
+        icon: "Headphones"
+      }
+    ],
+    formTitle: "Kontaktní Formulář",
+    workingHoursTitle: "Pracovní Doba",
+    workingHours: [
+      { day: "Pondělí - Pátek", hours: "9:00 - 17:00" },
+      { day: "Sobota", hours: "10:00 - 14:00" },
+      { day: "Neděle", hours: "Zavřeno" }
+    ]
   },
   rules: {
     title: "Pravidla",
     subtitle: "Pravidla turnaje",
-    description: "Oficiální pravidla Targon Cup 2025"
+    description: "Oficiální pravidla Targon Cup 2025",
+    sections: [
+      {
+        title: "Struktura Ligy",
+        icon: "Trophy",
+        items: [
+          "Počet týmů: 8–10",
+          "Splity: Dva ročně – Jarní, Letní a Zimní",
+          "Základní část: Double Round Robin (každý s každým 2×)",
+          "Formát zápasu: Best of 3 (Fearless)",
+          "Playoffs: Top 6 týmů postupuje do vyřazovací části",
+          "Formát Playoffs: Double Elimination – Best of 5 (Fearless)"
+        ],
+        note: ""
+      },
+      {
+        title: "Systém Bodování",
+        icon: "Target",
+        items: [
+          "Výhra 2:0 = 3 body",
+          "Výhra 2:1 = 2 body",
+          "Prohra 1:2 = 1 bod",
+          "Prohra 0:2 = 0 bodů"
+        ],
+        note: "Při shodě rozhoduje: Výsledek vzájemných zápasů, Tiebreak zápas(y), Čas potřebný k výhře"
+      },
+      {
+        title: "Pravidla pro Týmy",
+        icon: "Users",
+        items: [
+          "Velikost soupisky: 7 hráčů (5 hlavních, 2 náhradníci)",
+          "Trenér: Každý tým může mít trenéra",
+          "Občanství: Min. 3 hráči CZ/SK",
+          "Přestupy: Povoleny pouze mezi splity",
+          "Registrace: Logo, název a barvy před sezónou"
+        ],
+        note: ""
+      },
+      {
+        title: "Technické Podmínky",
+        icon: "Gamepad2",
+        items: [
+          "Oficiální turnajové servery Riot Games",
+          "Žádná externí komunikace během zápasu",
+          "Schválené headsety a software",
+          "Dozor administrátorů ligy",
+          "Streaming pouze s povolením admina"
+        ],
+        note: ""
+      },
+      {
+        title: "Chování a Disciplína",
+        icon: "Shield",
+        items: [
+          "Zakázáno: Hate speech, trolling, griefing",
+          "Verbální útoky na streamu nebo sociálních sítích"
+        ],
+        note: "Tresty: Varování, pokuty, suspendace, vyloučení"
+      },
+      {
+        title: "Draftovací Pravidla",
+        icon: "Target",
+        items: [
+          "Standardní Riot Games Ban/Pick formát",
+          "Draft za přítomnosti rozhodčího",
+          "Trenéři komunikují pouze během draftu"
+        ],
+        note: ""
+      },
+      {
+        title: "Správa Ligy",
+        icon: "Crown",
+        items: [
+          "Změny pravidel podléhají správě ligy",
+          "Týmy se účastní diskusí mezi splity",
+          "Právo vyloučit za závažné porušení"
+        ],
+        note: ""
+      },
+      {
+        title: "Identita Týmu",
+        icon: "Star",
+        items: [
+          "Název týmu, logo a dresy nesmí obsahovat urážlivé výrazy",
+          "Žádná politická, náboženská sdělení",
+          "Žádné napodobeniny jiných značek"
+        ],
+        note: "Veškerý vizuál musí být schválen organizátory před sezónou"
+      },
+      {
+        title: "Záskoky a Náhrady",
+        icon: "Users",
+        items: [
+          "Náhradník může být nasazen mezi hrami",
+          "Hráč musí být oficiálně zaregistrován",
+          "Dočasný záskok při technickém výpadku"
+        ],
+        note: "Týmy se musí dostavit včas, mediální povinnosti jsou závazné"
+      }
+    ],
+    downloadButtonText: "Stáhnout Kompletní Pravidla (PDF)"
   },
   champions: {
     title: "Šampioni",
     subtitle: "Hall of Fame",
-    description: "Vítězové předchozích ročníků"
+    description: "Vítězové předchozích ročníků",
+    mvpTitle: "MVP Hráči",
+    mvpSubtitle: "Nejlepší hráči z každé sezóny",
+    recordsTitle: "Turnajové Rekordy",
+    recordsSubtitle: "Nejlepší výkony v historii Targon Cup",
+    records: [
+      {
+        title: "Nejrychlejší výhra",
+        value: "18 min",
+        description: "Cosmic Reapers vs Thunder Wolves",
+        icon: "Trophy"
+      },
+      {
+        title: "Nejvyšší KDA",
+        value: "15.2",
+        description: "ReaperADC (Zima 2023)",
+        icon: "Award"
+      },
+      {
+        title: "Nejvíce damage",
+        value: "45,230",
+        description: "CelestialADC (Léto 2024)",
+        icon: "Star"
+      },
+      {
+        title: "Nejvíce titulů",
+        value: "3",
+        description: "Cosmic Reapers organizace",
+        icon: "Crown"
+      }
+    ]
   }
 };

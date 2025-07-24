@@ -134,10 +134,10 @@ const Champions: React.FC = () => {
           <div className="mb-20">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-black mb-4 text-white">
-                MVP Hráči
+                {content.champions.mvpTitle}
               </h2>
               <p className="text-lg text-gray-300">
-                Nejlepší hráči z každé sezóny
+                {content.champions.mvpSubtitle}
               </p>
             </div>
 
@@ -178,41 +178,26 @@ const Champions: React.FC = () => {
           <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-8 border border-gray-600">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-black mb-4 text-white">
-                Turnajové Rekordy
+                {content.champions.recordsTitle}
               </h2>
               <p className="text-gray-300">
-                Nejlepší výkony v historii Targon Cup
+                {content.champions.recordsSubtitle}
               </p>
             </div>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-gray-700/50 rounded-xl p-6 text-center">
-                <Trophy className="w-12 h-12 text-yellow-400 mx-auto mb-3" />
-                <div className="text-2xl font-bold text-white mb-1">18 min</div>
-                <div className="text-sm text-gray-300 mb-1">Nejrychlejší výhra</div>
-                <div className="text-xs text-gray-400">Cosmic Reapers vs Thunder Wolves</div>
-              </div>
-
-              <div className="bg-gray-700/50 rounded-xl p-6 text-center">
-                <Award className="w-12 h-12 text-blue-400 mx-auto mb-3" />
-                <div className="text-2xl font-bold text-white mb-1">15.2</div>
-                <div className="text-sm text-gray-300 mb-1">Nejvyšší KDA</div>
-                <div className="text-xs text-gray-400">ReaperADC (Zima 2023)</div>
-              </div>
-
-              <div className="bg-gray-700/50 rounded-xl p-6 text-center">
-                <Star className="w-12 h-12 text-green-400 mx-auto mb-3" />
-                <div className="text-2xl font-bold text-white mb-1">45,230</div>
-                <div className="text-sm text-gray-300 mb-1">Nejvíce damage</div>
-                <div className="text-xs text-gray-400">CelestialADC (Léto 2024)</div>
-              </div>
-
-              <div className="bg-gray-700/50 rounded-xl p-6 text-center">
-                <Crown className="w-12 h-12 text-purple-400 mx-auto mb-3" />
-                <div className="text-2xl font-bold text-white mb-1">3</div>
-                <div className="text-sm text-gray-300 mb-1">Nejvíce titulů</div>
-                <div className="text-xs text-gray-400">Cosmic Reapers organizace</div>
-              </div>
+              {content.champions.records.map((record, index) => {
+                const Icon = iconMap[record.icon] || Trophy;
+                const colors = ['text-yellow-400', 'text-blue-400', 'text-green-400', 'text-purple-400'];
+                return (
+                  <div key={index} className="bg-gray-700/50 rounded-xl p-6 text-center">
+                    <Icon className={`w-12 h-12 ${colors[index % colors.length]} mx-auto mb-3`} />
+                    <div className="text-2xl font-bold text-white mb-1">{record.value}</div>
+                    <div className="text-sm text-gray-300 mb-1">{record.title}</div>
+                    <div className="text-xs text-gray-400">{record.description}</div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
