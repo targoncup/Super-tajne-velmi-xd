@@ -191,6 +191,7 @@ const Register: React.FC = () => {
                   <span>Všichni hráči Gold+ rank</span>
                 </div>
               </div>
+              <div className="space-y-3">
                 <div className="flex items-center space-x-3">
                   <Check className="w-5 h-5 text-green-400" />
                   <span>Souhlas s pravidly turnaje</span>
@@ -199,6 +200,7 @@ const Register: React.FC = () => {
                   <Check className="w-5 h-5 text-green-400" />
                   <span>Logo a název týmu (schválení)</span>
                 </div>
+              </div>
               </div>
             </div>
           </div>
