@@ -586,6 +586,7 @@ const Register: React.FC = () => {
         </div>
       </section>
     </div>
+  </div>
   );
 };
 
