@@ -482,7 +482,7 @@ const Register: React.FC = () => {
 
               {/* Substitutes */}
               <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
-                <h3 className="text-2xl font-bold mb-6 text-white">{content.register.substitutesTitle}</h3>
+                <h3 className="text-2xl font-bold mb-6 text-white">Náhradníci (volitelné)</h3>
                 <div className="space-y-6">
                   {formData.substitutes.map((player, index) => (
                     <div key={index} className="grid md:grid-cols-4 gap-4 p-4 bg-gray-800/50 rounded-lg">
