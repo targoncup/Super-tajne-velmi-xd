@@ -113,7 +113,7 @@ const Contact: React.FC = () => {
                       {title === 'Email' ? (
                         <a href={`mailto:${contact}`} className="hover:underline">{contact}</a>
                       ) : (
-                        <a href={contact} target="_blank" rel="noopener noreferrer" className="hover:underline">{contact}</a>
+                        <a href={contact} target="_blank" rel="noopener noreferrer" className="hover:underline">https://discord.gg/c9pRsbYCt2</a>
                       )}
                     </p>
                     <p className="text-sm text-blue-300 mt-1">Dostupnost: {available}</p>
