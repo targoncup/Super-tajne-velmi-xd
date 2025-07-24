@@ -1,8 +1,8 @@
 import React from 'react';
 import { useContent } from '../hooks/useContent';
-import { 
-  Mail, 
-  MapPin, 
+import {
+  Mail,
+  MapPin,
   Clock,
   MessageCircle,
   Users,
@@ -58,7 +58,9 @@ const Contact: React.FC = () => {
           <div className="text-center mb-20">
             <div className="inline-flex items-center justify-center px-6 py-3 bg-blue-600/20 border border-blue-500/30 rounded-full mb-6">
               <Mail className="w-5 h-5 text-blue-400 mr-2" />
-              <span className="text-blue-400 font-semibold">{content.contact.subtitle}</span>
+              <span className="text-blue-400 font-semibold">
+                {content.contact.subtitle}
+              </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-black mb-6 text-white">
               {content.contact.title}
@@ -68,8 +70,8 @@ const Contact: React.FC = () => {
             </p>
           </div>
 
-          {/* Office Information */}
           <div className="space-y-8">
+            {/* Office Info */}
             <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
               <h3 className="text-xl font-bold mb-6 text-white flex items-center">
                 <MapPin className="w-6 h-6 mr-3 text-blue-400" />
@@ -85,6 +87,7 @@ const Contact: React.FC = () => {
               </div>
             </div>
 
+            {/* Working Hours */}
             <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
               <h3 className="text-xl font-bold mb-6 text-white flex items-center">
                 <Clock className="w-6 h-6 mr-3 text-blue-400" />
@@ -111,6 +114,7 @@ const Contact: React.FC = () => {
               </div>
             </div>
 
+            {/* FAQ */}
             <div className="bg-gray-700/50 rounded-2xl p-8 border border-gray-600">
               <h3 className="text-xl font-bold mb-4 text-white">FAQ</h3>
               <div className="space-y-3 text-sm">
@@ -136,7 +140,13 @@ const Contact: React.FC = () => {
                       <h4 className="text-white font-semibold">{title}</h4>
                     </div>
                     <p className="text-gray-300">{description}</p>
-                    <p className="text-white font-medium mt-2">{contact}</p>
+                    <p className="text-white font-medium mt-2">
+                      {title === 'Email' ? (
+                        <a href={`mailto:${contact}`} className="hover:underline">{contact}</a>
+                      ) : (
+                        <a href={contact} target="_blank" rel="noopener noreferrer" className="hover:underline">{contact}</a>
+                      )}
+                    </p>
                     <p className="text-sm text-blue-300 mt-1">Dostupnost: {available}</p>
                   </div>
                 ))}
@@ -154,7 +164,9 @@ const Contact: React.FC = () => {
                       <h4 className="text-white font-semibold">{title}</h4>
                     </div>
                     <p className="text-gray-300">{description}</p>
-                    <p className="text-white font-medium mt-2">{email}</p>
+                    <p className="text-white font-medium mt-2">
+                      <a href={`mailto:${email}`} className="hover:underline">{email}</a>
+                    </p>
                   </div>
                 ))}
               </div>
