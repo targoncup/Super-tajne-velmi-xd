@@ -98,7 +98,7 @@ const Rules: React.FC = () => {
                   </div>
                   
                   <div className="space-y-3">
-                    {section.items.map((item, itemIndex) => (
+                    {(section.items || []).map((item, itemIndex) => (
                       <div key={itemIndex} className="flex items-start space-x-3">
                         <div className="w-2 h-2 bg-white rounded-full mt-2 flex-shrink-0 opacity-60"></div>
                         <p className="text-gray-200 leading-relaxed">{item}</p>
