@@ -38,6 +38,17 @@ export interface SiteContent {
     subtitle: string;
     description: string;
     cta: string;
+    statsEnabled: boolean;
+    stats: {
+      teams: string;
+      teamsLabel: string;
+      prizePool: string;
+      prizePoolLabel: string;
+      viewers: string;
+      viewersLabel: string;
+      countries: string;
+      countriesLabel: string;
+    };
   };
   navigation: {
     home: string;
@@ -90,7 +101,18 @@ export const DEFAULT_CONTENT: SiteContent = {
     title: "Targon Cup 2025",
     subtitle: "Největší český League of Legends turnaj",
     description: "Připojte se k největšímu českému a slovenskému League of Legends turnaji roku 2025. Bojujte o titul mistra a ceny v hodnotě přes 100 000 Kč!",
-    cta: "Registrovat Tým"
+    cta: "Registrovat Tým",
+    statsEnabled: true,
+    stats: {
+      teams: "128",
+      teamsLabel: "Registrovaných týmů",
+      prizePool: "100 000 Kč",
+      prizePoolLabel: "Celková výhra",
+      viewers: "50 000",
+      viewersLabel: "Diváků online",
+      countries: "15",
+      countriesLabel: "Zemí"
+    }
   },
   navigation: {
     home: "Domů",
