@@ -337,7 +337,6 @@ export const DEFAULT_CONTENT: SiteContent = {
         title: "Technické Podmínky",
         icon: "Gamepad2",
         items: [
-          "Oficiální turnajové servery Riot Games",
           "Žádná externí komunikace během zápasu",
           "Schválené headsety a software",
           "Dozor administrátorů ligy",
