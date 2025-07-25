@@ -302,7 +302,7 @@ export const DEFAULT_CONTENT: SiteContent = {
         icon: "Trophy",
         items: [
           "Počet týmů: 8–10",
-          "Splity: Dva ročně – Jarní, Letní a Zimní",
+          "Splity: Dva ročně – Jarní, Letní a Zimní na EUNE",
           "Základní část: Double Round Robin (každý s každým 2×)",
           "Formát zápasu: Best of 3 (Fearless)",
           "Playoffs: Top 6 týmů postupuje do vyřazovací části",
