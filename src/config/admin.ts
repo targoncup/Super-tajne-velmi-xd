@@ -211,7 +211,7 @@ export const DEFAULT_CONTENT: SiteContent = {
   footer: {
     title: "Targon Cup 2025",
     description: "Největší český League of Legends turnaj",
-    copyright: "© 2025 Targon Cup. Všechna práva vyhrazena."
+    copyright: "© 2025 Targon Cup, Všechna práva vyhrazena."
   },
   tournament: {
     title: "Turnaj",
