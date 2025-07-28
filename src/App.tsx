@@ -28,7 +28,6 @@ function App() {
     <Router>
       <div className="min-h-screen bg-gray-800 text-white">
         <ScrollToTop />
-        <Navigation />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/tournament" element={<Tournament />} />
@@ -36,9 +35,21 @@ function App() {
           <Route path="/champions" element={<Champions />} />
           <Route path="/register" element={<Register />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin" element={
+            <div>
+              <Admin />
+            </div>
+          } />
         </Routes>
-        <Footer />
+        <Routes>
+          <Route path="/admin" element={null} />
+          <Route path="*" element={
+            <>
+              <Navigation />
+              <Footer />
+            </>
+          } />
+        </Routes>
       </div>
     </Router>
   );

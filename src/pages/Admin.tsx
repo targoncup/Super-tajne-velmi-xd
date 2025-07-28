@@ -177,6 +177,7 @@ const Admin: React.FC = () => {
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-gray-800 text-white pt-20">
+        {/* Remove navigation for login page */}
         <div className="max-w-md mx-auto px-4 py-24">
           <div className="bg-gray-700 rounded-2xl p-8 border border-gray-600 shadow-2xl">
             <div className="text-center mb-8">
@@ -239,7 +240,8 @@ const Admin: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-800 text-white">
+    <div className="min-h-screen bg-gray-800 text-white pt-20">
+      {/* Admin page without main navigation */}
       <div className="flex">
         {/* Sidebar */}
         <div className="w-64 bg-gray-900 min-h-screen border-r border-gray-700">
