@@ -179,25 +179,31 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ section, onClose }) => {
     setIsLoading(true);
     setSaveMessage('');
     
-    updateContent({ [section]: editedContent })
-      .then(() => {
-        setSaveMessage('Změny byly úspěšně uloženy a synchronizovány!');
+    // Use async/await for better error handling
+    const saveContent = async () => {
+      try {
+        await updateContent({ [section]: editedContent });
+        setSaveMessage('Změny byly úspěšně uloženy do databáze!');
         setIsLoading(false);
         
+        // Close after showing success message
         setTimeout(() => {
           setSaveMessage('');
           onClose();
-        }, 1500);
-      })
-      .catch((error) => {
-        setSaveMessage('Chyba při ukládání: ' + (error.message || 'Zkuste to znovu'));
+        }, 2000);
+      } catch (error) {
         console.error('Save error:', error);
+        setSaveMessage(`Chyba při ukládání: ${error instanceof Error ? error.message : 'Neznámá chyba'}`);
         setIsLoading(false);
         
+        // Clear error message after 5 seconds
         setTimeout(() => {
           setSaveMessage('');
-        }, 3000);
-      });
+        }, 5000);
+      }
+    };
+    
+    saveContent();
   };
 
   const handleCancel = () => {

@@ -79,20 +79,34 @@ export const useContent = () => {
   const updateContent = async (newContent: Partial<SiteContent>) => {
     try {
       setError(null);
+      
+      // Create updated content by merging with current content
       const updatedContent = deepMerge(content, newContent);
       
       // First update local state
       setContent(updatedContent);
       
-      // Then save to database
-      await saveToSupabase(updatedContent);
+      // Then save to database with proper error handling
+      const { error: upsertError } = await supabase
+        .from('site_content')
+        .upsert({ 
+          key: 'site', 
+          data: updatedContent 
+        }, { 
+          onConflict: 'key' 
+        });
+
+      if (upsertError) {
+        console.error('Supabase upsert error:', upsertError);
+        // Revert local state on error
+        setContent(content);
+        throw new Error(`Database error: ${upsertError.message}`);
+      }
       
-      console.log('Content updated and saved successfully');
+      console.log('Content updated and saved successfully to Supabase');
     } catch (err) {
       console.error('Error updating content:', err);
       setError(err instanceof Error ? err.message : 'Failed to update content');
-      // Revert local state on error
-      setContent(content);
       throw err;
     }
   };
@@ -100,8 +114,24 @@ export const useContent = () => {
   const resetContent = async () => {
     try {
       setError(null);
+      
+      // Save default content to database first
+      const { error: upsertError } = await supabase
+        .from('site_content')
+        .upsert({ 
+          key: 'site', 
+          data: DEFAULT_CONTENT 
+        }, { 
+          onConflict: 'key' 
+        });
+
+      if (upsertError) {
+        console.error('Supabase reset error:', upsertError);
+        throw new Error(`Database error: ${upsertError.message}`);
+      }
+      
+      // Then update local state
       setContent(DEFAULT_CONTENT);
-      await saveToSupabase(DEFAULT_CONTENT);
       console.log('Content reset successfully');
     } catch (err) {
       console.error('Error resetting content:', err);

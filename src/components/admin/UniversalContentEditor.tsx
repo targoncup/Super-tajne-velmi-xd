@@ -263,25 +263,29 @@ const UniversalContentEditor: React.FC<UniversalContentEditorProps> = ({ onClose
     setIsLoading(true);
     setSaveMessage('');
     
-    updateContent(editedContent)
-      .then(() => {
-        setSaveMessage('Všechny změny byly úspěšně uloženy a synchronizovány do databázy!');
+    // Use async/await for better error handling
+    const saveContent = async () => {
+      try {
+        await updateContent(editedContent);
+        setSaveMessage('Všechny změny byly úspěšně uloženy do databáze!');
         setHasChanges(false);
         setIsLoading(false);
         
         setTimeout(() => {
           setSaveMessage('');
         }, 3000);
-      })
-      .catch((error) => {
-        setSaveMessage('Chyba při ukládání: ' + (error.message || 'Zkuste to znovu'));
+      } catch (error) {
         console.error('Save error:', error);
+        setSaveMessage(`Chyba při ukládání: ${error instanceof Error ? error.message : 'Neznámá chyba'}`);
         setIsLoading(false);
         
         setTimeout(() => {
           setSaveMessage('');
-        }, 4000);
-      });
+        }, 5000);
+      }
+    };
+    
+    saveContent();
   };
 
   const handleReset = () => {
@@ -289,22 +293,25 @@ const UniversalContentEditor: React.FC<UniversalContentEditorProps> = ({ onClose
       setIsLoading(true);
       setSaveMessage('');
       
-      resetContent()
-        .then(() => {
+      const resetContentAsync = async () => {
+        try {
+          await resetContent();
           setEditedContent(DEFAULT_CONTENT);
           setHasChanges(false);
-          setSaveMessage('Obsah byl obnoven na výchozí hodnoty a synchronizován!');
+          setSaveMessage('Obsah byl obnoven na výchozí hodnoty!');
           setIsLoading(false);
           
           setTimeout(() => setSaveMessage(''), 3000);
-        })
-        .catch((error) => {
-          setSaveMessage('Chyba při resetování: ' + (error.message || 'Zkuste to znovu'));
+        } catch (error) {
           console.error('Reset error:', error);
+          setSaveMessage(`Chyba při resetování: ${error instanceof Error ? error.message : 'Neznámá chyba'}`);
           setIsLoading(false);
           
-          setTimeout(() => setSaveMessage(''), 4000);
-        });
+          setTimeout(() => setSaveMessage(''), 5000);
+        }
+      };
+      
+      resetContentAsync();
     }
   };
 
