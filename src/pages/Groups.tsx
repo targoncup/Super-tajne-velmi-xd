@@ -10,6 +10,17 @@ import {
   Gamepad2
 } from 'lucide-react';
 
+// Icon mapping for dynamic icon rendering
+const iconMap: { [key: string]: React.ComponentType<any> } = {
+  Trophy,
+  Users,
+  Star,
+  Shield,
+  Crown,
+  Target,
+  Gamepad2
+};
+
 const Groups: React.FC = () => {
   const { content } = useContent();
 
