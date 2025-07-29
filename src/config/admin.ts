@@ -89,6 +89,7 @@ export interface SiteContent {
       home: boolean;
       tournament: boolean;
       groups: boolean;
+      groups: boolean;
       register: boolean;
       rules: boolean;
       champions: boolean;
@@ -211,6 +212,7 @@ export const DEFAULT_CONTENT: SiteContent = {
       home: true,
       tournament: true,
       groups: true,
+      groups: true,
       register: true,
       rules: true,
       champions: true,
@@ -256,7 +258,30 @@ export const DEFAULT_CONTENT: SiteContent = {
   groups: {
     title: "Skupiny",
     subtitle: "Turnajové skupiny",
-    description: "Aktuálne postavenie týmov v skupinovej fáze"
+    description: "Aktuálne postavenie týmov v skupinovej fáze",
+    formatTitle: "Formát Turnaja",
+    formatSubtitle: "Ako funguje skupinová fáza",
+    qualificationInfo: {
+      advance: "1.-2. miesto: Postup do playoff",
+      eliminate: "3.-4. miesto: Vypadnutie"
+    },
+    formatCards: [
+      {
+        title: "Skupinová Fáze",
+        description: "Každý s každým (Round Robin)",
+        icon: "Gamepad2"
+      },
+      {
+        title: "Bodovanie",
+        description: "3 body za výhru, 0 za prehru",
+        icon: "Trophy"
+      },
+      {
+        title: "Postup",
+        description: "Top 2 z každej skupiny",
+        icon: "Crown"
+      }
+    ]
   },
   contact: {
     title: "Kontakt",
