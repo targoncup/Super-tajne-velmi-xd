@@ -59,6 +59,7 @@ const Admin: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loginError, setLoginError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [saveMessage, setSaveMessage] = useState('');
 
   const stats = getRegistrationStats();
 
