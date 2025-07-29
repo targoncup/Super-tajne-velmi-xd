@@ -222,7 +222,7 @@ export const DEFAULT_CONTENT: SiteContent = {
   navigation: {
     home: "Domů",
     tournament: "Turnaj",
-    groups: "Skupiny",
+    groups: "Tabulka",
     register: "Registrace",
     rules: "Pravidla",
     champions: "Šampioni",
