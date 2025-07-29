@@ -277,7 +277,7 @@ export const DEFAULT_CONTENT: SiteContent = {
   groups: {
     title: "Tabulka",
     subtitle: "Ligová tabulka",
-    description: "Aktuální postavení týmů v lize",
+    description: "Aktuální postavení týmů ve skupinové fázi",
     teams: [
       { name: 'Celestial Guardians', tag: 'CG', points: 27, wins: 9, losses: 0, logo: '' },
       { name: 'Starforge Legends', tag: 'SL', points: 24, wins: 8, losses: 1, logo: '' },
