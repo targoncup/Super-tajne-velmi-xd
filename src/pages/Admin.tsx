@@ -40,7 +40,7 @@ import {
 
 const Admin: React.FC = () => {
   const { isAuthenticated, login, logout } = useAuth();
-  const { content, updateContent, resetContent } = useContent();
+  const { content, updateContent, resetContent, reloadContent, loading: contentLoading, error: contentError } = useContent();
   const { 
     registrations, 
     loading: registrationsLoading, 
@@ -167,10 +167,22 @@ const Admin: React.FC = () => {
   const handleReset = () => {
     if (window.confirm('Opravdu chcete obnovit všechen obsah na výchozí hodnoty? Tato akce je nevratná.')) {
       setIsLoading(true);
-      setTimeout(() => {
-        resetContent();
-        setIsLoading(false);
-      }, 1000);
+      setSaveMessage('');
+      
+      resetContent()
+        .then(() => {
+          setSaveMessage('Obsah byl úspěšně obnoven na výchozí hodnoty!');
+          setIsLoading(false);
+          
+          setTimeout(() => setSaveMessage(''), 3000);
+        })
+        .catch((error) => {
+          setSaveMessage('Chyba při resetování: ' + (error.message || 'Zkuste to znovu'));
+          console.error('Reset error:', error);
+          setIsLoading(false);
+          
+          setTimeout(() => setSaveMessage(''), 4000);
+        });
     }
   };
 

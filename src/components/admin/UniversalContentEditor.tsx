@@ -261,40 +261,50 @@ const UniversalContentEditor: React.FC<UniversalContentEditorProps> = ({ onClose
 
   const handleSave = () => {
     setIsLoading(true);
+    setSaveMessage('');
     
-    setTimeout(async () => {
-      try {
-        await updateContent(editedContent);
+    updateContent(editedContent)
+      .then(() => {
         setSaveMessage('Všechny změny byly úspěšně uloženy a synchronizovány do databázy!');
-      } catch (error) {
-        setSaveMessage('Chyba při ukládání. Zkuste to znovu.');
+        setHasChanges(false);
+        setIsLoading(false);
+        
+        setTimeout(() => {
+          setSaveMessage('');
+        }, 3000);
+      })
+      .catch((error) => {
+        setSaveMessage('Chyba při ukládání: ' + (error.message || 'Zkuste to znovu'));
         console.error('Save error:', error);
-      }
-      setHasChanges(false);
-      setIsLoading(false);
-      
-      setTimeout(() => {
-        setSaveMessage('');
-      }, 3000);
-    }, 1000);
+        setIsLoading(false);
+        
+        setTimeout(() => {
+          setSaveMessage('');
+        }, 4000);
+      });
   };
 
   const handleReset = () => {
     if (window.confirm('Opravdu chcete obnovit všechen obsah na výchozí hodnoty? Tato akce je nevratná.')) {
       setIsLoading(true);
-      setTimeout(async () => {
-        try {
-          await resetContent();
+      setSaveMessage('');
+      
+      resetContent()
+        .then(() => {
           setEditedContent(DEFAULT_CONTENT);
           setHasChanges(false);
           setSaveMessage('Obsah byl obnoven na výchozí hodnoty a synchronizován!');
-        } catch (error) {
-          setSaveMessage('Chyba při resetování. Zkuste to znovu.');
+          setIsLoading(false);
+          
+          setTimeout(() => setSaveMessage(''), 3000);
+        })
+        .catch((error) => {
+          setSaveMessage('Chyba při resetování: ' + (error.message || 'Zkuste to znovu'));
           console.error('Reset error:', error);
-        }
-        setIsLoading(false);
-        setTimeout(() => setSaveMessage(''), 3000);
-      }, 1000);
+          setIsLoading(false);
+          
+          setTimeout(() => setSaveMessage(''), 4000);
+        });
     }
   };
 

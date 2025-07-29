@@ -2,33 +2,36 @@ import { useState, useEffect } from 'react';
 import { SiteContent, DEFAULT_CONTENT } from '../config/admin';
 import { supabase } from '../lib/supabase';
 
-const CONTENT_STORAGE_KEY = 'targon_cup_content';
-
 export const useContent = () => {
   const [content, setContent] = useState<SiteContent>(DEFAULT_CONTENT);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadContent = async () => {
       try {
+        setError(null);
         const { data, error } = await supabase
           .from('site_content')
           .select('data')
           .eq('key', 'site')
-          .maybeSingle();
+          .single();
 
-        if (error && error.code !== 'PGRST116') throw error;
-
-        if (data && data.data) {
+        if (error) {
+          if (error.code === 'PGRST116') {
+            // No data found, create initial record
+            await saveToSupabase(DEFAULT_CONTENT);
+            setContent(DEFAULT_CONTENT);
+          } else {
+            throw error;
+          }
+        } else if (data && data.data) {
           const merged = deepMerge(DEFAULT_CONTENT, data.data);
           setContent(merged);
-        } else {
-          // If no data in Supabase, save default content
-          await saveToSupabase(DEFAULT_CONTENT);
-          setContent(DEFAULT_CONTENT);
         }
       } catch (err) {
         console.error('Error loading content:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load content');
         setContent(DEFAULT_CONTENT);
       } finally {
         setLoading(false);
@@ -55,34 +58,89 @@ export const useContent = () => {
 
   const saveToSupabase = async (contentToSave: SiteContent) => {
     try {
+      setError(null);
       const { error } = await supabase
         .from('site_content')
         .upsert({ key: 'site', data: contentToSave }, { onConflict: 'key' });
 
-      if (error) throw error;
+      if (error) {
+        console.error('Supabase error:', error);
+        throw error;
+      }
+      
+      console.log('Content saved successfully to Supabase');
     } catch (err) {
       console.error('Error saving content to Supabase:', err);
+      setError(err instanceof Error ? err.message : 'Failed to save content');
       throw err;
     }
   };
 
   const updateContent = async (newContent: Partial<SiteContent>) => {
-    const updatedContent = deepMerge(content, newContent);
-    setContent(updatedContent);
-
-    // Save to Supabase
-    await saveToSupabase(updatedContent);
+    try {
+      setError(null);
+      const updatedContent = deepMerge(content, newContent);
+      
+      // First update local state
+      setContent(updatedContent);
+      
+      // Then save to database
+      await saveToSupabase(updatedContent);
+      
+      console.log('Content updated and saved successfully');
+    } catch (err) {
+      console.error('Error updating content:', err);
+      setError(err instanceof Error ? err.message : 'Failed to update content');
+      // Revert local state on error
+      setContent(content);
+      throw err;
+    }
   };
 
   const resetContent = async () => {
-    setContent(DEFAULT_CONTENT);
-    await saveToSupabase(DEFAULT_CONTENT);
+    try {
+      setError(null);
+      setContent(DEFAULT_CONTENT);
+      await saveToSupabase(DEFAULT_CONTENT);
+      console.log('Content reset successfully');
+    } catch (err) {
+      console.error('Error resetting content:', err);
+      setError(err instanceof Error ? err.message : 'Failed to reset content');
+      throw err;
+    }
+  };
+
+  // Force reload content from database
+  const reloadContent = async () => {
+    setLoading(true);
+    try {
+      setError(null);
+      const { data, error } = await supabase
+        .from('site_content')
+        .select('data')
+        .eq('key', 'site')
+        .single();
+
+      if (error) throw error;
+      
+      if (data && data.data) {
+        const merged = deepMerge(DEFAULT_CONTENT, data.data);
+        setContent(merged);
+      }
+    } catch (err) {
+      console.error('Error reloading content:', err);
+      setError(err instanceof Error ? err.message : 'Failed to reload content');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return {
     content,
     updateContent,
     resetContent,
+    reloadContent,
     loading,
+    error,
   };
 };
