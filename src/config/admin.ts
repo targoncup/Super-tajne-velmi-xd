@@ -222,7 +222,7 @@ export const DEFAULT_CONTENT: SiteContent = {
   navigation: {
     home: "Domů",
     tournament: "Turnaj",
-    groups: "Tabulka",
+    groups: "Skupiny",
     register: "Registrace",
     rules: "Pravidla",
     champions: "Šampioni",
@@ -275,9 +275,9 @@ export const DEFAULT_CONTENT: SiteContent = {
     successMessage: "Váš tým byl úspěšně zaregistrován. Obdržíte potvrzovací email s dalšími instrukcemi."
   },
   groups: {
-    title: "Skupiny",
-    subtitle: "Turnajové skupiny",
-    description: "Aktuálne postavenie týmov v skupinovej fáze",
+    title: "Tabulka",
+    subtitle: "Ligová tabulka",
+    description: "Aktuální postavení týmů v lize",
     teams: [
       { name: 'Celestial Guardians', tag: 'CG', points: 27, wins: 9, losses: 0, logo: '' },
       { name: 'Starforge Legends', tag: 'SL', points: 24, wins: 8, losses: 1, logo: '' },
@@ -290,26 +290,26 @@ export const DEFAULT_CONTENT: SiteContent = {
       { name: 'Storm Eagles', tag: 'SE', points: 3, wins: 1, losses: 8, logo: '' },
       { name: 'Void Walkers', tag: 'VW', points: 0, wins: 0, losses: 9, logo: '' }
     ],
-    formatTitle: "Formát Turnaja",
-    formatSubtitle: "Ako funguje skupinová fáza",
+    formatTitle: "Formát Turnaje",
+    formatSubtitle: "Jak funguje ligová fáze",
     qualificationInfo: {
-      advance: "1.-6. miesto: Postup do playoff",
-      eliminate: "7.-10. miesto: Vypadnutie"
+      advance: "1.-6. místo: Postup do playoff",
+      eliminate: "7.-10. místo: Vypadnutí"
     },
     formatCards: [
       {
-        title: "Liga Fáza",
+        title: "Ligová Fáze",
         description: "Každý s každým (Round Robin)",
         icon: "Gamepad2"
       },
       {
-        title: "Bodovanie",
-        description: "3 body za výhru, 0 za prehru",
+        title: "Bodování",
+        description: "3 body za výhru, 0 za prohru",
         icon: "Trophy"
       },
       {
         title: "Postup",
-        description: "Top 2 z každej skupiny",
+        description: "Top 6 týmů postupuje",
         icon: "Crown"
       }
     ]

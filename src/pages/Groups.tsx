@@ -87,7 +87,7 @@ const Groups: React.FC = () => {
         </div>
       </section>
 
-      {/* Teams Section */}
+      {/* Tabulka Section */}
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-8 border border-gray-600 hover:border-blue-500/50 transition-all duration-300">
@@ -95,7 +95,7 @@ const Groups: React.FC = () => {
               <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center">
                 <Trophy className="w-6 h-6 text-white" />
               </div>
-              <h2 className="text-2xl font-bold text-white">Tabuľka Ligy</h2>
+              <h2 className="text-2xl font-bold text-white">Tabulka Ligy</h2>
             </div>
 
             <div className="space-y-4">
@@ -108,7 +108,7 @@ const Groups: React.FC = () => {
                 <div className="col-span-2 text-center">Body</div>
               </div>
 
-              {/* Teams */}
+              {/* Týmy */}
               {teams.map((team, index) => {
                 const position = index + 1;
                 return (
@@ -150,7 +150,7 @@ const Groups: React.FC = () => {
               })}
             </div>
 
-            {/* Qualification Info */}
+            {/* Informace o postupu */}
             <div className="mt-6 p-4 bg-blue-600/20 rounded-lg border border-blue-500/30">
               <div className="text-sm text-blue-300">
                 <div className="flex items-center space-x-2 mb-2">
@@ -165,7 +165,7 @@ const Groups: React.FC = () => {
             </div>
           </div>
 
-          {/* Tournament Format Info */}
+          {/* Informace o formátu turnaje */}
           <div className="mt-16 bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-8 border border-gray-600">
             <div className="text-center mb-8">
               <h2 className="text-3xl font-black mb-4 text-white">{content.groups.formatTitle}</h2>
