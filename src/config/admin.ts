@@ -115,6 +115,29 @@ export interface SiteContent {
     title: string;
     subtitle: string;
     description: string;
+    teams: Array<{
+      id: string;
+      name: string;
+      teams: Array<{
+        name: string;
+        tag: string;
+        points: number;
+        wins: number;
+        losses: number;
+        logo?: string;
+      }>;
+    }>;
+    formatTitle: string;
+    formatSubtitle: string;
+    qualificationInfo: {
+      advance: string;
+      eliminate: string;
+    };
+    formatCards: Array<{
+      title: string;
+      description: string;
+      icon: string;
+    }>;
   };
   contact: {
     title: string;
@@ -259,6 +282,28 @@ export const DEFAULT_CONTENT: SiteContent = {
     title: "Skupiny",
     subtitle: "Turnajové skupiny",
     description: "Aktuálne postavenie týmov v skupinovej fáze",
+    teams: [
+      {
+        id: 'A',
+        name: 'Skupina A',
+        teams: [
+          { name: 'Celestial Guardians', tag: 'CG', points: 9, wins: 3, losses: 0, logo: '' },
+          { name: 'Thunder Wolves', tag: 'TW', points: 6, wins: 2, losses: 1, logo: '' },
+          { name: 'Dragon Slayers', tag: 'DS', points: 3, wins: 1, losses: 2, logo: '' },
+          { name: 'Phoenix Rising', tag: 'PR', points: 0, wins: 0, losses: 3, logo: '' }
+        ]
+      },
+      {
+        id: 'B',
+        name: 'Skupina B',
+        teams: [
+          { name: 'Starforge Legends', tag: 'SL', points: 9, wins: 3, losses: 0, logo: '' },
+          { name: 'Cosmic Reapers', tag: 'CR', points: 6, wins: 2, losses: 1, logo: '' },
+          { name: 'Shadow Hunters', tag: 'SH', points: 3, wins: 1, losses: 2, logo: '' },
+          { name: 'Ice Breakers', tag: 'IB', points: 0, wins: 0, losses: 3, logo: '' }
+        ]
+      }
+    ],
     formatTitle: "Formát Turnaja",
     formatSubtitle: "Ako funguje skupinová fáza",
     qualificationInfo: {

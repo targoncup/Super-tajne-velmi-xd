@@ -135,8 +135,16 @@ const Groups: React.FC = () => {
                           </div>
                         </div>
                         <div className="col-span-5 flex items-center space-x-3">
-                          <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center">
-                            <span className="text-xs font-bold text-white">{team.tag}</span>
+                          <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg flex items-center justify-center overflow-hidden">
+                            {team.logo ? (
+                              <img 
+                                src={team.logo} 
+                                alt={`${team.name} logo`}
+                                className="w-full h-full object-cover rounded-lg"
+                              />
+                            ) : (
+                              <span className="text-xs font-bold text-white">{team.tag}</span>
+                            )}
                           </div>
                           <div>
                             <div className="text-white font-medium">{team.name}</div>
