@@ -262,9 +262,14 @@ const UniversalContentEditor: React.FC<UniversalContentEditorProps> = ({ onClose
   const handleSave = () => {
     setIsLoading(true);
     
-    setTimeout(() => {
-      updateContent(editedContent);
-      setSaveMessage('Všechny změny byly úspěšně uloženy a publikovány!');
+    setTimeout(async () => {
+      try {
+        await updateContent(editedContent);
+        setSaveMessage('Všechny změny byly úspěšně uloženy a synchronizovány do databázy!');
+      } catch (error) {
+        setSaveMessage('Chyba při ukládání. Zkuste to znovu.');
+        console.error('Save error:', error);
+      }
       setHasChanges(false);
       setIsLoading(false);
       
@@ -277,11 +282,16 @@ const UniversalContentEditor: React.FC<UniversalContentEditorProps> = ({ onClose
   const handleReset = () => {
     if (window.confirm('Opravdu chcete obnovit všechen obsah na výchozí hodnoty? Tato akce je nevratná.')) {
       setIsLoading(true);
-      setTimeout(() => {
-        resetContent();
-        setEditedContent(JSON.parse(JSON.stringify(content)));
-        setHasChanges(false);
-        setSaveMessage('Obsah byl obnoven na výchozí hodnoty!');
+      setTimeout(async () => {
+        try {
+          await resetContent();
+          setEditedContent(DEFAULT_CONTENT);
+          setHasChanges(false);
+          setSaveMessage('Obsah byl obnoven na výchozí hodnoty a synchronizován!');
+        } catch (error) {
+          setSaveMessage('Chyba při resetování. Zkuste to znovu.');
+          console.error('Reset error:', error);
+        }
         setIsLoading(false);
         setTimeout(() => setSaveMessage(''), 3000);
       }, 1000);

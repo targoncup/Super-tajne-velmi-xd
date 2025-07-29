@@ -178,14 +178,21 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ section, onClose }) => {
     
     setIsLoading(true);
     
-    setTimeout(() => {
-      updateContent({ [section]: editedContent });
-      setSaveMessage('Změny byly úspěšně uloženy!');
+    setTimeout(async () => {
+      try {
+        await updateContent({ [section]: editedContent });
+        setSaveMessage('Změny byly úspěšně uloženy a synchronizovány!');
+      } catch (error) {
+        setSaveMessage('Chyba při ukládání. Zkuste to znovu.');
+        console.error('Save error:', error);
+      }
       setIsLoading(false);
       
       setTimeout(() => {
         setSaveMessage('');
-        onClose();
+        if (saveMessage.includes('úspěšně')) {
+          onClose();
+        }
       }, 2000);
     }, 800);
   };

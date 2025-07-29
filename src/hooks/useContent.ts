@@ -11,7 +11,6 @@ export const useContent = () => {
   useEffect(() => {
     const loadContent = async () => {
       try {
-        console.log('Loading content from Supabase...');
         const { data, error } = await supabase
           .from('site_content')
           .select('data')
@@ -21,35 +20,16 @@ export const useContent = () => {
         if (error && error.code !== 'PGRST116') throw error;
 
         if (data && data.data) {
-          console.log('Loaded content from Supabase:', data.data);
           const merged = deepMerge(DEFAULT_CONTENT, data.data);
-          console.log('Merged content:', merged);
           setContent(merged);
-          localStorage.setItem(CONTENT_STORAGE_KEY, JSON.stringify(merged));
         } else {
-          console.log('No data from Supabase, using localStorage or default');
-          const savedContent = localStorage.getItem(CONTENT_STORAGE_KEY);
-          if (savedContent) {
-            const parsed = JSON.parse(savedContent);
-            console.log('Loaded from localStorage:', parsed);
-            const merged = deepMerge(DEFAULT_CONTENT, parsed);
-            setContent(merged);
-          }
+          // If no data in Supabase, save default content
+          await saveToSupabase(DEFAULT_CONTENT);
+          setContent(DEFAULT_CONTENT);
         }
       } catch (err) {
         console.error('Error loading content:', err);
-        const savedContent = localStorage.getItem(CONTENT_STORAGE_KEY);
-        if (savedContent) {
-          try {
-            const parsed = JSON.parse(savedContent);
-            const merged = deepMerge(DEFAULT_CONTENT, parsed);
-            setContent(merged);
-          } catch {
-            setContent(DEFAULT_CONTENT);
-          }
-        } else {
-          setContent(DEFAULT_CONTENT);
-        }
+        setContent(DEFAULT_CONTENT);
       } finally {
         setLoading(false);
       }
@@ -73,35 +53,30 @@ export const useContent = () => {
     return result;
   };
 
-  const updateContent = async (newContent: Partial<SiteContent>) => {
-    const updatedContent = deepMerge(content, newContent);
-    setContent(updatedContent);
-    localStorage.setItem(CONTENT_STORAGE_KEY, JSON.stringify(updatedContent));
-
+  const saveToSupabase = async (contentToSave: SiteContent) => {
     try {
       const { error } = await supabase
         .from('site_content')
-        .upsert({ key: 'site', data: updatedContent }, { onConflict: 'key' });
+        .upsert({ key: 'site', data: contentToSave }, { onConflict: 'key' });
 
       if (error) throw error;
     } catch (err) {
       console.error('Error saving content to Supabase:', err);
+      throw err;
     }
+  };
+
+  const updateContent = async (newContent: Partial<SiteContent>) => {
+    const updatedContent = deepMerge(content, newContent);
+    setContent(updatedContent);
+
+    // Save to Supabase
+    await saveToSupabase(updatedContent);
   };
 
   const resetContent = async () => {
     setContent(DEFAULT_CONTENT);
-    localStorage.removeItem(CONTENT_STORAGE_KEY);
-
-    try {
-      const { error } = await supabase
-        .from('site_content')
-        .update({ data: DEFAULT_CONTENT })
-        .eq('key', 'site');
-      if (error) throw error;
-    } catch (err) {
-      console.error('Error resetting content in Supabase:', err);
-    }
+    await saveToSupabase(DEFAULT_CONTENT);
   };
 
   return {
