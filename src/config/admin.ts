@@ -116,16 +116,12 @@ export interface SiteContent {
     subtitle: string;
     description: string;
     teams: Array<{
-      id: string;
       name: string;
-      teams: Array<{
-        name: string;
-        tag: string;
-        points: number;
-        wins: number;
-        losses: number;
-        logo?: string;
-      }>;
+      tag: string;
+      points: number;
+      wins: number;
+      losses: number;
+      logo?: string;
     }>;
     formatTitle: string;
     formatSubtitle: string;
@@ -283,36 +279,26 @@ export const DEFAULT_CONTENT: SiteContent = {
     subtitle: "Turnajové skupiny",
     description: "Aktuálne postavenie týmov v skupinovej fáze",
     teams: [
-      {
-        id: 'A',
-        name: 'Skupina A',
-        teams: [
-          { name: 'Celestial Guardians', tag: 'CG', points: 9, wins: 3, losses: 0, logo: '' },
-          { name: 'Thunder Wolves', tag: 'TW', points: 6, wins: 2, losses: 1, logo: '' },
-          { name: 'Dragon Slayers', tag: 'DS', points: 3, wins: 1, losses: 2, logo: '' },
-          { name: 'Phoenix Rising', tag: 'PR', points: 0, wins: 0, losses: 3, logo: '' }
-        ]
-      },
-      {
-        id: 'B',
-        name: 'Skupina B',
-        teams: [
-          { name: 'Starforge Legends', tag: 'SL', points: 9, wins: 3, losses: 0, logo: '' },
-          { name: 'Cosmic Reapers', tag: 'CR', points: 6, wins: 2, losses: 1, logo: '' },
-          { name: 'Shadow Hunters', tag: 'SH', points: 3, wins: 1, losses: 2, logo: '' },
-          { name: 'Ice Breakers', tag: 'IB', points: 0, wins: 0, losses: 3, logo: '' }
-        ]
-      }
+      { name: 'Celestial Guardians', tag: 'CG', points: 27, wins: 9, losses: 0, logo: '' },
+      { name: 'Starforge Legends', tag: 'SL', points: 24, wins: 8, losses: 1, logo: '' },
+      { name: 'Cosmic Reapers', tag: 'CR', points: 21, wins: 7, losses: 2, logo: '' },
+      { name: 'Thunder Wolves', tag: 'TW', points: 18, wins: 6, losses: 3, logo: '' },
+      { name: 'Dragon Slayers', tag: 'DS', points: 15, wins: 5, losses: 4, logo: '' },
+      { name: 'Shadow Hunters', tag: 'SH', points: 12, wins: 4, losses: 5, logo: '' },
+      { name: 'Phoenix Rising', tag: 'PR', points: 9, wins: 3, losses: 6, logo: '' },
+      { name: 'Ice Breakers', tag: 'IB', points: 6, wins: 2, losses: 7, logo: '' },
+      { name: 'Storm Eagles', tag: 'SE', points: 3, wins: 1, losses: 8, logo: '' },
+      { name: 'Void Walkers', tag: 'VW', points: 0, wins: 0, losses: 9, logo: '' }
     ],
     formatTitle: "Formát Turnaja",
     formatSubtitle: "Ako funguje skupinová fáza",
     qualificationInfo: {
-      advance: "1.-2. miesto: Postup do playoff",
-      eliminate: "3.-4. miesto: Vypadnutie"
+      advance: "1.-6. miesto: Postup do playoff",
+      eliminate: "7.-10. miesto: Vypadnutie"
     },
     formatCards: [
       {
-        title: "Skupinová Fáze",
+        title: "Liga Fáza",
         description: "Každý s každým (Round Robin)",
         icon: "Gamepad2"
       },
