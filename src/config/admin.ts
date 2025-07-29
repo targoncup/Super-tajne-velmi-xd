@@ -80,6 +80,7 @@ export interface SiteContent {
   navigation: {
     home: string;
     tournament: string;
+    groups: string;
     register: string;
     rules: string;
     champions: string;
@@ -87,6 +88,7 @@ export interface SiteContent {
     pageVisibility: {
       home: boolean;
       tournament: boolean;
+      groups: boolean;
       register: boolean;
       rules: boolean;
       champions: boolean;
@@ -104,6 +106,11 @@ export interface SiteContent {
     description: string;
   };
   register: {
+    title: string;
+    subtitle: string;
+    description: string;
+  };
+  groups: {
     title: string;
     subtitle: string;
     description: string;
@@ -195,6 +202,7 @@ export const DEFAULT_CONTENT: SiteContent = {
   navigation: {
     home: "Domů",
     tournament: "Turnaj",
+    groups: "Skupiny",
     register: "Registrace",
     rules: "Pravidla",
     champions: "Šampioni",
@@ -202,6 +210,7 @@ export const DEFAULT_CONTENT: SiteContent = {
     pageVisibility: {
       home: true,
       tournament: true,
+      groups: true,
       register: true,
       rules: true,
       champions: true,
@@ -243,6 +252,11 @@ export const DEFAULT_CONTENT: SiteContent = {
     submitButtonText: "Registrovat Tým",
     successTitle: "Registrace Úspěšná!",
     successMessage: "Váš tým byl úspěšně zaregistrován. Obdržíte potvrzovací email s dalšími instrukcemi."
+  },
+  groups: {
+    title: "Skupiny",
+    subtitle: "Turnajové skupiny",
+    description: "Aktuálne postavenie týmov v skupinovej fáze"
   },
   contact: {
     title: "Kontakt",

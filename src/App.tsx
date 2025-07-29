@@ -9,6 +9,7 @@ import Tournament from './pages/Tournament';
 import Rules from './pages/Rules';
 import Champions from './pages/Champions';
 import Register from './pages/Register';
+import Groups from './pages/Groups';
 import Contact from './pages/Contact';
 import Admin from './pages/Admin';
 
@@ -33,6 +34,7 @@ function App() {
           <Route path="/tournament" element={<Tournament />} />
           <Route path="/rules" element={<Rules />} />
           <Route path="/champions" element={<Champions />} />
+          <Route path="/groups" element={<Groups />} />
           <Route path="/register" element={<Register />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/admin" element={
