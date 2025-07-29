@@ -579,6 +579,7 @@ const Admin: React.FC = () => {
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                   {[
                     { key: 'tournament', label: 'Turnaj', icon: Calendar },
+                    { key: 'groups', label: 'Skupiny', icon: Users },
                     { key: 'register', label: 'Registrace', icon: Users },
                     { key: 'rules', label: 'Pravidla', icon: FileText },
                     { key: 'champions', label: 'Šampioni', icon: Crown },

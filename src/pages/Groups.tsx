@@ -77,13 +77,13 @@ const Groups: React.FC = () => {
           <div className="text-center mb-20">
             <div className="inline-flex items-center justify-center px-6 py-3 bg-blue-600/20 border border-blue-500/30 rounded-full mb-6">
               <Users className="w-5 h-5 text-blue-400 mr-2" />
-              <span className="text-blue-400 font-semibold">Turnajové Skupiny</span>
+              <span className="text-blue-400 font-semibold">{content.groups.subtitle}</span>
             </div>
             <h1 className="text-4xl md:text-6xl font-black mb-6 text-white tracking-tight">
-              Skupiny
+              {content.groups.title}
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-              Aktuálne postavenie týmov v skupinovej fáze Targon Cup 2025
+              {content.groups.description}
             </p>
           </div>
         </div>
@@ -151,11 +151,11 @@ const Groups: React.FC = () => {
                   <div className="text-sm text-blue-300">
                     <div className="flex items-center space-x-2 mb-2">
                       <Crown className="w-4 h-4 text-yellow-400" />
-                      <span><strong>1.-2. miesto:</strong> Postup do playoff</span>
+                      <span><strong>{content.groups.qualificationInfo.advance}</strong></span>
                     </div>
                     <div className="flex items-center space-x-2">
                       <Target className="w-4 h-4 text-gray-400" />
-                      <span><strong>3.-4. miesto:</strong> Vypadnutie</span>
+                      <span><strong>{content.groups.qualificationInfo.eliminate}</strong></span>
                     </div>
                   </div>
                 </div>
@@ -166,34 +166,29 @@ const Groups: React.FC = () => {
           {/* Tournament Format Info */}
           <div className="mt-16 bg-gradient-to-br from-gray-800 to-gray-700 rounded-2xl p-8 border border-gray-600">
             <div className="text-center mb-8">
-              <h2 className="text-3xl font-black mb-4 text-white">Formát Turnaja</h2>
-              <p className="text-gray-300">Ako funguje skupinová fáza</p>
+              <h2 className="text-3xl font-black mb-4 text-white">{content.groups.formatTitle}</h2>
+              <p className="text-gray-300">{content.groups.formatSubtitle}</p>
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-green-600 to-green-800 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Gamepad2 className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-lg font-bold text-white mb-2">Skupinová Fáza</h3>
-                <p className="text-gray-300 text-sm">Každý s každým (Round Robin)</p>
-              </div>
-
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Trophy className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-lg font-bold text-white mb-2">Bodovanie</h3>
-                <p className="text-gray-300 text-sm">3 body za výhru, 0 za prehru</p>
-              </div>
-
-              <div className="text-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-purple-600 to-purple-800 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Crown className="w-8 h-8 text-white" />
-                </div>
-                <h3 className="text-lg font-bold text-white mb-2">Postup</h3>
-                <p className="text-gray-300 text-sm">Top 2 z každej skupiny</p>
-              </div>
+              {content.groups.formatCards.map((card, index) => {
+                const Icon = iconMap[card.icon] || Trophy;
+                const gradients = [
+                  'from-green-600 to-green-800',
+                  'from-blue-600 to-blue-800',
+                  'from-purple-600 to-purple-800'
+                ];
+                
+                return (
+                  <div key={index} className="text-center">
+                    <div className={`w-16 h-16 bg-gradient-to-br ${gradients[index]} rounded-2xl flex items-center justify-center mx-auto mb-4`}>
+                      <Icon className="w-8 h-8 text-white" />
+                    </div>
+                    <h3 className="text-lg font-bold text-white mb-2">{card.title}</h3>
+                    <p className="text-gray-300 text-sm">{card.description}</p>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
