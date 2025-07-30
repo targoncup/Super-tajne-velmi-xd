@@ -598,9 +598,9 @@ const Admin: React.FC = () => {
                     { key: 'champions', label: 'Šampioni', icon: Crown },
                     { key: 'contact', label: 'Kontakt', icon: Mail }
                   ].map(({ key, label, icon: Icon }) => (
-                    <div key={key} className="flex items-center justify-between p-4 bg-gray-600/30 rounded-lg">
+                    <div key={key} className="flex items-center justify-between p-4 bg-gray-600/50 rounded-lg">
                       <div className="flex items-center space-x-3">
-                        <Icon className="w-5 h-5 text-blue-400" />
+                        <Icon className="w-5 h-5 text-gray-400" />
                         <span className="text-white font-medium">{label}</span>
                       </div>
                       <button
@@ -634,7 +634,6 @@ const Admin: React.FC = () => {
                         />
                       </button>
                     </div>
-                  ))}
                   ))}
                 </div>
                 <div className="mt-4 p-3 bg-blue-600/20 rounded-lg border border-blue-500/30">
