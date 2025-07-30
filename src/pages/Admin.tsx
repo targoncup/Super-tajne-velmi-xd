@@ -598,24 +598,24 @@ const Admin: React.FC = () => {
                     { key: 'champions', label: 'Šampioni', icon: Crown },
                     { key: 'contact', label: 'Kontakt', icon: Mail }
                   ].map(({ key, label, icon: Icon }) => (
-                        const currentVisibility = content.navigation.pageVisibility[key as keyof typeof content.navigation.pageVisibility];
-                        const newVisibility = !currentVisibility;
-                        
-                        // Update only the specific visibility setting without affecting other content
-                        updateContent({
-                          navigation: {
-                            ...content.navigation,
-                            pageVisibility: {
-                              ...content.navigation.pageVisibility,
-                              [key]: newVisibility
-                            }
-                          }
-                        });
-                          };
+                    <div key={key} className="flex items-center justify-between p-4 bg-gray-600/30 rounded-lg">
+                      <div className="flex items-center space-x-3">
+                        <Icon className="w-5 h-5 text-blue-400" />
+                        <span className="text-white font-medium">{label}</span>
+                      </div>
+                      <button
+                        onClick={() => {
+                          const currentVisibility = content.navigation.pageVisibility[key as keyof typeof content.navigation.pageVisibility];
+                          const newVisibility = !currentVisibility;
+                          
+                          // Update only the specific visibility setting without affecting other content
                           updateContent({
                             navigation: {
                               ...content.navigation,
-                              pageVisibility: updatedVisibility
+                              pageVisibility: {
+                                ...content.navigation.pageVisibility,
+                                [key]: newVisibility
+                              }
                             }
                           });
                         }}
@@ -634,6 +634,7 @@ const Admin: React.FC = () => {
                         />
                       </button>
                     </div>
+                  ))}
                   ))}
                 </div>
                 <div className="mt-4 p-3 bg-blue-600/20 rounded-lg border border-blue-500/30">
