@@ -28,7 +28,6 @@ const Navigation: React.FC = () => {
     { name: content.navigation.register, icon: Users, href: '/register', visible: content.navigation.pageVisibility.register },
     { name: content.navigation.rules, icon: FileText, href: '/rules', visible: content.navigation.pageVisibility.rules },
     { name: 'Tabulka', icon: Users, href: '/groups', visible: content.navigation.pageVisibility.groups },
-    { name: content.navigation.champions, icon: Trophy, href: '/champions', visible: content.navigation.pageVisibility.champions },
     { name: content.navigation.contact, icon: Mail, href: '/contact', visible: content.navigation.pageVisibility.contact }
   ].filter(item => item.visible);
 
