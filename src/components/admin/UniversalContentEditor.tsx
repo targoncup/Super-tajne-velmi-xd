@@ -266,7 +266,20 @@ const UniversalContentEditor: React.FC<UniversalContentEditorProps> = ({ onClose
     // Use async/await for better error handling
     const saveContent = async () => {
       try {
-        await updateContent(editedContent);
+        // Create a partial update that preserves existing structure
+        const partialUpdate: Partial<SiteContent> = {};
+        
+        // Only include sections that have actually changed
+        Object.keys(editedContent).forEach(sectionKey => {
+          const originalSection = content[sectionKey as keyof SiteContent];
+          const editedSection = editedContent[sectionKey as keyof SiteContent];
+          
+          if (JSON.stringify(originalSection) !== JSON.stringify(editedSection)) {
+            partialUpdate[sectionKey as keyof SiteContent] = editedSection as any;
+          }
+        });
+        
+        await updateContent(partialUpdate);
         setSaveMessage('Všechny změny byly úspěšně uloženy do databáze!');
         setHasChanges(false);
         setIsLoading(false);

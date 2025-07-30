@@ -182,7 +182,9 @@ const ContentEditor: React.FC<ContentEditorProps> = ({ section, onClose }) => {
     // Use async/await for better error handling
     const saveContent = async () => {
       try {
-        await updateContent({ [section]: editedContent });
+        // Only update the specific section being edited
+        const sectionUpdate = { [section]: editedContent };
+        await updateContent(sectionUpdate);
         setSaveMessage('Změny byly úspěšně uloženy do databáze!');
         setIsLoading(false);
         

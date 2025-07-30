@@ -598,16 +598,19 @@ const Admin: React.FC = () => {
                     { key: 'champions', label: 'Šampioni', icon: Crown },
                     { key: 'contact', label: 'Kontakt', icon: Mail }
                   ].map(({ key, label, icon: Icon }) => (
-                    <div key={key} className="flex items-center justify-between p-4 bg-gray-800/50 rounded-lg border border-gray-600">
-                      <div className="flex items-center space-x-3">
-                        <Icon className="w-5 h-5 text-gray-400" />
-                        <span className="text-white font-medium">{label}</span>
-                      </div>
-                      <button
-                        onClick={() => {
-                          const updatedVisibility = {
-                            ...content.navigation.pageVisibility,
-                            [key]: !content.navigation.pageVisibility[key as keyof typeof content.navigation.pageVisibility]
+                        const currentVisibility = content.navigation.pageVisibility[key as keyof typeof content.navigation.pageVisibility];
+                        const newVisibility = !currentVisibility;
+                        
+                        // Update only the specific visibility setting without affecting other content
+                        updateContent({
+                          navigation: {
+                            ...content.navigation,
+                            pageVisibility: {
+                              ...content.navigation.pageVisibility,
+                              [key]: newVisibility
+                            }
+                          }
+                        });
                           };
                           updateContent({
                             navigation: {

@@ -80,7 +80,7 @@ export const useContent = () => {
     try {
       setError(null);
       
-      // Create updated content by merging with current content
+      // Create updated content by merging with current content, preserving existing structure
       const updatedContent = deepMerge(content, newContent);
       
       // First update local state
@@ -99,7 +99,7 @@ export const useContent = () => {
       if (upsertError) {
         console.error('Supabase upsert error:', upsertError);
         // Revert local state on error
-        setContent(content);
+        setContent(prev => prev);
         throw new Error(`Database error: ${upsertError.message}`);
       }
       
