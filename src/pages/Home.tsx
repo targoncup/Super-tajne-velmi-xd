@@ -204,45 +204,6 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Champions Section */}
-      {content.navigation.pageVisibility.champions && (
-        <section className="py-24">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center mb-20">
-              <h2 className="text-4xl md:text-5xl font-black mb-6 text-white">
-                {content.home.championsTitle}
-              </h2>
-              <p className="text-xl text-gray-300">{content.home.championsSubtitle}</p>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              {champions.map((champion, index) => (
-                <div key={index} className="bg-gradient-to-br from-gray-800 to-gray-700 border border-gray-600 hover:border-yellow-500/50 rounded-2xl p-8 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl group">
-                  <div className="text-center">
-                    <div className="w-20 h-20 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                      <Crown className="w-10 h-10 text-white" />
-                    </div>
-                    <div className="text-sm text-yellow-400 font-bold mb-2">{champion.season}</div>
-                    <h3 className="text-xl font-bold mb-3 text-white">{champion.team}</h3>
-                    <div className="text-2xl font-black text-green-400 mb-2">{champion.prize}</div>
-                    <div className="text-sm text-gray-300">{champion.place} Místo</div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <div className="text-center mt-12">
-              <Link 
-                to="/champions"
-                className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-yellow-600 to-yellow-700 hover:from-yellow-700 hover:to-yellow-800 text-white rounded-xl font-bold transition-all duration-300 transform hover:scale-105"
-              >
-                <Trophy className="w-5 h-5 mr-2" />
-                Zobrazit Všechny Šampiony
-              </Link>
-            </div>
-          </div>
-        </section>
-      )}
     </div>
   );
 };
