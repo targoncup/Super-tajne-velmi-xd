@@ -116,6 +116,15 @@ const Rules: React.FC = () => {
                       </p>
                     </div>
                   )}
+                  
+                  {/* Add health substitute note specifically for "Pravidla pro Týmy" section */}
+                  {section.title === "Pravidla pro Týmy" && (
+                    <div className="mt-6 p-4 bg-blue-600/20 backdrop-blur-sm rounded-xl border border-blue-500/30">
+                      <p className="text-sm text-blue-200">
+                        <span className="font-bold text-blue-100">Poznámka:</span> V případě zdravotních důvodů je možné mít příležitostného suba.
+                      </p>
+                    </div>
+                  )}
                 </div>
               );
             })}
